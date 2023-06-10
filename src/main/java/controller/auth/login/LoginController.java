@@ -1,4 +1,4 @@
-package controller.home.auth.login;
+package controller.auth.login;
 
 public class LoginController {
 }
