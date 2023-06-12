@@ -11,7 +11,7 @@ public interface DAOInterface<T> {
 	
 	public ArrayList<T> selectAll();
 	
-	public T selectById(int id);
+	public T selectById(String id);
 	
 	public ArrayList<T> selectByCondition(String condition);
 	
