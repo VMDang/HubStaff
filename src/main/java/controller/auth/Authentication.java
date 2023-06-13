@@ -1,5 +1,7 @@
 package controller.auth;
 
-public class Authentication {
+import model.employee.Employee;
 
+public class Authentication {
+	public static Employee authentication;
 }

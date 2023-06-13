@@ -66,16 +66,11 @@
                         </Pane>
                         <Pane prefHeight="54.0" prefWidth="240.0">
                            <children>
-                              <Label fx:id="timeKeepingBtn" alignment="BASELINE_LEFT" layoutX="14.0" layoutY="9.0" prefHeight="37.0" prefWidth="118.0" text="Chấm công" textFill="WHITE">
+                              <Label fx:id="timeKeepingBtn" alignment="BASELINE_LEFT" layoutX="14.0" layoutY="9.0" onMouseClicked="#switchToTimekeeping" prefHeight="37.0" prefWidth="118.0" text="Chấm công" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="206.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../assets/img/dropdown.png" />
-                                 </image>
-                              </ImageView>
                            </children>
                         </Pane>
                         <Pane prefHeight="54.0" prefWidth="240.0">
@@ -85,16 +80,11 @@
                                     <Font name="System Bold" size="20.0" />
                                  </font>
                               </Label>
-                              <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="206.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
-                                 <image>
-                                    <Image url="@../../assets/img/dropdown.png" />
-                                 </image>
-                              </ImageView>
                            </children>
                         </Pane>
-                        <Pane prefHeight="54.0" prefWidth="240.0">
+                        <Pane fx:id="importBtn" prefHeight="54.0" prefWidth="240.0">
                            <children>
-                              <Label fx:id="importBtn" alignment="BASELINE_LEFT" layoutX="14.0" layoutY="9.0" prefHeight="37.0" prefWidth="118.0" text="Import" textFill="WHITE">
+                              <Label alignment="BASELINE_LEFT" layoutX="14.0" layoutY="9.0" prefHeight="37.0" prefWidth="118.0" text="Import" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="20.0" />
                                  </font>
@@ -123,7 +113,7 @@
             </AnchorPane>
          </left>
          <center>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: e4e4e4;" BorderPane.alignment="CENTER" />
+            <AnchorPane fx:id="basePane" prefHeight="709.0" prefWidth="1104.0" style="-fx-background-color: e4e4e4;" BorderPane.alignment="CENTER" />
          </center>
       </BorderPane>
    </children>
