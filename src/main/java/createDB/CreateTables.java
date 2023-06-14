@@ -3,7 +3,7 @@ package createDB;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
-
+import java.sql.Time;
 import database.JDBCUtil;
 
 public class CreateTables {
@@ -44,17 +44,17 @@ public class CreateTables {
 					+ "    ID varchar(255) NOT NULL ,\r\n"
 					+ "    EmployeeID varchar(255) NOT NULL,\r\n"
 					+ "    Date DATE NOT NULL,\r\n"
-					+ "    In TIME NOT NULL,\r\n"
-					+ "    Out TIME NOT NULL,\r\n"
+					+ "    TimeIn TIME NOT NULL,\r\n"
+					+ "    TimeOut TIME NOT NULL,\r\n"
 					+ "    Shift1 DOUBLE(10, 2) NOT NULL,\r\n"
 					+ "    Shift2 DOUBLE(10, 2) NOT NULL,\r\n"
 					+ "    Shift3 DOUBLE(10, 2) NOT NULL,\r\n"
 					+ "    PRIMARY KEY (ID),\r\n"
-					+ "    CONSTRAINT FK_Employees FOREIGN KEY (EmployeeID)\r\n"
+					+ "    CONSTRAINT FK_Employees_Table_Worker FOREIGN KEY (EmployeeID)\r\n"
 					+ "    REFERENCES Employees(ID)"
 					+ ");";
 			st.execute(sql);
-			connection.commit();
+			
 			
 			JDBCUtil.closeConnection(connection);
 		} catch (SQLException e) {
@@ -74,19 +74,19 @@ public class CreateTables {
 					+ "    ID varchar(255) NOT NULL ,\r\n"
 					+ "    EmployeeID varchar(255) NOT NULL,\r\n"
 					+ "    Date DATE NOT NULL,\r\n"
-					+ "    In TIME NOT NULL,\r\n"
-					+ "    Out TIME NOT NULL,\r\n"
-					+ "    Morning BOOLEAN NOT NULL,\r\n"
-					+ "    Afternoon BOOLEAN NOT NULL,\r\n"
-					+ "    HourLate DOUBLE(10, 2) ,\r\n"
-					+ "    HourEarly DOUBLE(10, 2) ,\r\n"
+					+ "    TimeIn TIME NOT NULL,\r\n"
+					+ "    TimeOut TIME NOT NULL,\r\n"
+					+ "    Morning BOOL NOT NULL,\r\n"
+					+ "    Afternoon BOOL NOT NULL,\r\n"
+					+ "    HourLate DOUBLE(3, 2) ,\r\n"
+					+ "    HourEarly DOUBLE(3, 2) ,\r\n"
 					+ "    PRIMARY KEY (ID),\r\n"
 					+ "    CONSTRAINT FK_Employees FOREIGN KEY (EmployeeID)\r\n"
 					+ "    REFERENCES Employees(ID)"
-					+ ")";
+					+ ");";
 			System.out.println(sql);
 			st.execute(sql);
-			connection.commit();
+			
 			
 			JDBCUtil.closeConnection(connection);
 		} catch (SQLException e) {
@@ -97,6 +97,6 @@ public class CreateTables {
 	
 	public static void main(String[] args) {
 		
-		CreateTables.createTableLogTimekeepingOfficer();
+		CreateTables.createTableLogTimekeepingWorker();
 	}
 }

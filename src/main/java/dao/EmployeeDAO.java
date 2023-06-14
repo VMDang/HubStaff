@@ -188,7 +188,7 @@ public class EmployeeDAO implements DAOInterface<Employee>{
 		try {
 			Connection con = JDBCUtil.getConnection();
 			
-			String sql = "SELECT * FROM Employees WHERE " + condition ;
+			String sql = "SELECT * FROM Employees WHERE " + condition + ";";
 			PreparedStatement st = con.prepareStatement(sql);
 			
 			
