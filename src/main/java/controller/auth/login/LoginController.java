@@ -12,47 +12,46 @@ import java.util.prefs.Preferences;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-
+import model.employee.Employee;
+import controller.auth.Authentication;
 import controller.layouts.LayoutController;
 import static controller.fxml.FxmlConstains.*;
 
 public class LoginController {
     @FXML
     private TextField inputUsername, inputPassword;
-    
+
+    @FXML
+    private Label validate;
+
     public void handleLogin(ActionEvent event) throws IOException {
-        String SELECT_QUERY = "SELECT * FROM employee WHERE name = ? AND password = ?";
-        String Username = inputUsername.getText();
+        String SELECT_QUERY = "SELECT * FROM employee WHERE id = ? AND password = ?";
+        String Id = inputUsername.getText();
         String Password = inputPassword.getText();
-        if (Username.trim().equals("") || Password.trim().equals("")) {
-//            createDialog(
-//                    Alert.AlertType.WARNING,
-//                    "Cảnh báo!",
-//                    "Khoan nào cán bộ!",
-//                    "Vui lòng nhập đầy đủ username và password!"
-//            );
+        if (Id.trim().equals("") || Password.trim().equals("")) {
+            validate.setText("Vui lòng nhập đủ mã nhân viên và mật khẩu");
+            validate.setVisible(true);
         }   else {
             try {
                 //Khai bao ket noi sql
                 Connection conn = DriverManager.getConnection(DATABASE, USERNAME, PASSWORD);
                 PreparedStatement preparedStatement = conn.prepareStatement(SELECT_QUERY);
-                preparedStatement.setString(1, Username);
+                preparedStatement.setString(1, Id);
                 preparedStatement.setString(2, Password);
                 ResultSet result = preparedStatement.executeQuery();
                 if (result.next()) {
                     Preferences userPreferences = Preferences.userRoot();
                     userPreferences.put("role", result.getString(4));
-                    userPreferences.put("username", result.getString(2));
+                    userPreferences.put("id", result.getString(1));
+                    Authentication.authentication = new Employee(result.getString(1), result.getString(2), Password, result.getInt(4));
                     LayoutController layout = new LayoutController();
                     layout.changeScene(event, HOME_VIEW);
-                }   else {
-//                    createDialog(
-//                            Alert.AlertType.ERROR,
-//                            "Cảnh báo!",
-//                            "Khoan nào cán bộ!",
-//                            "Sai username hoặc password!"
-//                    );
+                                    
+                }else {
+                    validate.setText("Mã nhân viên hoặc mật khẩu sai! Vui lòng nhập lại");
+                    validate.setVisible(true);
                 }
             }   catch (SQLException e) {
                 e.printStackTrace();

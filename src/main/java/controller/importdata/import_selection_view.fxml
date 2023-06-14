@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane fx:id="basePane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.importdata.ImportSelectionController">
+   <children>
+      <AnchorPane layoutX="-132.0" layoutY="-80.0" prefHeight="709.0" prefWidth="1126.0" style="-fx-background-color: #e5e5e5;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Pane fx:id="btnImportByExcel" layoutX="174.0" layoutY="90.0" onMouseClicked="#switchToImportByExcel" prefHeight="178.0" prefWidth="289.0" style="-fx-background-color: #d2d2d2; -fx-background-radius: 20px;">
+               <children>
+                  <Label alignment="BASELINE_LEFT" layoutX="53.0" layoutY="129.0" prefHeight="38.0" prefWidth="184.0" text="Import với Excel">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="107.0" fitWidth="100.0" layoutX="95.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../assets/img/excel.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane fx:id="btnImportManual" layoutX="614.0" layoutY="90.0" onMouseClicked="#switchToImportManual" prefHeight="178.0" prefWidth="289.0" style="-fx-background-color: #d2d2d2; -fx-background-radius: 20px;">
+               <children>
+                  <Label alignment="BASELINE_LEFT" layoutX="53.0" layoutY="129.0" prefHeight="38.0" prefWidth="190.0" text="Import thủ công">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="107.0" fitWidth="100.0" layoutX="105.0" layoutY="18.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../assets/img/importManual.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>
