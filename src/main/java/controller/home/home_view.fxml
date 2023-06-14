@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.effect.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.paint.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.paint.Color?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.home.HomeController">
+   <children>
+      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <top>
+            <AnchorPane prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
+               <children>
+                  <Pane layoutX="-21.0" layoutY="-93.0" prefHeight="60.0" prefWidth="235.0" style="-fx-background-color: #0A4969;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1126.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label layoutX="25.0" layoutY="4.0" text="HUB STAFF" textAlignment="CENTER" textFill="#df9042">
+                           <font>
+                              <Font name="System Bold" size="36.0" />
+                           </font>
+                        </Label>
+                     </children></Pane>
+                  <Button layoutX="240.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="98.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="0.0">
+                     <graphic>
+                        <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../assets/img/menu.png" />
+                           </image>
+                        </ImageView>
+                     </graphic></Button>
+                  <Button layoutX="1192.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="71.0" style="-fx-background-color: #ffffff;" text="Setting" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                  <Button layoutX="1194.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="111.0" style="-fx-background-color: #ffffff;" text="Notification" />
+                  <Line endX="1366.0" opacity="0.5" strokeWidth="0.5" />
+               </children>
+            </AnchorPane>
+         </top>
+         <left>
+            <AnchorPane prefHeight="200.0" prefWidth="240.0" BorderPane.alignment="CENTER">
+               <children>
+                  <VBox layoutX="-1.0" layoutY="58.0" prefHeight="650.0" prefWidth="240.0" style="-fx-background-color: #0A4969;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0">
+                     <children>
+                        <Pane fx:id="dashboardBtn" onMouseClicked="#switchToDashboard" prefHeight="54.0" prefWidth="240.0">
+                           <children>
+                              <Label alignment="BASELINE_LEFT" layoutX="14.0" layoutY="9.0" prefHeight="37.0" prefWidth="208.0" text="Dashboard" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane fx:id="profileBtn" onMouseClicked="#switchToProfile" prefHeight="54.0" prefWidth="240.0">
+                           <children>
+                              <Label alignment="BASELINE_LEFT" layoutX="14.0" layoutY="9.0" prefHeight="37.0" prefWidth="214.0" text="Thông tin cá nhân" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane fx:id="timekeepingBtn" onMouseClicked="#switchToTimekeeping" prefHeight="54.0" prefWidth="240.0">
+                           <children>
+                              <Label alignment="BASELINE_LEFT" layoutX="14.0" layoutY="9.0" prefHeight="37.0" prefWidth="118.0" text="Chấm công" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane fx:id="reportBtn" onMouseClicked="#switchToReport" prefHeight="54.0" prefWidth="240.0">
+                           <children>
+                              <Label alignment="BASELINE_LEFT" layoutX="14.0" layoutY="9.0" prefHeight="37.0" prefWidth="118.0" text="Báo cáo" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                        <Pane fx:id="importBtn" onMouseClicked="#switchToImport" prefHeight="54.0" prefWidth="240.0">
+                           <children>
+                              <Label alignment="BASELINE_LEFT" layoutX="14.0" layoutY="9.0" prefHeight="37.0" prefWidth="118.0" text="Import" textFill="WHITE">
+                                 <font>
+                                    <Font name="System Bold" size="20.0" />
+                                 </font>
+                              </Label>
+                           </children>
+                        </Pane>
+                     </children>
+                  </VBox>
+                  <Pane layoutX="6.0" layoutY="-86.0" prefHeight="62.0" prefWidth="240.0" style="-fx-background-color: #0A4969;" AnchorPane.bottomAnchor="646.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                     <children>
+                        <Label fx:id="usernameLabel" layoutX="14.0" layoutY="11.0" text="Username" textFill="WHITE">
+                           <font>
+                              <Font size="24.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <effect>
+                        <DropShadow height="15.0" radius="4.42" spread="0.53" width="4.68">
+                           <color>
+                              <Color opacity="0.5987842082977295" />
+                           </color>
+                        </DropShadow>
+                     </effect>
+                  </Pane>
+               </children>
+            </AnchorPane>
+         </left>
+         <center>
+            <AnchorPane fx:id="basePane" prefHeight="709.0" prefWidth="1126.0" style="-fx-background-color: #f1f1f1;" BorderPane.alignment="CENTER" />
+         </center>
+      </BorderPane>
+   </children>
+</AnchorPane>
