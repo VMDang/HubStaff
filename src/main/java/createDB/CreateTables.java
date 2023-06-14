@@ -7,7 +7,8 @@ import java.sql.Statement;
 import database.JDBCUtil;
 
 public class CreateTables {
-	public static void main(String[] args) {
+	
+	public static void createTableEmployees() {
 		try {
 			Connection connection = JDBCUtil.getConnection();
 			System.out.println(connection);
@@ -23,7 +24,7 @@ public class CreateTables {
 					+ "    RoleId int NOT NULL,\r\n"
 					+ "    PRIMARY KEY (ID)\r\n"
 					+ ");";
-			st.executeUpdate(sql);
+			st.execute(sql);
 			
 			
 			JDBCUtil.closeConnection(connection);
@@ -31,5 +32,71 @@ public class CreateTables {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+	}
+	public static void createTableLogTimekeepingWorker() {
+		try {
+			Connection connection = JDBCUtil.getConnection();
+			System.out.println(connection);
+			
+			Statement st = connection.createStatement();
+			
+			String sql = "CREATE TABLE LogTimekeepingWorker (\r\n"
+					+ "    ID varchar(255) NOT NULL ,\r\n"
+					+ "    EmployeeID varchar(255) NOT NULL,\r\n"
+					+ "    Date DATE NOT NULL,\r\n"
+					+ "    In TIME NOT NULL,\r\n"
+					+ "    Out TIME NOT NULL,\r\n"
+					+ "    Shift1 DOUBLE(10, 2) NOT NULL,\r\n"
+					+ "    Shift2 DOUBLE(10, 2) NOT NULL,\r\n"
+					+ "    Shift3 DOUBLE(10, 2) NOT NULL,\r\n"
+					+ "    PRIMARY KEY (ID),\r\n"
+					+ "    CONSTRAINT FK_Employees FOREIGN KEY (EmployeeID)\r\n"
+					+ "    REFERENCES Employees(ID)"
+					+ ");";
+			st.execute(sql);
+			connection.commit();
+			
+			JDBCUtil.closeConnection(connection);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void createTableLogTimekeepingOfficer() {
+		try {
+			Connection connection = JDBCUtil.getConnection();
+			System.out.println(connection);
+			
+			Statement st = connection.createStatement();
+			
+			String sql = "CREATE TABLE LogTimekeepingOfficer (\r\n"
+					+ "    ID varchar(255) NOT NULL ,\r\n"
+					+ "    EmployeeID varchar(255) NOT NULL,\r\n"
+					+ "    Date DATE NOT NULL,\r\n"
+					+ "    In TIME NOT NULL,\r\n"
+					+ "    Out TIME NOT NULL,\r\n"
+					+ "    Morning BOOLEAN NOT NULL,\r\n"
+					+ "    Afternoon BOOLEAN NOT NULL,\r\n"
+					+ "    HourLate DOUBLE(10, 2) ,\r\n"
+					+ "    HourEarly DOUBLE(10, 2) ,\r\n"
+					+ "    PRIMARY KEY (ID),\r\n"
+					+ "    CONSTRAINT FK_Employees FOREIGN KEY (EmployeeID)\r\n"
+					+ "    REFERENCES Employees(ID)"
+					+ ")";
+			System.out.println(sql);
+			st.execute(sql);
+			connection.commit();
+			
+			JDBCUtil.closeConnection(connection);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
+	
+	public static void main(String[] args) {
+		
+		CreateTables.createTableLogTimekeepingOfficer();
 	}
 }

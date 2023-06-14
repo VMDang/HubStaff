@@ -1,6 +1,7 @@
 package dao;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -20,15 +21,19 @@ public class EmployeeDAO implements DAOInterface<Employee>{
 		// TODO Auto-generated method stub
 		try {
 			Connection con = JDBCUtil.getConnection();
-			
-			Statement st = con.createStatement();
-			
 			String sql = "INSERT INTO Employees\r\n"
-					+ "VALUES ('"+t.getId()+"','" +t.getName()+"','" +t.getDepartment()+"','" +t.getUnit_id()+"','"+t.getPassword()+"','" +t.getRole_id()+"');";
+					+ "VALUES ( ?, ?, ?, ?, ?, ?)";
 			
-			System.out.println(sql);
+			PreparedStatement st = con.prepareStatement(sql);
 			
-			int check = st.executeUpdate(sql);
+			st.setString(1,t.getId());
+			st.setString(2,t.getName());
+			st.setString(3,t.getDepartment());
+			st.setString(4,t.getUnit_id());
+			st.setString(5,t.getPassword());
+			st.setInt(6, t.getRole_id());
+			
+			int check = st.executeUpdate();
 			
 			if(check > 0) {
 				System.out.println("Thanh cong");
@@ -51,14 +56,20 @@ public class EmployeeDAO implements DAOInterface<Employee>{
 		try {
 			Connection con = JDBCUtil.getConnection();
 			
-			Statement st = con.createStatement();
-			
 			String sql = "UPDATE Employees\r\n"
-					+ "SET Name = '"+t.getName()+"', Department = '"+t.getDepartment()+"', UnitId = '"+t.getUnit_id()+"', Password = '"+t.getPassword()+"', RoleId = "+t.getRole_id()+"\r\n"
-					+ "WHERE ID = '"+t.getId()+"';";
-			System.out.println(sql);
+					+ "SET Name = ?"+", Department = ?"+", UnitId = ?"+", Password = ?"+", RoleId = ? "
+					+ "WHERE ID = ?";
 			
-			int check = st.executeUpdate(sql);
+			PreparedStatement st = con.prepareStatement(sql);
+			
+			st.setString(6,t.getId());
+			st.setString(1,t.getName());
+			st.setString(2,t.getDepartment());
+			st.setString(3,t.getUnit_id());
+			st.setString(4,t.getPassword());
+			st.setInt(5, t.getRole_id());
+			
+			int check = st.executeUpdate();
 			
 			if(check > 0) {
 				System.out.println("Thanh cong");
@@ -80,13 +91,14 @@ public class EmployeeDAO implements DAOInterface<Employee>{
 		try {
 			Connection con = JDBCUtil.getConnection();
 			
-			Statement st = con.createStatement();
+			String sql = "DELETE FROM Employees WHERE ID = ?";
 			
-			String sql = "DELETE FROM Employees WHERE ID = '"+t.getId()+"';";
+			PreparedStatement st = con.prepareStatement(sql);
 			
-			System.out.println(sql);
+			st.setString(1,t.getId());
 			
-			int check = st.executeUpdate(sql);
+			
+			int check = st.executeUpdate();
 			
 			if(check > 0) {
 				System.out.println("Thanh cong");
@@ -145,13 +157,10 @@ public class EmployeeDAO implements DAOInterface<Employee>{
 		try {
 			Connection con = JDBCUtil.getConnection();
 			
-			Statement st = con.createStatement();
-			
 			String sql = "SELECT * FROM Employees WHERE ID = '"+id+"';";
-			
-			System.out.println(sql);
-			
-			ResultSet rs = st.executeQuery(sql);
+			PreparedStatement st = con.prepareStatement(sql);
+				
+			ResultSet rs = st.executeQuery();
 			
 			while(rs.next()) {
 				String ID = rs.getString("ID");
@@ -179,13 +188,11 @@ public class EmployeeDAO implements DAOInterface<Employee>{
 		try {
 			Connection con = JDBCUtil.getConnection();
 			
-			Statement st = con.createStatement();
+			String sql = "SELECT * FROM Employees WHERE " + condition ;
+			PreparedStatement st = con.prepareStatement(sql);
 			
-			String sql = "SELECT * FROM Employees WHERE " + condition + ";";
 			
-			System.out.println(sql);
-			
-			ResultSet rs = st.executeQuery(sql);
+			ResultSet rs = st.executeQuery();
 			
 			while(rs.next()) {
 				String ID = rs.getString("ID");
