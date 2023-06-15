@@ -1,7 +1,9 @@
 package model.employee.worker;
 
 public class WorkerUnitManager extends Worker{
-	public WorkerUnitManager(String id, String name, String department, String unit_id, String password, int role_id) {
-		super(id, name, department, unit_id, password, role_id);
+
+	public WorkerUnitManager(String id, String name, String unit_id, String password) {
+		super(id, name, unit_id, password);
+		this.role_id = 3;
 	}
 }
