@@ -9,7 +9,6 @@ import javafx.stage.Stage;
 import static controller.fxml.FxmlConstains.*;
 
 public class HomeApplication extends Application {
-
 	@Override
 	public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HomeApplication.class.getResource(LOGIN_VIEW));
