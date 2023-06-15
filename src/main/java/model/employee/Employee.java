@@ -7,12 +7,19 @@ public class Employee {
     protected String unit_id;
     protected String password;
     protected int role_id;
-	public Employee(String i, String name, String password, int role_id) {
-		super();
-		this.id = i;
-		this.name = name;
-		this.password = password;
-		this.role_id = role_id;
+    
+    public Employee() {
+    	
+    }
+  
+    public Employee(String id, String name, String department, String unit_id, String password, int role_id) {
+    	super();
+      this.id = id;
+      this.name = name;
+      this.department = department;
+      this.unit_id = unit_id;
+      this.password = password;
+      this.role_id = role_id;
 	}
 	public String getId() {
 		return id;
@@ -26,6 +33,18 @@ public class Employee {
 	public void setName(String name) {
 		this.name = name;
 	}
+	public String getDepartment() {
+		return department;
+	}
+	public void setDepartment(String department) {
+		this.department = department;
+	}
+	public String getUnit_id() {
+		return unit_id;
+	}
+	public void setUnit_id(String unit_id) {
+		this.unit_id = unit_id;
+	}
 	public String getPassword() {
 		return password;
 	}
@@ -38,5 +57,4 @@ public class Employee {
 	public void setRole_id(int role_id) {
 		this.role_id = role_id;
 	}
-    
 }
