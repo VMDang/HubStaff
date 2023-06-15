@@ -94,6 +94,7 @@ public class HomeController implements Initializable {
             drawerPane.setTranslateX(0);
         } else {
             drawerPane.setTranslateX(-240);
+            basePane.setLayoutX(0);
         }
 		    drawerImage.setOnMouseClicked(event -> toggleDrawer());      
       

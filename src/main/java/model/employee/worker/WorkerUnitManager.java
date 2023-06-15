@@ -2,8 +2,8 @@ package model.employee.worker;
 
 public class WorkerUnitManager extends Worker{
 
-	public WorkerUnitManager(String i, String name, String password, int role_id) {
-		super(i, name, password, role_id);
-		// TODO Auto-generated constructor stub
+	public WorkerUnitManager(String id, String name, String unit_id, String password) {
+		super(id, name, unit_id, password);
+		this.role_id = 3;
 	}
 }

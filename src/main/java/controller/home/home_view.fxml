@@ -23,9 +23,9 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="768.0" prefWidth="1366.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.home.HomeController">
    <children>
-      <BorderPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-         <top>
-            <AnchorPane prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: #ffffff;" BorderPane.alignment="CENTER">
+      <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <AnchorPane prefHeight="60.0" prefWidth="200.0" style="-fx-background-color: #ffffff;">
                <children>
                   <Pane layoutX="-21.0" layoutY="-93.0" prefHeight="60.0" prefWidth="235.0" style="-fx-background-color: #0A4969;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="1126.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -38,7 +38,8 @@
                            </effect>
                         </Label>
                         <Line endX="240.0" layoutY="60.0" />
-                     </children></Pane>
+                     </children>
+                  </Pane>
                   <Button fx:id="drawerImage" layoutX="240.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="98.0" style="-fx-background-color: #d2d2d2;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="0.0">
                      <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
@@ -46,7 +47,8 @@
                               <Image url="@../../assets/img/menu.png" />
                            </image>
                         </ImageView>
-                     </graphic></Button>
+                     </graphic>
+                  </Button>
                   <Line endX="1366.0" opacity="0.5" strokeWidth="0.5" />
                   <Pane layoutX="1127.0" layoutY="-1.0" prefHeight="62.0" prefWidth="240.0" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="40.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -64,9 +66,7 @@
                   </ImageView>
                </children>
             </AnchorPane>
-         </top>
-         <left>
-            <AnchorPane fx:id="drawerPane" BorderPane.alignment="CENTER">
+            <AnchorPane fx:id="drawerPane" AnchorPane.bottomAnchor="0.0" AnchorPane.topAnchor="60.0">
                <children>
                   <VBox layoutX="-1.0" layoutY="58.0" style="-fx-background-color: #0A4969;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
                      <children>
@@ -119,10 +119,8 @@
                   </VBox>
                </children>
             </AnchorPane>
-         </left>
-         <center>
-            <AnchorPane fx:id="basePane" style="-fx-background-color: #f1f1f1;" BorderPane.alignment="CENTER" />
-         </center>
-      </BorderPane>
+            <AnchorPane fx:id="basePane" style="-fx-background-color: #f1f1f1;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="240.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="60.0" />
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
