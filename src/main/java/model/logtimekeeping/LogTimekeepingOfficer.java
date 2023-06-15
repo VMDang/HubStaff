@@ -1,6 +1,7 @@
 package model.logtimekeeping;
 
-import java.util.Date;
+import java.sql.Time;
+import java.sql.Date;
 
 public class LogTimekeepingOfficer extends LogTimekeeping{
     private boolean morning;
@@ -8,12 +9,11 @@ public class LogTimekeepingOfficer extends LogTimekeeping{
     private float hour_late;
     private float hour_early;
     
+	public LogTimekeepingOfficer() {}
 	
-	
-	
-	public LogTimekeepingOfficer(String employee_id, Date date, String in, String out, boolean morning,
-			boolean afternoon, float hour_late, float hour_early) {
-		super(employee_id, date, in, out);
+	public LogTimekeepingOfficer(String logID, String employee_id, Date date, Time time_in, Time time_out,
+			boolean morning, boolean afternoon, float hour_late, float hour_early) {
+		super(logID, employee_id, date, time_in, time_out);
 		this.morning = morning;
 		this.afternoon = afternoon;
 		this.hour_late = hour_late;
