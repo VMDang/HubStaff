@@ -7,12 +7,16 @@ import java.util.ResourceBundle;
 import controller.auth.Authentication;
 import controller.layouts.LayoutController;
 import static controller.fxml.FxmlConstains.*;
+
+import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import javafx.util.Duration;
 
 public class HomeController implements Initializable {
     private final LayoutController layout = new LayoutController();
