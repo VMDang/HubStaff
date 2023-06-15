@@ -35,7 +35,7 @@
                            </font>
                         </Label>
                      </children></Pane>
-                  <Button layoutX="240.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="98.0" style="-fx-background-color: #ffffff;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="0.0">
+                  <Button fx:id="drawerImage" layoutX="240.0" mnemonicParsing="false" prefHeight="60.0" prefWidth="98.0" style="-fx-background-color: #d2d2d2;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="240.0" AnchorPane.topAnchor="0.0">
                      <graphic>
                         <ImageView fitHeight="50.0" fitWidth="50.0" pickOnBounds="true" preserveRatio="true">
                            <image>

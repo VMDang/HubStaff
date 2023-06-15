@@ -37,6 +37,14 @@ public class HomeController implements Initializable {
 
     @FXML
     private Label usernameLabel;
+  
+    @FXML
+    private Button drawerImage;
+    
+    @FXML
+    private AnchorPane drawerPane;
+    
+    private boolean isDrawerOpen = true;
 
     @FXML
     void switchToDashboard(MouseEvent event) throws IOException {
@@ -77,7 +85,14 @@ public class HomeController implements Initializable {
 
 
     @Override
-    public void initialize(URL arg0, ResourceBundle arg1) {
+    public void initialize(URL location, ResourceBundle resources) {
+        if (isDrawerOpen) {
+            drawerPane.setTranslateX(0);
+        } else {
+            drawerPane.setTranslateX(-240);
+        }
+		    drawerImage.setOnMouseClicked(event -> toggleDrawer());      
+      
         if(!Authentication.isHRManager()) {
             importBtn.setVisible(false);
         }
@@ -85,7 +100,6 @@ public class HomeController implements Initializable {
         if (!(Authentication.isHRManager() || Authentication.isWorkerUnitManager() || Authentication.isOfficerUnitManager())){
             reportBtn.setVisible(false);
         }
-
         usernameLabel.setText(Authentication.authentication.getName());
     }
 
@@ -97,5 +111,17 @@ public class HomeController implements Initializable {
         importBtn.setStyle("-fx-background-color: #0A4969");
         btn.setStyle("-fx-background-color: #054df6");
     }
+  
+    private void toggleDrawer() {
+        TranslateTransition transition = new TranslateTransition(Duration.millis(200), drawerPane);
+        if (isDrawerOpen) {
+            transition.setToX(-240);
+        } else {
+            transition.setToX(0);
+        }
+        transition.play();
 
+        isDrawerOpen = !isDrawerOpen;
+    }
+    
 }

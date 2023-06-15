@@ -12,6 +12,7 @@ import java.util.prefs.Preferences;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import model.employee.Employee;
@@ -22,7 +23,7 @@ import static controller.fxml.FxmlConstains.*;
 public class LoginController {
     @FXML
     private TextField inputUsername, inputPassword;
-
+  
     @FXML
     private Label validate;
 
@@ -58,4 +59,6 @@ public class LoginController {
             }
         }
     }
+
 }
+
