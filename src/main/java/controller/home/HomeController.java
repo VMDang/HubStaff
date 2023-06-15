@@ -17,6 +17,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import model.employee.HRManager;
+import model.employee.officer.OfficerUnitManager;
+import model.employee.worker.WorkerUnitManager;
 
 public class HomeController implements Initializable {
     private final LayoutController layout = new LayoutController();
@@ -70,10 +73,10 @@ public class HomeController implements Initializable {
     @FXML
     void switchToReport(MouseEvent event) throws IOException {
         highlightSidebar(reportBtn);
-        if (Authentication.isHRManager()){
+        if (Authentication.authentication instanceof HRManager){
             layout.changeAnchorPane(basePane, HRM_REPORT_SELECTION_VIEW);
         }
-        if (Authentication.isWorkerUnitManager()){
+        if (Authentication.authentication instanceof WorkerUnitManager){
             layout.changeAnchorPane(basePane, WUM_REPORT_SELECTION_VIEW);
         }
 
@@ -82,7 +85,7 @@ public class HomeController implements Initializable {
     @FXML
     void switchToImport(MouseEvent event) throws IOException {
         highlightSidebar(importBtn);
-        if (Authentication.isHRManager()){
+        if (Authentication.authentication instanceof  HRManager){
             layout.changeAnchorPane(basePane, IMPORT_SELECTION_VIEW);
         }
     }
@@ -97,11 +100,11 @@ public class HomeController implements Initializable {
         }
 		    drawerImage.setOnMouseClicked(event -> toggleDrawer());      
       
-        if(!Authentication.isHRManager()) {
+        if(!(Authentication.authentication instanceof  HRManager)) {
             importBtn.setVisible(false);
         }
 
-        if (!(Authentication.isHRManager() || Authentication.isWorkerUnitManager() || Authentication.isOfficerUnitManager())){
+        if (!(Authentication.authentication instanceof HRManager || Authentication.authentication instanceof WorkerUnitManager || Authentication.authentication instanceof OfficerUnitManager)){
             reportBtn.setVisible(false);
         }
         usernameLabel.setText(Authentication.authentication.getName());

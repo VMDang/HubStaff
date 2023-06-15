@@ -11,53 +11,21 @@ import model.employee.worker.WorkerUnitManager;
 public class Authentication {
 	public static Employee authentication;
 
-
-
 	public static void setAuthentication(Employee auth) {
 		Authentication.authentication = auth;
 
-		if (Authentication.isWorker()){
+		if (authentication.getRole_id() == 1){
 			authentication = new Worker(authentication.getId(), authentication.getName(), authentication.getUnit_id(), authentication.getPassword());
-		}else if(Authentication.isOfficer()){
+		}else if(authentication.getRole_id() == 2){
 			authentication = new Officer(authentication.getId(), authentication.getName(), authentication.getDepartment(), authentication.getUnit_id(), authentication.getPassword());
-		}else if(Authentication.isWorkerUnitManager()){
+		}else if(authentication.getRole_id() == 3){
 			authentication = new WorkerUnitManager(authentication.getId(), authentication.getName(), authentication.getUnit_id(), authentication.getPassword());
-		}else if (Authentication.isOfficerUnitManager()){
-			authentication = new Officer(authentication.getId(), authentication.getName(), authentication.getDepartment(), authentication.getUnit_id(), authentication.getPassword());
-		}else if (Authentication.isHRManager()){
+		}else if (authentication.getRole_id() == 4){
+			authentication = new OfficerUnitManager(authentication.getId(), authentication.getName(), authentication.getDepartment(), authentication.getUnit_id(), authentication.getPassword());
+		}else if (authentication.getRole_id() == 5){
 			authentication = new HRManager(authentication.getId(), authentication.getName(), authentication.getDepartment(), authentication.getUnit_id(), authentication.getPassword());
 		}
 
-	}
-
-	public static boolean isWorker() {
-		if (authentication.getRole_id() == 1){
-			return true;
-		}else return false;
-	}
-
-	public static boolean isOfficer() {
-		if (authentication.getRole_id() == 2){
-			return true;
-		}else return false;
-	}
-
-	public static boolean isWorkerUnitManager() {
-		if (authentication.getRole_id() == 3){
-			return true;
-		}else return false;
-	}
-
-	public static boolean isOfficerUnitManager() {
-		if (authentication.getRole_id() == 4){
-			return true;
-		}else return false;
-	}
-
-	public static boolean isHRManager() {
-		if (authentication.getRole_id() == 5){
-			return true;
-		}else return false;
 	}
 
 	public static void main(String[] args) {
