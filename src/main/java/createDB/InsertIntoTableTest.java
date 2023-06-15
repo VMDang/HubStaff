@@ -8,12 +8,12 @@ import model.employee.Employee;
 
 public class InsertIntoTableTest {
 	public static void main(String[] args) {
-		Employee nv = new Employee("nv11","Nguyen Duy Hung@11" ,"Van Phong","UN02", "170102",3);
-		EmployeeDAO.getInstance().update(nv);
-//		for(int i = 1 ; i <=10 ; i++) {
-//			Employee nv = new Employee("nv"+i,"Nguyen Duy Hung@" + i,"Van Phong","UN02", "170102",i%5+1);
-//			EmployeeDAO.getInstance().insert(nv);
-//		}
+//		Employee nv = new Employee("nv11","Nguyen Duy Hung@11" ,"Van Phong","UN02", "170102",3);
+//		EmployeeDAO.getInstance().update(nv);
+		for(int i = 1 ; i <=10 ; i++) {
+			Employee nv = new Employee("nv"+i,"Nguyen Duy Hung@" + i,"Van Phong","UN02", "170102",i%5+1);
+			EmployeeDAO.getInstance().insert(nv);
+		}
 //		
 //		ArrayList<Employee> allEmployees = EmployeeDAO.getInstance().selectAll(); 
 //		
