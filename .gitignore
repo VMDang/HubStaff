@@ -37,6 +37,7 @@ build/
 
 ### Intellji ###
 .idea/
+src/main/resources/
 
 ### Mac OS ###
 .DS_Store

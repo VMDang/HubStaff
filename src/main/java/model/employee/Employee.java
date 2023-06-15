@@ -11,14 +11,15 @@ public class Employee {
     public Employee() {
     	
     }
+  
     public Employee(String id, String name, String department, String unit_id, String password, int role_id) {
     	super();
-		this.id = id;
-		this.name = name;
-		this.department = department;
-		this.unit_id = unit_id;
-		this.password = password;
-		this.role_id = role_id;
+      this.id = id;
+      this.name = name;
+      this.department = department;
+      this.unit_id = unit_id;
+      this.password = password;
+      this.role_id = role_id;
 	}
 	public String getId() {
 		return id;
@@ -56,6 +57,4 @@ public class Employee {
 	public void setRole_id(int role_id) {
 		this.role_id = role_id;
 	}
-    
-    
 }
