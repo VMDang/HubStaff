@@ -11,6 +11,10 @@ import java.util.ArrayList;
 import database.JDBCUtil;
 
 public class GetAllEmployees implements IHRSystem<Employee>{
+	
+	public static GetAllEmployees getInstance() {
+		return new GetAllEmployees();
+	}
 
 	@Override
 	public Employee getAEmployee(String id) {

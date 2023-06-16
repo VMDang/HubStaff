@@ -8,9 +8,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import dao.EmployeeDAO;
 import database.JDBCUtil;
 
 public class GetAEmployee implements IHRSystem<Employee>{
+	
+	public static GetAEmployee getInstance() {
+		return new GetAEmployee();
+	}
+	
     @Override
     public Employee getAEmployee(String id) {
     	Employee nv = new Employee();

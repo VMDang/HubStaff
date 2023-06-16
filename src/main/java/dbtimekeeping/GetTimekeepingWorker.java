@@ -13,6 +13,10 @@ import database.JDBCUtil;
 import model.logtimekeeping.LogTimekeepingWorker;
 
 public class GetTimekeepingWorker implements IDBTimekeeping<LogTimekeepingWorker>{
+	
+	public static GetTimekeepingWorker getInstance() {
+		return new GetTimekeepingWorker();
+	}
     
 	@Override
 	public LogTimekeepingWorker getATimekeepingByID(String id) {
