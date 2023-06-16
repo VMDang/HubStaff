@@ -2,12 +2,44 @@ package hrsystem;
 
 import model.employee.Employee;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class GetAEmployee implements IHRSystem{
+import database.JDBCUtil;
+
+public class GetAEmployee implements IHRSystem<Employee>{
     @Override
     public Employee getAEmployee(String id) {
-        return null;
+    	Employee nv = new Employee();
+		try {
+			Connection con = JDBCUtil.getConnection();
+			
+			String sql = "SELECT * FROM Employees WHERE ID = '"+id+"';";
+			PreparedStatement st = con.prepareStatement(sql);
+				
+			ResultSet rs = st.executeQuery();
+			
+			while(rs.next()) {
+				String ID = rs.getString("ID");
+				String Name = rs.getString("Name");
+				String Department = rs.getString("Department");
+				String UnitId = rs.getString("UnitId");
+				String Password = rs.getString("Password");
+				int RoleId = rs.getInt("RoleId");
+			
+				nv = new Employee(ID, Name, Department, UnitId, Password, RoleId);
+			}
+			
+			JDBCUtil.closeConnection(con);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return nv;
     }
 
     @Override

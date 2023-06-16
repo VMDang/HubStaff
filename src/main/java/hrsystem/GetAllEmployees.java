@@ -2,16 +2,57 @@ package hrsystem;
 
 import model.employee.Employee;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
-public class GetAllEmployees implements IHRSystem{
-    @Override
-    public Employee getAEmployee(String id) {
-        return null;
-    }
+import database.JDBCUtil;
 
-    @Override
-    public ArrayList<Employee> getAllEmployees() {
-        return null;
-    }
+public class GetAllEmployees implements IHRSystem<Employee>{
+
+	@Override
+	public Employee getAEmployee(String id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+	@Override
+	public ArrayList<Employee> getAllEmployees() {
+		ArrayList<Employee> allEmployees = new ArrayList<Employee>();
+		try {
+			Connection con = JDBCUtil.getConnection();
+			
+			Statement st = con.createStatement();
+			
+			String sql = "SELECT * FROM Employees";
+			
+			System.out.println(sql);
+			
+			ResultSet rs = st.executeQuery(sql);
+			
+			while(rs.next()) {
+				String ID = rs.getString("ID");
+				String Name = rs.getString("Name");
+				String Department = rs.getString("Department");
+				String UnitId = rs.getString("UnitId");
+				String Password = rs.getString("Password");
+				int RoleId = rs.getInt("RoleId");
+				
+				Employee nv = new Employee(ID, Name, Department, UnitId, Password, RoleId);
+				allEmployees.add(nv);
+					
+			}
+		
+			JDBCUtil.closeConnection(con);
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return allEmployees;
+	}
+   
 }
