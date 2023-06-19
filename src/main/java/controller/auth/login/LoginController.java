@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.prefs.Preferences;
 
-import dao.EmployeeDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -17,6 +16,7 @@ import javafx.scene.control.TextField;
 import model.employee.Employee;
 import controller.auth.Authentication;
 import controller.layouts.LayoutController;
+import employee.services.EmployeeDAO;
 import model.employee.officer.Officer;
 import model.employee.worker.Worker;
 
