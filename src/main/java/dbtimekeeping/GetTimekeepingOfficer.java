@@ -64,7 +64,7 @@ public class GetTimekeepingOfficer implements IDBTimekeeping<LogTimekeepingOffic
 		try {
 			Connection con = JDBCUtil.getConnection();
 			
-			String sql = "SELECT * FROM LogTimekeepingOfficer WHERE ID =" + employeeID+";";
+			String sql = "SELECT * FROM LogTimekeepingOfficer WHERE EmployeeID = '" + employeeID+"';";
 			
 			PreparedStatement st = con.prepareStatement(sql);	
 			

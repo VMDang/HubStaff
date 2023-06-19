@@ -62,7 +62,7 @@ public class GetTimekeepingWorker implements IDBTimekeeping<LogTimekeepingWorker
 			
 			Statement st = con.createStatement();
 			
-			String sql = "SELECT * FROM LogTimekeepingWorker WHERE ID = " + employeeID +";";
+			String sql = "SELECT * FROM LogTimekeepingWorker WHERE EmployeeID = '" + employeeID +"';";
 			
 			System.out.println(sql);
 			

@@ -8,8 +8,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-import dao.EmployeeDAO;
 import database.JDBCUtil;
+import employee.services.EmployeeDAO;
 
 public class GetAEmployee implements IHRSystem<Employee>{
 	

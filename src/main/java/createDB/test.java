@@ -6,8 +6,8 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 
-import dao.LogTimekeepingOfficerDAO;
-import dao.LogTimekeepingWorkerDAO;
+import employee.services.LogTimekeepingOfficerDAO;
+import employee.services.LogTimekeepingWorkerDAO;
 public class test {
 	public static void main(String[] args) {
 		
