@@ -1,11 +1,13 @@
 package createDB;
 
+import model.logtimekeeping.LogTimekeepingOfficer;
 import model.logtimekeeping.LogTimekeepingWorker;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 
-import dao.LogTimekeepingWorkerDAO;
+import employee.services.LogTimekeepingOfficerDAO;
+import employee.services.LogTimekeepingWorkerDAO;
 public class test {
 	public static void main(String[] args) {
 		
@@ -31,6 +33,13 @@ public class test {
 //		for(LogTimekeepingWorker log : arr) {
 //			System.out.println(log.toString());
 //		}
+		
+		
+		
+		for(int i = 1; i<=10; i++) {
+			LogTimekeepingOfficer log = new LogTimekeepingOfficer("LOG"+i,"nv"+i,Date.valueOf("2023-01-03"),Time.valueOf("08:00:00"),Time.valueOf("18:12:00"), true, true, 0, 0);
+			LogTimekeepingOfficerDAO.getInstance().insert(log);
+		}
 		
 	}
 }

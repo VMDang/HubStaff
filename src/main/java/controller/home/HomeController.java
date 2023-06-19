@@ -20,6 +20,9 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+import model.employee.HRManager;
+import model.employee.officer.OfficerUnitManager;
+import model.employee.worker.WorkerUnitManager;
 
 import model.employee.HRManager;
 import model.employee.officer.OfficerUnitManager;
