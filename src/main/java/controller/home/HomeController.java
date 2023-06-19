@@ -9,6 +9,9 @@ import controller.layouts.LayoutController;
 import static controller.fxml.FxmlConstains.*;
 
 import javafx.animation.TranslateTransition;
+import javafx.animation.Timeline;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -17,6 +20,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
+
+import model.employee.HRManager;
+import model.employee.officer.OfficerUnitManager;
+import model.employee.worker.WorkerUnitManager;
 
 public class HomeController implements Initializable {
     private final LayoutController layout = new LayoutController();
@@ -70,10 +77,10 @@ public class HomeController implements Initializable {
     @FXML
     void switchToReport(MouseEvent event) throws IOException {
         highlightSidebar(reportBtn);
-        if (Authentication.isHRManager()){
+        if (Authentication.authentication instanceof HRManager){
             layout.changeAnchorPane(basePane, HRM_REPORT_SELECTION_VIEW);
         }
-        if (Authentication.isWorkerUnitManager()){
+        if (Authentication.authentication instanceof WorkerUnitManager){
             layout.changeAnchorPane(basePane, WUM_REPORT_SELECTION_VIEW);
         }
 
@@ -82,7 +89,7 @@ public class HomeController implements Initializable {
     @FXML
     void switchToImport(MouseEvent event) throws IOException {
         highlightSidebar(importBtn);
-        if (Authentication.isHRManager()){
+        if (Authentication.authentication instanceof  HRManager){
             layout.changeAnchorPane(basePane, IMPORT_SELECTION_VIEW);
         }
     }
@@ -94,15 +101,14 @@ public class HomeController implements Initializable {
             drawerPane.setTranslateX(0);
         } else {
             drawerPane.setTranslateX(-240);
-            basePane.setLayoutX(0);
         }
 		    drawerImage.setOnMouseClicked(event -> toggleDrawer());      
       
-        if(!Authentication.isHRManager()) {
+        if(!(Authentication.authentication instanceof  HRManager)) {
             importBtn.setVisible(false);
         }
 
-        if (!(Authentication.isHRManager() || Authentication.isWorkerUnitManager() || Authentication.isOfficerUnitManager())){
+        if (!(Authentication.authentication instanceof HRManager || Authentication.authentication instanceof WorkerUnitManager || Authentication.authentication instanceof OfficerUnitManager)){
             reportBtn.setVisible(false);
         }
         usernameLabel.setText(Authentication.authentication.getName());
@@ -127,6 +133,21 @@ public class HomeController implements Initializable {
         transition.play();
 
         isDrawerOpen = !isDrawerOpen;
+        
+        double basePaneWidth = basePane.getWidth();
+        double basePaneHeight = basePane.getHeight();
+        double targetWidth = isDrawerOpen ? basePaneWidth - 240 : basePaneWidth + 240;
+        double targetHeight = isDrawerOpen ? basePaneHeight - 0 : basePaneHeight + 0;
+
+        Timeline widthTimeline = new Timeline();
+        KeyFrame widthFrame = new KeyFrame(Duration.millis(200), new KeyValue(basePane.prefWidthProperty(), targetWidth));
+        widthTimeline.getKeyFrames().add(widthFrame);
+        widthTimeline.play();
+
+        Timeline heightTimeline = new Timeline();
+        KeyFrame heightFrame = new KeyFrame(Duration.millis(200), new KeyValue(basePane.prefHeightProperty(), targetHeight));
+        heightTimeline.getKeyFrames().add(heightFrame);
+        heightTimeline.play();
     }
     
 }
