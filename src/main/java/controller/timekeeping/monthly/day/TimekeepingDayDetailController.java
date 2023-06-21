@@ -1,4 +1,4 @@
-package controller.timekeeping.monthly;
+package controller.timekeeping.monthly.day;
 
 import java.net.URL;
 import java.sql.Time;

@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import controller.auth.Authentication;
+import controller.timekeeping.monthly.day.TimekeepingDayDetailController;
 import dbtimekeeping.GetTimekeepingOfficer;
 import dbtimekeeping.GetTimekeepingWorker;
 import javafx.collections.FXCollections;
@@ -136,7 +137,6 @@ public class MonthlyTimekeepingController implements Initializable {
     	statusCol.setCellValueFactory(new PropertyValueFactory<TimekeepingEmployeeTableRow,String>("status"));
     	
     	tableTimekeepingMonth.setItems(LogTimekeepingMonthList);
-    	
     	
     	total_day_workCol.setCellValueFactory(new PropertyValueFactory<genaralTableRow,Integer>("total_day_work"));
     	total_hour_workCol.setCellValueFactory(new PropertyValueFactory<genaralTableRow,Float>("total_hour_work"));
@@ -292,7 +292,7 @@ public class MonthlyTimekeepingController implements Initializable {
 			total_hour_work += r.getHour_work();
 			total_overtime += r.getOvertime();
 		}
-		salary = (int) Math.round(70000*(total_hour_work - total_overtime) + 100000*total_overtime);
+		salary = (int) Math.round(30000*(total_hour_work - total_overtime) + 60000*total_overtime);
 		return new genaralTableRow(total_day_work, total_hour_work, total_overtime, salary);
 	}
 }
