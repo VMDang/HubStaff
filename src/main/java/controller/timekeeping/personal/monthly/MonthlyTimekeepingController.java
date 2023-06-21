@@ -1,4 +1,4 @@
-package controller.timekeeping.monthly;
+package controller.timekeeping.personal.monthly;
 
 import static controller.fxml.FxmlConstains.TIMEKEEPING_DAY_DETAIL_VIEW;
 import java.io.IOException;
@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import controller.auth.Authentication;
-import controller.timekeeping.monthly.day.TimekeepingDayDetailController;
+import controller.timekeeping.personal.monthly.day.TimekeepingDayDetailController;
 import dbtimekeeping.GetTimekeepingOfficer;
 import dbtimekeeping.GetTimekeepingWorker;
 import javafx.collections.FXCollections;

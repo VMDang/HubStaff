@@ -1,4 +1,4 @@
-package controller.timekeeping.monthly;
+package controller.timekeeping.personal.monthly;
 
 import java.sql.Date;
 import java.sql.Time;

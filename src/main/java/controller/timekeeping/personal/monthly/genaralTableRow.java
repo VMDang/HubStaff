@@ -1,4 +1,4 @@
-package controller.timekeeping.monthly;
+package controller.timekeeping.personal.monthly;
 
 public class genaralTableRow {
 	private int total_day_work;
