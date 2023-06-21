@@ -16,6 +16,7 @@ public class LogTimekeepingWorker extends LogTimekeeping{
 		this.shift2 = shift2;
 		this.shift3 = shift3;
 	}
+	
 	public float getShift1() {
 		return shift1;
 	}
