@@ -9,4 +9,15 @@ public class Worker extends Employee {
 		this.department = "Factory";
 	}
 
+	@Override
+	public String toString() {
+		return "Worker{" +
+				"id='" + id + '\'' +
+				", name='" + name + '\'' +
+				", department='" + department + '\'' +
+				", unit_id='" + unit_id + '\'' +
+				", password='" + password + '\'' +
+				", role_id=" + role_id +
+				'}';
+	}
 }
