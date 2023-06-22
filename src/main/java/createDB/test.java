@@ -37,8 +37,8 @@ public class test {
 		
 		
 		for(int i = 1; i<=10; i++) {
-			LogTimekeepingOfficer log = new LogTimekeepingOfficer("LOG"+i,"nv"+i,Date.valueOf("2023-01-03"),Time.valueOf("08:00:00"),Time.valueOf("18:12:00"), true, true, 0, 0);
-			LogTimekeepingOfficerDAO.getInstance().insert(log);
+			LogTimekeepingWorker log = new LogTimekeepingWorker("LOG"+i+99,"nv10",Date.valueOf("2023-01-03"),Time.valueOf("08:00:00"),Time.valueOf("18:12:00"), 4, 4, 4);
+			LogTimekeepingWorkerDAO.getInstance().insert(log);
 		}
 		
 	}
