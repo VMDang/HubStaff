@@ -21,34 +21,33 @@ import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 import java.util.ResourceBundle;
 
 public class WUMWorkerUnitReportController implements Initializable {
-    private ObservableList<WUMWorkerUnitReportRecord> listRecord = FXCollections.observableArrayList();
+    private ObservableList<WUMWorkerUnitReportRow> listRecord = FXCollections.observableArrayList();
 
     private HashMap<String, Worker> currentWorkers = new HashMap<String, Worker>();
 
     @FXML
-    private TableView<WUMWorkerUnitReportRecord> tableReport;
+    private TableView<WUMWorkerUnitReportRow> tableReport;
 
     @FXML
-    private TableColumn<WUMWorkerUnitReportRecord, Integer> index;
+    private TableColumn<WUMWorkerUnitReportRow, Integer> index;
 
     @FXML
-    private TableColumn<WUMWorkerUnitReportRecord, String > worker_id;
+    private TableColumn<WUMWorkerUnitReportRow, String > worker_id;
 
     @FXML
-    private TableColumn<WUMWorkerUnitReportRecord, String> name;
+    private TableColumn<WUMWorkerUnitReportRow, String> name;
 
     @FXML
-    private TableColumn<WUMWorkerUnitReportRecord, String> hoursOT;
+    private TableColumn<WUMWorkerUnitReportRow, String> hoursOT;
 
     @FXML
-    private TableColumn<WUMWorkerUnitReportRecord, String> hoursWork;
+    private TableColumn<WUMWorkerUnitReportRow, String> hoursWork;
 
     @FXML
-    private TableColumn<WUMWorkerUnitReportRecord, YearMonth> month;
+    private TableColumn<WUMWorkerUnitReportRow, YearMonth> month;
 
     @FXML
     private Button btnSearch;
@@ -116,11 +115,11 @@ public class WUMWorkerUnitReportController implements Initializable {
 
         index.setCellValueFactory(index -> new ReadOnlyObjectWrapper<Integer>(tableReport.getItems().indexOf(index.getValue())+1));
         index.setSortable(false);
-        worker_id.setCellValueFactory(new PropertyValueFactory<WUMWorkerUnitReportRecord, String>("workerID"));
-        name.setCellValueFactory(new PropertyValueFactory<WUMWorkerUnitReportRecord, String>("name"));
-        month.setCellValueFactory(new PropertyValueFactory<WUMWorkerUnitReportRecord, YearMonth>("month"));
-        hoursWork.setCellValueFactory(new PropertyValueFactory<WUMWorkerUnitReportRecord, String>("hoursWork"));
-        hoursOT.setCellValueFactory(new PropertyValueFactory<WUMWorkerUnitReportRecord, String>("hoursOT"));
+        worker_id.setCellValueFactory(new PropertyValueFactory<WUMWorkerUnitReportRow, String>("workerID"));
+        name.setCellValueFactory(new PropertyValueFactory<WUMWorkerUnitReportRow, String>("name"));
+        month.setCellValueFactory(new PropertyValueFactory<WUMWorkerUnitReportRow, YearMonth>("month"));
+        hoursWork.setCellValueFactory(new PropertyValueFactory<WUMWorkerUnitReportRow, String>("hoursWork"));
+        hoursOT.setCellValueFactory(new PropertyValueFactory<WUMWorkerUnitReportRow, String>("hoursOT"));
 
         tableReport.setItems(listRecord);
     }
@@ -155,7 +154,7 @@ public class WUMWorkerUnitReportController implements Initializable {
                     hoursOT = String.valueOf(totalHoursOT) + " / " + String.valueOf(logTimekeepingByMonth.size()*4);
                 }
 
-                listRecord.add(new WUMWorkerUnitReportRecord(w.getId(), w.getName(), monthFilter, hoursWork, hoursOT));
+                listRecord.add(new WUMWorkerUnitReportRow(w.getId(), w.getName(), monthFilter, hoursWork, hoursOT));
             }
         }
     }

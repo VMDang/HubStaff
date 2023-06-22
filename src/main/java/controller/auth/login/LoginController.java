@@ -1,13 +1,8 @@
 package controller.auth.login;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.prefs.Preferences;
 
+import hrsystem.GetAEmployee;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 
@@ -16,11 +11,8 @@ import javafx.scene.control.TextField;
 import model.employee.Employee;
 import controller.auth.Authentication;
 import controller.layouts.LayoutController;
-import employee.services.EmployeeDAO;
-import model.employee.officer.Officer;
-import model.employee.worker.Worker;
 
-import static controller.fxml.FxmlConstains.*;
+import static assets.navigation.FXMLNavigation.*;
 
 public class LoginController {
     @FXML
@@ -36,7 +28,9 @@ public class LoginController {
             validate.setText("Vui lòng nhập đủ mã nhân viên và mật khẩu");
             validate.setVisible(true);
         }   else {
-            Employee employee = EmployeeDAO.getInstance().selectById(Id);
+
+            Employee employee = GetAEmployee.getInstance().getAEmployee(Id);
+
             if (employee.getPassword().equals(Password)){
                     Authentication.setAuthentication(employee);
                     LayoutController layout = new LayoutController();

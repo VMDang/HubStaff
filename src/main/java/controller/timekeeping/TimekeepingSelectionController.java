@@ -3,7 +3,7 @@ package controller.timekeeping;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
-import static controller.fxml.FxmlConstains.*;
+import static assets.navigation.FXMLNavigation.*;
 
 import java.io.IOException;
 

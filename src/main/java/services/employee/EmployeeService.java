@@ -1,4 +1,4 @@
-package employee.services;
+package services.employee;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -9,11 +9,12 @@ import java.util.ArrayList;
 
 import database.JDBCUtil;
 import model.employee.Employee;
+import services.IService;
 
-public class EmployeeDAO implements DAOInterface<Employee>{
+public class EmployeeService implements IService<Employee> {
 	
-	public static EmployeeDAO getInstance() {
-		return new EmployeeDAO();
+	public static EmployeeService getInstance() {
+		return new EmployeeService();
 	}
 
 	@Override

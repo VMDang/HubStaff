@@ -1,8 +1,6 @@
 package createDB;
 
-import java.util.ArrayList;
-
-import employee.services.EmployeeDAO;
+import services.employee.EmployeeService;
 import model.employee.Employee;
 
 
@@ -12,7 +10,7 @@ public class InsertIntoTableTest {
 //		EmployeeDAO.getInstance().update(nv);
 		for(int i = 1 ; i <=10 ; i++) {
 			Employee nv = new Employee("nv10","Nguyen Duy Hung@10" ,"Van Phong","UN02", "170102",i%5+1);
-			EmployeeDAO.getInstance().insert(nv);
+			EmployeeService.getInstance().insert(nv);
 		}
 //		
 //		ArrayList<Employee> allEmployees = EmployeeDAO.getInstance().selectAll(); 

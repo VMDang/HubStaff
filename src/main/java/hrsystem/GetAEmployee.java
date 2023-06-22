@@ -9,7 +9,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import database.JDBCUtil;
-import employee.services.EmployeeDAO;
 
 public class GetAEmployee implements IHRSystem<Employee>{
 	

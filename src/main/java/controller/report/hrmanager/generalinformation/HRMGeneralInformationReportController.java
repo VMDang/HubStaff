@@ -1,10 +1,8 @@
-package controller.report.hrmanager.general;
+package controller.report.hrmanager.generalinformation;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-import dbtimekeeping.GetTimekeepingOfficer;
-import dbtimekeeping.GetTimekeepingWorker;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,7 +12,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 
-public class GeneralInformationController implements Initializable {
+public class HRMGeneralInformationReportController implements Initializable {
     @FXML
     private RadioButton allBtn;
 

@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import static controller.fxml.FxmlConstains.*;
+import static assets.navigation.FXMLNavigation.*;
 
 import java.io.IOException;
 
@@ -41,6 +41,6 @@ public class HRMReportSelectionController {
     
     @FXML
     void switchToGeneralInfo(MouseEvent event) throws IOException {
-    	layout.changeAnchorPane(basePane, GENERAL_INFOMATION_VIEW);
+    	layout.changeAnchorPane(basePane, GENERAL_INFORMATION_VIEW);
     }
 }
