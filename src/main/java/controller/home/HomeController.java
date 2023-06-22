@@ -38,6 +38,9 @@ public class HomeController implements Initializable {
 
     @FXML
     private Pane reportBtn;
+    
+    @FXML
+    private Pane generalInfoBtn;
 
     @FXML
     private AnchorPane basePane;

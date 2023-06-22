@@ -11,5 +11,6 @@ public class FxmlConstains {
 	public static String TIMEKEEPING_DAY_DETAIL_VIEW = "/controller/timekeeping/personal/monthly/day/timekeeping_day_detail_view.fxml";
 
 	public static String WUM_WORKER_UNIT_REPORT_VIEW = "/controller/report/unitmanager/workerunitreport/WUM_worker_unit_report.fxml";
+	public static String GENERAL_INFOMATION_VIEW = "/controller/report/hrmanager/general/general_infomation_view.fxml";
 
 }
