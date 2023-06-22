@@ -134,5 +134,4 @@ public class GetTimekeepingOfficer implements IDBTimekeeping<LogTimekeepingOffic
 		}
 		return allLogTimekeepingOfficers;
 	}
-    
 }
