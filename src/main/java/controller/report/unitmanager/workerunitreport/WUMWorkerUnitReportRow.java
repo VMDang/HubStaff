@@ -2,14 +2,14 @@ package controller.report.unitmanager.workerunitreport;
 
 import java.lang.String;
 
-public class WUMWorkerUnitReportRecord {
+public class WUMWorkerUnitReportRow {
     private String workerID;
     private String name;
     private String month;
     private String hoursWork;
     private String hoursOT;
 
-    public WUMWorkerUnitReportRecord(String workerID, String name, String month, String hoursWork, String hoursOT) {
+    public WUMWorkerUnitReportRow(String workerID, String name, String month, String hoursWork, String hoursOT) {
         this.workerID = workerID;
         this.name = name;
         this.month = month;
@@ -59,7 +59,7 @@ public class WUMWorkerUnitReportRecord {
 
     @Override
     public String toString() {
-        return "WUMWorkerUnitReportRecord{" +
+        return "WUMWorkerUnitReportRow{" +
                 "workerID='" + workerID + '\'' +
                 ", name='" + name + '\'' +
                 ", month=" + month +

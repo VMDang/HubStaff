@@ -1,4 +1,4 @@
-package controller.report.hrmanager.general;
+package controller.report.hrmanager.generalinformation;
 
 import java.util.Date;
 import java.text.SimpleDateFormat;

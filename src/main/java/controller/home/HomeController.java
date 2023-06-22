@@ -6,7 +6,7 @@ import java.util.ResourceBundle;
 
 import controller.auth.Authentication;
 import controller.layouts.LayoutController;
-import static controller.fxml.FxmlConstains.*;
+import static assets.navigation.FXMLNavigation.*;
 
 import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;

@@ -6,8 +6,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -18,46 +16,39 @@ import javafx.stage.Stage;
 import model.employee.Employee;
 import model.logtimekeeping.LogTimekeepingOfficer;
 import model.logtimekeeping.LogTimekeepingWorker;
-import model.logtimekeeping.LogTimekeeping;
 
-import java.awt.TextField;
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
-import java.util.ResourceBundle;
-
-import com.mysql.cj.xdevapi.Table;
 
 import dbtimekeeping.GetTimekeepingOfficer;
 import dbtimekeeping.GetTimekeepingWorker;
-import employee.services.LogTimekeepingOfficerDAO;
-import employee.services.LogTimekeepingWorkerDAO;
+import services.logtimekeeping.LogTimekeepingOfficerService;
+import services.logtimekeeping.LogTimekeepingWorkerService;
 import hrsystem.GetAEmployee;
 public class ExcelImportController  {
-	List<ChamCong> chamCongs;
+	List<ExcelImportRow> excelImportRows;
 	
 	@FXML
-	private TableView<ChamCong> table;
+	private TableView<ExcelImportRow> table;
 	@FXML
-	private TableColumn<ChamCong,Integer> idColumn;
+	private TableColumn<ExcelImportRow,Integer> idColumn;
 	@FXML
-	private TableColumn<ChamCong,String> employee_idColumn;
+	private TableColumn<ExcelImportRow,String> employee_idColumn;
 	@FXML
-	private TableColumn<ChamCong,String> dateColumn;
+	private TableColumn<ExcelImportRow,String> dateColumn;
 	@FXML
-	private TableColumn<ChamCong,String> time_inColumn;
+	private TableColumn<ExcelImportRow,String> time_inColumn;
 	@FXML
-	private TableColumn<ChamCong,String> time_outColumn;
+	private TableColumn<ExcelImportRow,String> time_outColumn;
 	@FXML
-	private TableColumn<ChamCong, String> nameColumn;
+	private TableColumn<ExcelImportRow, String> nameColumn;
 	@FXML
-	private TableColumn<ChamCong, String> statusColumn;
-	private ObservableList<ChamCong> chamCongList;	
+	private TableColumn<ExcelImportRow, String> statusColumn;
+	private ObservableList<ExcelImportRow> excelImportRowList;
 	@FXML
 	private AnchorPane basePane;
 	@FXML
@@ -90,24 +81,24 @@ public class ExcelImportController  {
 		 try {
 			  if (url==null)return;
 			  String excelFilePath = url;
-			  chamCongs = ReadExcelExample.readExcel(excelFilePath);
+			  excelImportRows = ReadExcel.readExcel(excelFilePath);
 			 
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			
 		}
-		for (ChamCong chamCong : chamCongs) {
-			Employee employee1 = GetAEmployee.getInstance().getAEmployee(chamCong.getEmployee_id());
+		for (ExcelImportRow excelImportRow : excelImportRows) {
+			Employee employee1 = GetAEmployee.getInstance().getAEmployee(excelImportRow.getEmployee_id());
 			if (employee1!=null) {
-				chamCong.setName(employee1.getName());
-				chamCong.setRole_id(employee1.getRole_id());
-				if(chamCong.getRole_id()==5) {
-					chamCong.setStatus("Failed"); 
+				excelImportRow.setName(employee1.getName());
+				excelImportRow.setRole_id(employee1.getRole_id());
+				if(excelImportRow.getRole_id()==5) {
+					excelImportRow.setStatus("Failed");
 				}
 			}
 			else {
-				chamCong.setStatus("Failed");
+				excelImportRow.setStatus("Failed");
 			}
 			
 		}
@@ -115,58 +106,58 @@ public class ExcelImportController  {
 		Integer count_log_office=Log1.size();
 		ArrayList<LogTimekeepingWorker> Log2 = GetTimekeepingWorker.getInstance().getAllTimekeepings();
 		Integer count_log_worker=Log2.size();
-		for (ChamCong chamCong : chamCongs) {
-			if(chamCong.getStatus()==null) {
-				if(chamCong.getRole_id()==2||chamCong.getRole_id()==4) {
-					ArrayList<LogTimekeepingOfficer> officers = GetTimekeepingOfficer.getInstance().getTimekeepingsByEmployeeID(chamCong.getEmployee_id());
+		for (ExcelImportRow excelImportRow : excelImportRows) {
+			if(excelImportRow.getStatus()==null) {
+				if(excelImportRow.getRole_id()==2|| excelImportRow.getRole_id()==4) {
+					ArrayList<LogTimekeepingOfficer> officers = GetTimekeepingOfficer.getInstance().getTimekeepingsByEmployeeID(excelImportRow.getEmployee_id());
 					if(officers.isEmpty()==true) {
-						chamCong.setStatus("Sucess");
+						excelImportRow.setStatus("Sucess");
 						LogTimekeepingOfficer newlog = new LogTimekeepingOfficer();
 						newlog.setLogID("log"+count_log_office.toString());
 						count_log_office++;
-						newlog.setTime_in(Time.valueOf(chamCong.getTime_in()));
-						newlog.setTime_out(Time.valueOf(chamCong.getTime_out()));
-						newlog.setDate(Date.valueOf(chamCong.getDate()));
-						newlog.setEmployee_id(chamCong.getEmployee_id());
-						if(Time.valueOf(chamCong.getTime_in()).compareTo(Time.valueOf("12:00:00")) < 0 ) {
+						newlog.setTime_in(Time.valueOf(excelImportRow.getTime_in()));
+						newlog.setTime_out(Time.valueOf(excelImportRow.getTime_out()));
+						newlog.setDate(Date.valueOf(excelImportRow.getDate()));
+						newlog.setEmployee_id(excelImportRow.getEmployee_id());
+						if(Time.valueOf(excelImportRow.getTime_in()).compareTo(Time.valueOf("12:00:00")) < 0 ) {
 							newlog.setMorning(true);
 						}
 						else {
 							newlog.setMorning(false);
 						}
-						if(Time.valueOf(chamCong.getTime_out()).compareTo(Time.valueOf("12:00:00")) > 0 ) {
+						if(Time.valueOf(excelImportRow.getTime_out()).compareTo(Time.valueOf("12:00:00")) > 0 ) {
 							newlog.setAfternoon(true);
 						}
 						else {
 							newlog.setAfternoon(false);
 						}
-						if(Time.valueOf(chamCong.getTime_in()).compareTo(Time.valueOf("07:30:00")) <= 0 ) {
+						if(Time.valueOf(excelImportRow.getTime_in()).compareTo(Time.valueOf("07:30:00")) <= 0 ) {
 							newlog.setHour_late(0);
 						}
 						else {
-							Time time1 = Time.valueOf(chamCong.getTime_in());
+							Time time1 = Time.valueOf(excelImportRow.getTime_in());
 							Time time2 = Time.valueOf("07:30:00");
 							Long k = time1.getTime()-time2.getTime();
 							newlog.setHour_late(k/3600000);
 						}
-						if(Time.valueOf(chamCong.getTime_out()).compareTo(Time.valueOf("17:00:00")) >= 0 ) {
+						if(Time.valueOf(excelImportRow.getTime_out()).compareTo(Time.valueOf("17:00:00")) >= 0 ) {
 							newlog.setHour_early(0);
 						}
 						else {
-							Time time1 = Time.valueOf(chamCong.getTime_out());
+							Time time1 = Time.valueOf(excelImportRow.getTime_out());
 							Time time2 = Time.valueOf("17:00:00");
 							Long k = time2.getTime()-time1.getTime();
 							newlog.setHour_early(k/3600000);
 						}
-						LogTimekeepingOfficerDAO.getInstance().insert(newlog);
+						LogTimekeepingOfficerService.getInstance().insert(newlog);
 						continue;
 						
 						
 					}
 					int check=1;
 					for (LogTimekeepingOfficer officer : officers) {
-						if (officer.getDate().compareTo(Date.valueOf(chamCong.getDate()))==0) {
-							chamCong.setStatus("duplicate");
+						if (officer.getDate().compareTo(Date.valueOf(excelImportRow.getDate()))==0) {
+							excelImportRow.setStatus("duplicate");
 							check=-1;
 							break;
 						}
@@ -177,61 +168,61 @@ public class ExcelImportController  {
 					}
 				  if(check==-1) continue;
 				  else {
-					  chamCong.setStatus("Sucess");
+					  excelImportRow.setStatus("Sucess");
 						LogTimekeepingOfficer newlog = new LogTimekeepingOfficer();
 						newlog.setLogID("log"+count_log_office.toString());
 						count_log_office++;
-						newlog.setTime_in(Time.valueOf(chamCong.getTime_in()));
-						newlog.setTime_out(Time.valueOf(chamCong.getTime_out()));
-						newlog.setDate(Date.valueOf(chamCong.getDate()));
-						newlog.setEmployee_id(chamCong.getEmployee_id());
-						if(Time.valueOf(chamCong.getTime_in()).compareTo(Time.valueOf("12:00:00")) < 0 ) {
+						newlog.setTime_in(Time.valueOf(excelImportRow.getTime_in()));
+						newlog.setTime_out(Time.valueOf(excelImportRow.getTime_out()));
+						newlog.setDate(Date.valueOf(excelImportRow.getDate()));
+						newlog.setEmployee_id(excelImportRow.getEmployee_id());
+						if(Time.valueOf(excelImportRow.getTime_in()).compareTo(Time.valueOf("12:00:00")) < 0 ) {
 							newlog.setMorning(true);
 						}
 						else {
 							newlog.setMorning(false);
 						}
-						if(Time.valueOf(chamCong.getTime_out()).compareTo(Time.valueOf("12:00:00")) > 0 ) {
+						if(Time.valueOf(excelImportRow.getTime_out()).compareTo(Time.valueOf("12:00:00")) > 0 ) {
 							newlog.setAfternoon(true);
 						}
 						else {
 							newlog.setAfternoon(false);
 						}
-						if(Time.valueOf(chamCong.getTime_in()).compareTo(Time.valueOf("07:30:00")) <= 0 ) {
+						if(Time.valueOf(excelImportRow.getTime_in()).compareTo(Time.valueOf("07:30:00")) <= 0 ) {
 							newlog.setHour_late(0);
 						}
 						else {
-							Time time1 = Time.valueOf(chamCong.getTime_in());
+							Time time1 = Time.valueOf(excelImportRow.getTime_in());
 							Time time2 = Time.valueOf("07:30:00");
 							Long k = time1.getTime()-time2.getTime();
 							newlog.setHour_late(k/3600000);
 						}
-						if(Time.valueOf(chamCong.getTime_out()).compareTo(Time.valueOf("17:00:00")) >= 0 ) {
+						if(Time.valueOf(excelImportRow.getTime_out()).compareTo(Time.valueOf("17:00:00")) >= 0 ) {
 							newlog.setHour_early(0);
 						}
 						else {
-							Time time1 = Time.valueOf(chamCong.getTime_out());
+							Time time1 = Time.valueOf(excelImportRow.getTime_out());
 							Time time2 = Time.valueOf("17:00:00");
 							Long k = time2.getTime()-time1.getTime();
 							newlog.setHour_early(k/3600000);
 						}
-						LogTimekeepingOfficerDAO.getInstance().insert(newlog);
+						LogTimekeepingOfficerService.getInstance().insert(newlog);
 						continue;
 				  }
 				}
 				else {
-					ArrayList<LogTimekeepingWorker> workers = GetTimekeepingWorker.getInstance().getTimekeepingsByEmployeeID(chamCong.getEmployee_id());
+					ArrayList<LogTimekeepingWorker> workers = GetTimekeepingWorker.getInstance().getTimekeepingsByEmployeeID(excelImportRow.getEmployee_id());
 					if(workers.isEmpty()==true) {
-						chamCong.setStatus("Sucess");
+						excelImportRow.setStatus("Sucess");
 						LogTimekeepingWorker newlog = new LogTimekeepingWorker();
 						newlog.setLogID("log"+count_log_worker.toString());
 						count_log_worker++;
-						newlog.setTime_in(Time.valueOf(chamCong.getTime_in()));
-						newlog.setTime_out(Time.valueOf(chamCong.getTime_out()));
-						newlog.setDate(Date.valueOf(chamCong.getDate()));
-						newlog.setEmployee_id(chamCong.getEmployee_id());
-						Time time1 = Time.valueOf(chamCong.getTime_in());
-						Time time2 = Time.valueOf(chamCong.getTime_out());
+						newlog.setTime_in(Time.valueOf(excelImportRow.getTime_in()));
+						newlog.setTime_out(Time.valueOf(excelImportRow.getTime_out()));
+						newlog.setDate(Date.valueOf(excelImportRow.getDate()));
+						newlog.setEmployee_id(excelImportRow.getEmployee_id());
+						Time time1 = Time.valueOf(excelImportRow.getTime_in());
+						Time time2 = Time.valueOf(excelImportRow.getTime_out());
 						Long k = time2.getTime()-time1.getTime();
 						k=k/3600000;
 						if(k<4) {
@@ -249,15 +240,15 @@ public class ExcelImportController  {
 							newlog.setShift2(4);
 							newlog.setShift3(k-8);
 						}
-						LogTimekeepingWorkerDAO.getInstance().insert(newlog);
+						LogTimekeepingWorkerService.getInstance().insert(newlog);
 						continue;
 						
 						
 					}
 					int check=1;
 					for (LogTimekeepingWorker worker : workers) {
-						if (worker.getDate().compareTo(Date.valueOf(chamCong.getDate()))==0) {
-							chamCong.setStatus("duplicate");
+						if (worker.getDate().compareTo(Date.valueOf(excelImportRow.getDate()))==0) {
+							excelImportRow.setStatus("duplicate");
 							check=-1;
 							break;
 						}
@@ -268,16 +259,16 @@ public class ExcelImportController  {
 					}
 				  if(check==-1) continue;
 				  else {
-					  chamCong.setStatus("Sucess");
+					  excelImportRow.setStatus("Sucess");
 						LogTimekeepingWorker newlog = new LogTimekeepingWorker();
 						newlog.setLogID("log"+count_log_worker.toString());
 						count_log_worker++;
-						newlog.setTime_in(Time.valueOf(chamCong.getTime_in()));
-						newlog.setTime_out(Time.valueOf(chamCong.getTime_out()));
-						newlog.setDate(Date.valueOf(chamCong.getDate()));
-						newlog.setEmployee_id(chamCong.getEmployee_id());
-						Time time1 = Time.valueOf(chamCong.getTime_in());
-						Time time2 = Time.valueOf(chamCong.getTime_out());
+						newlog.setTime_in(Time.valueOf(excelImportRow.getTime_in()));
+						newlog.setTime_out(Time.valueOf(excelImportRow.getTime_out()));
+						newlog.setDate(Date.valueOf(excelImportRow.getDate()));
+						newlog.setEmployee_id(excelImportRow.getEmployee_id());
+						Time time1 = Time.valueOf(excelImportRow.getTime_in());
+						Time time2 = Time.valueOf(excelImportRow.getTime_out());
 						Long k = time2.getTime()-time1.getTime();
 						k = k/3600000;
 						if(k<4) {
@@ -295,20 +286,20 @@ public class ExcelImportController  {
 							newlog.setShift2(4);
 							newlog.setShift3(k-8);
 						}
-						LogTimekeepingWorkerDAO.getInstance().insert(newlog);
+						LogTimekeepingWorkerService.getInstance().insert(newlog);
 						}
 				  }
 				}
 		}
-	    chamCongList = FXCollections.observableArrayList(chamCongs);
-		idColumn.setCellValueFactory(new PropertyValueFactory<ChamCong, Integer>("id"));
-		employee_idColumn.setCellValueFactory(new PropertyValueFactory<ChamCong, String>("employee_id"));
-		dateColumn.setCellValueFactory(new PropertyValueFactory<ChamCong, String>("date"));
-		time_inColumn.setCellValueFactory(new PropertyValueFactory<ChamCong, String>("time_in"));
-		time_outColumn.setCellValueFactory(new PropertyValueFactory<ChamCong, String>("time_out"));
-		nameColumn.setCellValueFactory(new PropertyValueFactory<ChamCong, String>("name") );
-		statusColumn.setCellValueFactory(new PropertyValueFactory<ChamCong, String>("status"));
-		table.setItems(chamCongList);
+	    excelImportRowList = FXCollections.observableArrayList(excelImportRows);
+		idColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, Integer>("id"));
+		employee_idColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("employee_id"));
+		dateColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("date"));
+		time_inColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("time_in"));
+		time_outColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("time_out"));
+		nameColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("name") );
+		statusColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("status"));
+		table.setItems(excelImportRowList);
 	
 	
 	}	

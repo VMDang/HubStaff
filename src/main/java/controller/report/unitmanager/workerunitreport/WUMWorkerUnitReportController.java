@@ -17,45 +17,49 @@ import model.logtimekeeping.LogTimekeepingWorker;
 
 import java.net.URL;
 import java.time.LocalDate;
-import java.time.Month;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Date;
+import java.util.HashMap;
 import java.util.ResourceBundle;
 
 public class WUMWorkerUnitReportController implements Initializable {
-    private ObservableList<WUMWorkerUnitReportRecord> listRecord = FXCollections.observableArrayList();
+    private ObservableList<WUMWorkerUnitReportRow> listRecord = FXCollections.observableArrayList();
+
+    private HashMap<String, Worker> currentWorkers = new HashMap<String, Worker>();
 
     @FXML
-    private TableView<WUMWorkerUnitReportRecord> tableReport;
+    private TableView<WUMWorkerUnitReportRow> tableReport;
 
     @FXML
-    private TableColumn<WUMWorkerUnitReportRecord, Integer> index;
+    private TableColumn<WUMWorkerUnitReportRow, Integer> index;
 
     @FXML
-    private TableColumn<WUMWorkerUnitReportRecord, String > worker_id;
+    private TableColumn<WUMWorkerUnitReportRow, String > worker_id;
 
     @FXML
-    private TableColumn<WUMWorkerUnitReportRecord, String> name;
+    private TableColumn<WUMWorkerUnitReportRow, String> name;
 
     @FXML
-    private TableColumn<WUMWorkerUnitReportRecord, String> hoursOT;
+    private TableColumn<WUMWorkerUnitReportRow, String> hoursOT;
 
     @FXML
-    private TableColumn<WUMWorkerUnitReportRecord, String> hoursWork;
+    private TableColumn<WUMWorkerUnitReportRow, String> hoursWork;
 
     @FXML
-    private TableColumn<WUMWorkerUnitReportRecord, YearMonth> month;
+    private TableColumn<WUMWorkerUnitReportRow, YearMonth> month;
 
     @FXML
-    private Label monthSelected;
+    private Button btnSearch;
 
     @FXML
-    private Button resetPage;
+    private Button btnReloadPage;
 
     @FXML
-    private DatePicker searchByMonth;
+    private ChoiceBox<String> chooseMonth;
+
+    @FXML
+    private ChoiceBox<String> chooseYear;
 
     @FXML
     private Label countWorkers;
@@ -69,10 +73,13 @@ public class WUMWorkerUnitReportController implements Initializable {
     @FXML
     private Label wum_name;
 
+    String[] listMonth = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+    String[] listYear = {"2023", "2022", "2021", "2020"};
+
     @FXML
-    void resetPage(ActionEvent event) {
-        searchByMonth.setValue(LocalDate.now());
-        monthSelected.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("MM/yyyy")));
+    void reloadPage(ActionEvent event) {
+        chooseMonth.setValue(LocalDate.now().format(DateTimeFormatter.ofPattern("MM")));
+        chooseYear.setValue(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
 
         listRecord.removeAll();
         tableReport.getItems().clear();
@@ -82,55 +89,60 @@ public class WUMWorkerUnitReportController implements Initializable {
     }
     @FXML
     void searchByMonth(ActionEvent event) {
-        LocalDate date = searchByMonth.getValue();
-        String month = date.format(DateTimeFormatter.ofPattern("MM/yyyy"));
-        monthSelected.setText(month);
-
         listRecord.removeAll();
         tableReport.getItems().clear();
 
         setListRecord();
         tableReport.setItems(listRecord);
+
+//        for (Map.Entry<String, Worker> w: currentWorkers.entrySet()) {
+//            System.out.println(w.getKey() + "  ---  " + w.getValue().toString());
+//        }
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        setListRecord();
-
         unit_id.setText(Authentication.authentication.getUnit_id());
         wum_name.setText(Authentication.authentication.getName());
         countWorkers.setText(String.valueOf(listRecord.size()));
-        monthSelected.setText(LocalDate.now().format(DateTimeFormatter.ofPattern("MM/yyyy")));
+
+        chooseMonth.getItems().addAll(listMonth);
+        chooseMonth.setValue(LocalDate.now().format(DateTimeFormatter.ofPattern("MM")));
+        chooseYear.getItems().addAll(listYear);
+        chooseYear.setValue(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
+
+        setListRecord();
 
         index.setCellValueFactory(index -> new ReadOnlyObjectWrapper<Integer>(tableReport.getItems().indexOf(index.getValue())+1));
         index.setSortable(false);
-        worker_id.setCellValueFactory(new PropertyValueFactory<WUMWorkerUnitReportRecord, String>("workerID"));
-        name.setCellValueFactory(new PropertyValueFactory<WUMWorkerUnitReportRecord, String>("name"));
-        month.setCellValueFactory(new PropertyValueFactory<WUMWorkerUnitReportRecord, YearMonth>("month"));
-        hoursWork.setCellValueFactory(new PropertyValueFactory<WUMWorkerUnitReportRecord, String>("hoursWork"));
-        hoursOT.setCellValueFactory(new PropertyValueFactory<WUMWorkerUnitReportRecord, String>("hoursOT"));
+        worker_id.setCellValueFactory(new PropertyValueFactory<WUMWorkerUnitReportRow, String>("workerID"));
+        name.setCellValueFactory(new PropertyValueFactory<WUMWorkerUnitReportRow, String>("name"));
+        month.setCellValueFactory(new PropertyValueFactory<WUMWorkerUnitReportRow, YearMonth>("month"));
+        hoursWork.setCellValueFactory(new PropertyValueFactory<WUMWorkerUnitReportRow, String>("hoursWork"));
+        hoursOT.setCellValueFactory(new PropertyValueFactory<WUMWorkerUnitReportRow, String>("hoursOT"));
 
         tableReport.setItems(listRecord);
-
     }
 
     public void setListRecord() {
         ArrayList<Worker> workers = new ArrayList<Worker>();
         workers.addAll(getAllWorkerUnit(Authentication.authentication.getUnit_id()));
 
-        for (Worker w : workers) {
-            if (monthSelected.getText().equals("")){
-                LocalDate date = LocalDate.now();
-                monthSelected.setText(date.format(DateTimeFormatter.ofPattern("MM/yyyy")));
-            }
+        String monthFilter = chooseMonth.getValue() + "/" + chooseYear.getValue();
 
+        for (Worker w : workers) {
             ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = new ArrayList<LogTimekeepingWorker>();
             logTimekeepingWorkers.addAll(getTimeKeepingAWorker(w.getId()));
 
             ArrayList<LogTimekeepingWorker> logTimekeepingByMonth = new ArrayList<LogTimekeepingWorker>();
-            logTimekeepingByMonth.addAll(getTimekeepingByMonth(logTimekeepingWorkers, monthSelected.getText()));
+            logTimekeepingByMonth.addAll(getTimekeepingByMonth(logTimekeepingWorkers, monthFilter));
 
             if (!logTimekeepingByMonth.isEmpty()){
+
+
+                if (monthFilter.equals(LocalDate.now().format(DateTimeFormatter.ofPattern("MM/yyyy")))){
+                    currentWorkers.put(w.getId(), w);
+                }
                 float totalHoursWork = 0, totalHoursOT = 0;
                 String hoursWork = "", hoursOT = "";
 
@@ -142,7 +154,7 @@ public class WUMWorkerUnitReportController implements Initializable {
                     hoursOT = String.valueOf(totalHoursOT) + " / " + String.valueOf(logTimekeepingByMonth.size()*4);
                 }
 
-                listRecord.add(new WUMWorkerUnitReportRecord(w.getId(), w.getName(), monthSelected.getText(), hoursWork, hoursOT));
+                listRecord.add(new WUMWorkerUnitReportRow(w.getId(), w.getName(), monthFilter, hoursWork, hoursOT));
             }
         }
     }
@@ -177,7 +189,6 @@ public class WUMWorkerUnitReportController implements Initializable {
             if (monthReport.equals(monthFilter)){
                 logFilterByMonth.add(log);
             }
-
         }
 
         return logFilterByMonth;

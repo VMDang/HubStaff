@@ -1,7 +1,7 @@
 package controller.timekeeping.personal.monthly;
 
-import static controller.fxml.FxmlConstains.TIMEKEEPING_DAY_WORKER_DETAIL_VIEW;
-import static controller.fxml.FxmlConstains.TIMEKEEPING_DAY_OFFICER_DETAIL_VIEW;
+import static assets.navigation.FXMLNavigation.TIMEKEEPING_DAY_WORKER_DETAIL_VIEW;
+import static assets.navigation.FXMLNavigation.TIMEKEEPING_DAY_OFFICER_DETAIL_VIEW;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -11,8 +11,8 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import controller.auth.Authentication;
-import controller.timekeeping.personal.monthly.day.TimekeepingDayOfficerDetailController;
-import controller.timekeeping.personal.monthly.day.TimekeepingDayWorkerDetailController;
+import controller.timekeeping.personal.monthly.day.officer.TimekeepingDayOfficerDetailController;
+import controller.timekeeping.personal.monthly.day.worker.TimekeepingDayWorkerDetailController;
 import dbtimekeeping.GetTimekeepingOfficer;
 import dbtimekeeping.GetTimekeepingWorker;
 import javafx.collections.FXCollections;
@@ -77,19 +77,19 @@ public class MonthlyTimekeepingController implements Initializable {
     private Button refresh;
     
     @FXML
-    private TableView<genaralTableRow> tableGenaral;
+    private TableView<GenaralTableRow> tableGenaral;
 
     @FXML
-    private TableColumn<genaralTableRow, Integer> total_day_workCol;
+    private TableColumn<GenaralTableRow, Integer> total_day_workCol;
 
     @FXML
-    private TableColumn<genaralTableRow, Float> total_hour_workCol;
+    private TableColumn<GenaralTableRow, Float> total_hour_workCol;
 
     @FXML
-    private TableColumn<genaralTableRow, Float> total_overtimeCol;
+    private TableColumn<GenaralTableRow, Float> total_overtimeCol;
 
     @FXML
-    private TableColumn<genaralTableRow, Integer> salaryCol;
+    private TableColumn<GenaralTableRow, Integer> salaryCol;
 
     @FXML
     private TableView<TimekeepingEmployeeTableRow> tableTimekeepingMonth;
@@ -113,7 +113,7 @@ public class MonthlyTimekeepingController implements Initializable {
     private TableColumn<TimekeepingEmployeeTableRow, Float> overtimeCol;
     
     private static ObservableList<TimekeepingEmployeeTableRow> LogTimekeepingMonthList = FXCollections.observableArrayList();
-    private static ObservableList<genaralTableRow> genaralRows = FXCollections.observableArrayList();
+    private static ObservableList<GenaralTableRow> genaralRows = FXCollections.observableArrayList();
     
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -142,10 +142,10 @@ public class MonthlyTimekeepingController implements Initializable {
     	
     	tableTimekeepingMonth.setItems(LogTimekeepingMonthList);
     	
-    	total_day_workCol.setCellValueFactory(new PropertyValueFactory<genaralTableRow,Integer>("total_day_work"));
-    	total_hour_workCol.setCellValueFactory(new PropertyValueFactory<genaralTableRow,Float>("total_hour_work"));
-    	total_overtimeCol.setCellValueFactory(new PropertyValueFactory<genaralTableRow,Float>("total_overtime"));
-    	salaryCol.setCellValueFactory(new PropertyValueFactory<genaralTableRow,Integer>("salary"));
+    	total_day_workCol.setCellValueFactory(new PropertyValueFactory<GenaralTableRow,Integer>("total_day_work"));
+    	total_hour_workCol.setCellValueFactory(new PropertyValueFactory<GenaralTableRow,Float>("total_hour_work"));
+    	total_overtimeCol.setCellValueFactory(new PropertyValueFactory<GenaralTableRow,Float>("total_overtime"));
+    	salaryCol.setCellValueFactory(new PropertyValueFactory<GenaralTableRow,Integer>("salary"));
     	
     	tableGenaral.setItems(genaralRows);
     	
@@ -322,7 +322,7 @@ public class MonthlyTimekeepingController implements Initializable {
 		if(time_in.compareTo(Time.valueOf("07:30:00")) <= 0 && time_out.compareTo(Time.valueOf("17:00:00")) >= 0) status = "OKE";
 		return new TimekeepingEmployeeTableRow(date, time_in, time_out, hour_work, overtime, status, log.isMorning(), log.isAfternoon());
 	}
-	public static genaralTableRow createGenaralTableRow(ObservableList<TimekeepingEmployeeTableRow> LogInMonth) {
+	public static GenaralTableRow createGenaralTableRow(ObservableList<TimekeepingEmployeeTableRow> LogInMonth) {
 		int total_day_work = 0;
 		float total_hour_work = 0f;
 		float total_overtime= 0f;
@@ -334,6 +334,6 @@ public class MonthlyTimekeepingController implements Initializable {
 			total_overtime += r.getOvertime();
 		}
 		salary = (int) Math.round(30000*(total_hour_work - total_overtime) + 60000*total_overtime);
-		return new genaralTableRow(total_day_work, total_hour_work, total_overtime, salary);
+		return new GenaralTableRow(total_day_work, total_hour_work, total_overtime, salary);
 	}
 }

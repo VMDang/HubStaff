@@ -1,6 +1,6 @@
 package controller.timekeeping.personal.monthly;
 
-public class genaralTableRow {
+public class GenaralTableRow {
 	private int total_day_work;
 	private float total_hour_work;
 	private float total_overtime;
@@ -8,7 +8,7 @@ public class genaralTableRow {
 	
 	
 	
-	public genaralTableRow(int total_day_work, float total_hour_work, float total_overtime, int salary) {
+	public GenaralTableRow(int total_day_work, float total_hour_work, float total_overtime, int salary) {
 		super();
 		this.total_day_work = total_day_work;
 		this.total_hour_work = total_hour_work;

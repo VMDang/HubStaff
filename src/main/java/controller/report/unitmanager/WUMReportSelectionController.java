@@ -8,7 +8,7 @@ import javafx.scene.layout.Pane;
 
 import java.io.IOException;
 
-import static controller.fxml.FxmlConstains.WUM_WORKER_UNIT_REPORT_VIEW;
+import static assets.navigation.FXMLNavigation.WUM_WORKER_UNIT_REPORT_VIEW;
 
 public class WUMReportSelectionController {
 

@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="339.0" prefWidth="510.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.timekeeping.personal.monthly.day.officer.TimekeepingDayOfficerDetailController">
+    <children>
+        <Label layoutX="30.0" layoutY="66.0" text="Mã nhân viên:" />
+        <Label layoutX="31.0" layoutY="92.0" text="Họ và tên : " />
+        <Label layoutX="18.0" layoutY="29.0" text="Thông tin công nhân">
+            <font>
+                <Font name="System Bold" size="16.0" />
+            </font>
+        </Label>
+        <Text fx:id="unit" layoutX="407.0" layoutY="79.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tổ 02" />
+        <Text fx:id="nameEmployee" layoutX="130.0" layoutY="106.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vũ Minh Đăng" />
+        <Label layoutX="353.0" layoutY="66.0" text="Đơn vị " />
+        <Text fx:id="employeeID" layoutX="143.0" layoutY="80.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ABC" />
+        <Label layoutX="31.0" layoutY="119.0" text="Phòng ban :" />
+        <Text fx:id="department" layoutX="130.0" layoutY="132.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nhà máy sản xuất" />
+        <Label layoutX="18.0" layoutY="159.0" text="Chi tiết chấm công ">
+            <font>
+                <Font name="System Bold" size="16.0" />
+            </font>
+        </Label>
+        <Label fx:id="timebtn" alignment="CENTER" layoutX="204.0" layoutY="193.0" prefHeight="26.0" prefWidth="94.0" style="-fx-background-color: #66A9E3; -fx-background-radius: 10;" text="12-06-2023" textFill="WHITE">
+            <font>
+                <Font size="15.0" />
+            </font>
+        </Label>
+        <TableView fx:id="tableDetail" layoutX="17.0" layoutY="249.0" prefHeight="67.0" prefWidth="478.0" stylesheets="@../../../../../../assets/style/table.css">
+            <columns>
+                <TableColumn fx:id="time_inCol" prefWidth="113.59997177124023" text="Giờ vào " />
+                <TableColumn fx:id="time_outCol" prefWidth="98.4000244140625" text="Giờ ra " />
+                <TableColumn fx:id="morningCol" prefWidth="75.19996643066406" text="Buổi sáng" />
+                <TableColumn fx:id="afternoonCol" prefWidth="68.0" text="Buổi chiều" />
+                <TableColumn fx:id="salaryCol" prefWidth="117.60003662109375" text="Lương Ngày" />
+            </columns>
+        </TableView>
+    </children>
+</AnchorPane>

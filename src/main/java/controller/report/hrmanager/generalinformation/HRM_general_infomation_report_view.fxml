@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="709.0" prefWidth="1126.0" style="-fx-background-color: e4e4e4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.report.hrmanager.general.GeneralInformationController">
+<AnchorPane prefHeight="709.0" prefWidth="1126.0" style="-fx-background-color: e4e4e4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.report.hrmanager.generalinformation.HRMGeneralInformationReportController">
    <children>
       <Pane layoutX="7.0" layoutY="30.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5px;" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="30.0">
          <children>

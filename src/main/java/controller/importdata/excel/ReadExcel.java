@@ -1,29 +1,25 @@
 package controller.importdata.excel;
 
 
-	import java.io.File;
-	import java.io.FileInputStream;
-	import java.io.IOException;
-	import java.io.InputStream;
-	import java.math.BigDecimal;
-import java.sql.Date;
-import java.sql.Time;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.math.BigDecimal;
 import java.util.ArrayList;
-	import java.util.Iterator;
-	import java.util.List;
+import java.util.Iterator;
+import java.util.List;
+
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellType;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 	 
-	import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-	import org.apache.poi.ss.usermodel.Cell;
-	import org.apache.poi.ss.usermodel.CellType;
-	import org.apache.poi.ss.usermodel.FormulaEvaluator;
-	import org.apache.poi.ss.usermodel.Row;
-	import org.apache.poi.ss.usermodel.Sheet;
-	import org.apache.poi.ss.usermodel.Workbook;
-	import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-	 
-	public class ReadExcelExample {
+	public class ReadExcel {
 	    public static final int COLUMN_INDEX_ID = 0;
 	    public static final int COLUMN_INDEX_TITLE = 1;
 	    public static final int COLUMN_INDEX_DATE = 2;
@@ -31,8 +27,8 @@ import java.util.ArrayList;
 	    public static final int COLUMN_INDEX_OUT = 4;
 	 
 	   
-	    public static List<ChamCong> readExcel(String excelFilePath) throws IOException {
-	        List<ChamCong> chamCongs = new ArrayList<>();
+	    public static List<ExcelImportRow> readExcel(String excelFilePath) throws IOException {
+	        List<ExcelImportRow> excelImportRows = new ArrayList<>();
 	 
 	        // Get file
 	        InputStream inputStream = new FileInputStream(new File(excelFilePath));
@@ -57,7 +53,7 @@ import java.util.ArrayList;
 	            Iterator<Cell> cellIterator = nextRow.cellIterator();
 	 
 	            // Read cells and set value for book object
-	            ChamCong chamCong = new ChamCong();
+	            ExcelImportRow excelImportRow = new ExcelImportRow();
 	            while (cellIterator.hasNext()) {
 	                //Read cell
 	                Cell cell = cellIterator.next();
@@ -69,32 +65,32 @@ import java.util.ArrayList;
 	                int columnIndex = cell.getColumnIndex();
 	                switch (columnIndex) {
 	                case COLUMN_INDEX_ID:
-	                	chamCong.setId(new BigDecimal((double) cellValue).intValue());
+	                	excelImportRow.setId(new BigDecimal((double) cellValue).intValue());
 	                    break;
 	                case COLUMN_INDEX_TITLE:
-	                	chamCong.setEmployee_id((String) getCellValue(cell));
+	                	excelImportRow.setEmployee_id((String) getCellValue(cell));
 	                    break;
 	                case COLUMN_INDEX_DATE:
-	                	chamCong.setDate((String) getCellValue(cell) );
+	                	excelImportRow.setDate((String) getCellValue(cell) );
 	                    break;
 	                case COLUMN_INDEX_IN:
-	                	chamCong.setTime_in((String) getCellValue(cell));
+	                	excelImportRow.setTime_in((String) getCellValue(cell));
 	                    break;
 	                case COLUMN_INDEX_OUT:
-	                	chamCong.setTime_out((String) getCellValue(cell));
+	                	excelImportRow.setTime_out((String) getCellValue(cell));
 	                    break;
 	                default:
 	                    break;
 	                }
 	 
 	            }
-	            chamCongs.add(chamCong);
+	            excelImportRows.add(excelImportRow);
 	        }
 	 
 	        workbook.close();
 	        inputStream.close();
 	 
-	        return chamCongs;
+	        return excelImportRows;
 	    }
 	 
 	    // Get Workbook

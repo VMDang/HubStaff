@@ -1,9 +1,6 @@
 package controller.importdata.excel;
 
-import java.sql.Date;
-import java.sql.Time;
-
-public class ChamCong {
+public class ExcelImportRow {
 	private Integer id ;
 	private String employee_id;
 	private String date;
@@ -13,12 +10,12 @@ public class ChamCong {
 	private String status;
 	private int role_id;
 	
-	public ChamCong() {
+	public ExcelImportRow() {
 		super();
 	}
 	
-	public ChamCong(Integer id, String employee_id, String date, String time_in, String time_out, String name,
-			String status, int role_id) {
+	public ExcelImportRow(Integer id, String employee_id, String date, String time_in, String time_out, String name,
+                          String status, int role_id) {
 		super();
 		this.id = id;
 		this.employee_id = employee_id;

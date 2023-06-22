@@ -1,4 +1,4 @@
-package employee.services;
+package services.logtimekeeping;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -10,23 +10,24 @@ import java.sql.Time;
 import java.util.ArrayList;
 
 import database.JDBCUtil;
-import model.logtimekeeping.LogTimekeepingWorker;
+import model.logtimekeeping.LogTimekeepingOfficer;
+import services.IService;
 
-public class LogTimekeepingWorkerDAO implements DAOInterface<LogTimekeepingWorker>{
+public class LogTimekeepingOfficerService implements IService<LogTimekeepingOfficer> {
 		
-	public static LogTimekeepingWorkerDAO getInstance() {
-		return new LogTimekeepingWorkerDAO();
+	public static LogTimekeepingOfficerService getInstance() {
+		return new LogTimekeepingOfficerService();
 	}
 	
-	// attb : ID , employee_id, date, time_in, time_out, shift1, shift2, shift3
+	// attb : String logID, String employee_id, Date date, Time time_in, Time time_out, boolean morning, boolean afternoon, float hour_late, float hour_early
 	
 	@Override
-	public int insert(LogTimekeepingWorker t) {
+	public int insert(LogTimekeepingOfficer t) {
 		// TODO Auto-generated method stub
 				try {
 					Connection con = JDBCUtil.getConnection();
-					String sql = "INSERT INTO logtimekeepingworker\r\n"
-							+ "VALUES ( ?, ?, ?, ?, ?, ?, ? , ? )";
+					String sql = "INSERT INTO logtimekeepingOfficer\r\n"
+							+ "VALUES ( ?, ?, ?, ?, ?, ?, ? , ? ,?)";
 									//ID , employee_id, date, time_in, time_out, shift1, shift2, shift3
 					PreparedStatement st = con.prepareStatement(sql);
 					
@@ -35,9 +36,10 @@ public class LogTimekeepingWorkerDAO implements DAOInterface<LogTimekeepingWorke
 					st.setDate(3,t.getDate());
 					st.setTime(4,t.getTime_in());
 					st.setTime(5,t.getTime_out());
-					st.setDouble(6, t.getShift1());
-					st.setDouble(7, t.getShift2());
-					st.setDouble(8, t.getShift3());
+					st.setBoolean(6, t.isMorning());
+					st.setBoolean(7, t.isAfternoon());
+					st.setDouble(8, t.getHour_late());
+					st.setDouble(9, t.getHour_early());
 					
 					int check = st.executeUpdate();
 					
@@ -59,24 +61,25 @@ public class LogTimekeepingWorkerDAO implements DAOInterface<LogTimekeepingWorke
 	}
 	
 	@Override
-	public int update(LogTimekeepingWorker t) {
+	public int update(LogTimekeepingOfficer t) {
 		try {
 			Connection con = JDBCUtil.getConnection();
 			
-			String sql = "UPDATE LogTimekeepingWorker\r\n"
-					+ "SET EmployeeID = ?"+", Date = ?"+", TimeIn = ?"+", TimeOut = ?"+", Shift1 = ? "+", Shift2 = ? "+", Shift3 = ? "
+			String sql = "UPDATE LogTimekeepingOfficer\r\n"
+					+ "SET EmployeeID = ?"+", Date = ?"+", TimeIn = ?"+", TimeOut = ?"+", Morning = ? "+", Afternoon = ? "+", HourLate = ? "+", HourEarly = ? "
 					+ "WHERE ID = ?";
 			
 			PreparedStatement st = con.prepareStatement(sql);
 			
-			st.setString(8,t.getLogID());
+			st.setString(9,t.getLogID());
 			st.setString(1,t.getEmployee_id());
 			st.setDate(2,t.getDate());
 			st.setTime(3,t.getTime_in());
 			st.setTime(4,t.getTime_out());
-			st.setDouble(5, t.getShift1());
-			st.setDouble(6, t.getShift2());
-			st.setDouble(7, t.getShift3());
+			st.setBoolean(5, t.isMorning());
+			st.setBoolean(6, t.isAfternoon());
+			st.setDouble(7, t.getHour_late());
+			st.setDouble(8, t.getHour_early());
 			
 			int check = st.executeUpdate();
 			
@@ -96,11 +99,11 @@ public class LogTimekeepingWorkerDAO implements DAOInterface<LogTimekeepingWorke
 	}
 
 	@Override
-	public int delete(LogTimekeepingWorker t) {
+	public int delete(LogTimekeepingOfficer t) {
 		try {
 			Connection con = JDBCUtil.getConnection();
 			
-			String sql = "DELETE FROM LogTimekeepingWorker WHERE ID = ?";
+			String sql = "DELETE FROM LogTimekeepingOfficer WHERE ID = ?";
 			
 			PreparedStatement st = con.prepareStatement(sql);
 			
@@ -125,14 +128,14 @@ public class LogTimekeepingWorkerDAO implements DAOInterface<LogTimekeepingWorke
 	}
 
 	@Override
-	public ArrayList<LogTimekeepingWorker> selectAll() {
-		ArrayList<LogTimekeepingWorker> allLogTimekeepingWorkers = new ArrayList<LogTimekeepingWorker>();
+	public ArrayList<LogTimekeepingOfficer> selectAll() {
+		ArrayList<LogTimekeepingOfficer> allLogTimekeepingOfficers = new ArrayList<LogTimekeepingOfficer>();
 		try {
 			Connection con = JDBCUtil.getConnection();
 			
 			Statement st = con.createStatement();
 			
-			String sql = "SELECT * FROM LogTimekeepingWorker";
+			String sql = "SELECT * FROM LogTimekeepingOfficer";
 			
 			System.out.println(sql);
 			
@@ -145,12 +148,13 @@ public class LogTimekeepingWorkerDAO implements DAOInterface<LogTimekeepingWorke
 				Date date = rs.getDate("Date");
 				Time time_in = rs.getTime("TimeIn");
 				Time time_out =rs.getTime("TimeOut");
-				Float shift1 = (float) rs.getDouble("Shift1");
-				Float shift2 = (float) rs.getDouble("Shift2");
-				Float shift3 = (float) rs.getDouble("Shift3");
+				boolean morning = rs.getBoolean("Morning");
+				boolean afternoon = rs.getBoolean("Afternoon");
+				Float hour_late = (float) rs.getDouble("HourLate");
+				Float hour_early = (float) rs.getDouble("HourEarly");
 				
-				LogTimekeepingWorker log = new LogTimekeepingWorker(logID, employee_id, date, time_in, time_out, shift1, shift2, shift3);
-				allLogTimekeepingWorkers.add(log);
+				LogTimekeepingOfficer log = new LogTimekeepingOfficer(logID, employee_id, date, time_in, time_out, morning, afternoon, hour_late, hour_early);
+				allLogTimekeepingOfficers.add(log);
 					
 			}
 		
@@ -160,16 +164,16 @@ public class LogTimekeepingWorkerDAO implements DAOInterface<LogTimekeepingWorke
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return allLogTimekeepingWorkers;
+		return allLogTimekeepingOfficers;
 	}
 
 	@Override
-	public LogTimekeepingWorker selectById(String id) {
-		LogTimekeepingWorker log = new LogTimekeepingWorker();
+	public LogTimekeepingOfficer selectById(String id) {
+		LogTimekeepingOfficer log = new LogTimekeepingOfficer();
 		try {
 			Connection con = JDBCUtil.getConnection();
 			
-			String sql = "SELECT * FROM LogTimekeepingWorker WHERE ID = '"+id+"';";
+			String sql = "SELECT * FROM LogTimekeepingOfficer WHERE ID = '"+id+"';";
 			System.out.println(sql);
 			PreparedStatement st = con.prepareStatement(sql);
 				
@@ -181,11 +185,13 @@ public class LogTimekeepingWorkerDAO implements DAOInterface<LogTimekeepingWorke
 				Date date = rs.getDate("Date");
 				Time time_in = rs.getTime("TimeIn");
 				Time time_out =rs.getTime("TimeOut");
-				Float shift1 = (float) rs.getDouble("Shift1");
-				Float shift2 = (float) rs.getDouble("Shift2");
-				Float shift3 = (float) rs.getDouble("Shift3");
+				boolean morning = rs.getBoolean("Morning");
+				boolean afternoon = rs.getBoolean("Afternoon");
+				Float hour_late = (float) rs.getDouble("HourLate");
+				Float hour_early = (float) rs.getDouble("HourEarly");
 				
-				log = new LogTimekeepingWorker(logID, employee_id, date, time_in, time_out, shift1, shift2, shift3);
+				log = new LogTimekeepingOfficer(logID, employee_id, date, time_in, time_out, morning, afternoon, hour_late, hour_early);
+				
 				
 			}
 			
@@ -199,14 +205,14 @@ public class LogTimekeepingWorkerDAO implements DAOInterface<LogTimekeepingWorke
 	}
 
 	@Override
-	public ArrayList<LogTimekeepingWorker> selectByCondition(String condition) {
-		ArrayList<LogTimekeepingWorker> LogTimekeepingWorkers = new ArrayList<LogTimekeepingWorker>();
+	public ArrayList<LogTimekeepingOfficer> selectByCondition(String condition) {
+		ArrayList<LogTimekeepingOfficer> logTimekeepingOfficers = new ArrayList<LogTimekeepingOfficer>();
 		try {
 			Connection con = JDBCUtil.getConnection();
 			
 			Statement st = con.createStatement();
 			
-			String sql = "SELECT * FROM LogTimekeepingWorker WHERE " + condition+";";
+			String sql = "SELECT * FROM LogTimekeepingOfficer WHERE " + condition+";";
 			
 			System.out.println(sql);
 			
@@ -219,13 +225,13 @@ public class LogTimekeepingWorkerDAO implements DAOInterface<LogTimekeepingWorke
 				Date date = rs.getDate("Date");
 				Time time_in = rs.getTime("TimeIn");
 				Time time_out =rs.getTime("TimeOut");
-				Float shift1 = (float) rs.getDouble("Shift1");
-				Float shift2 = (float) rs.getDouble("Shift2");
-				Float shift3 = (float) rs.getDouble("Shift3");
+				boolean morning = rs.getBoolean("Morning");
+				boolean afternoon = rs.getBoolean("Afternoon");
+				Float hour_late = (float) rs.getDouble("HourLate");
+				Float hour_early = (float) rs.getDouble("HourEarly");
 				
-				LogTimekeepingWorker log = new LogTimekeepingWorker(logID, employee_id, date, time_in, time_out, shift1, shift2, shift3);
-				LogTimekeepingWorkers.add(log);
-					
+				LogTimekeepingOfficer log = new LogTimekeepingOfficer(logID, employee_id, date, time_in, time_out, morning, afternoon, hour_late, hour_early);
+				logTimekeepingOfficers.add(log);
 			}
 		
 			JDBCUtil.closeConnection(con);
@@ -234,7 +240,7 @@ public class LogTimekeepingWorkerDAO implements DAOInterface<LogTimekeepingWorke
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return LogTimekeepingWorkers;
+		return logTimekeepingOfficers;
 	}
 
 
