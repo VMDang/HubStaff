@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.image.*?>
-<?import javafx.scene.text.*?>
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="basePane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.report.hrmanager.HRMReportSelectionController">
+<AnchorPane fx:id="basePane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.report.hrmanager.HRMReportSelectionController">
    <children>
       <AnchorPane layoutX="-132.0" layoutY="-80.0" prefHeight="709.0" prefWidth="1126.0" style="-fx-background-color: #e5e5e5;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -50,6 +49,20 @@
                   <ImageView fitHeight="107.0" fitWidth="100.0" layoutX="120.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
                      <image>
                         <Image url="@../../../assets/img/HRManager_General.png" />
+                     </image>
+                  </ImageView>
+               </children>
+            </Pane>
+            <Pane fx:id="btnGeneralInfo" layoutX="614.0" layoutY="364.0" onMouseClicked="#switchToGeneralInfo" prefHeight="206.0" prefWidth="336.0" style="-fx-background-color: #d2d2d2; -fx-background-radius: 20px;">
+               <children>
+                  <Label alignment="BASELINE_LEFT" ellipsisString="" layoutX="54.0" layoutY="120.0" prefHeight="78.0" prefWidth="229.0" text="Thông tin tổng hợp" textAlignment="CENTER" wrapText="true">
+                     <font>
+                        <Font size="26.0" />
+                     </font>
+                  </Label>
+                  <ImageView fitHeight="107.0" fitWidth="100.0" layoutX="120.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../assets/img/General_info.png" />
                      </image>
                   </ImageView>
                </children>

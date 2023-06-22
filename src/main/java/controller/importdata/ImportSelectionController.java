@@ -1,5 +1,9 @@
 package controller.importdata;
 
+import static controller.fxml.FxmlConstains.*;
+
+import java.io.IOException;
+
 import controller.layouts.LayoutController;
 import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
@@ -19,8 +23,8 @@ public class ImportSelectionController {
     private Pane btnImportManual;
 
     @FXML
-    void switchToImportByExcel(MouseEvent event) {
-
+    void switchToImportByExcel(MouseEvent event) throws IOException {
+    	layout.changeAnchorPane(basePane, EXCEL_IMPORT_VIEW);
     }
 
     @FXML

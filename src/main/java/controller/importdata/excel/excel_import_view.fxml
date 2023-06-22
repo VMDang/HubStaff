@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Text?>
+
+<AnchorPane fx:id="basePane" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.importdata.excel.ExcelImportController">
+   <children>
+      <AnchorPane layoutX="46.0" prefHeight="709.0" prefWidth="1126.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="-46.0" AnchorPane.topAnchor="0.0" />
+      <Pane layoutX="-1.0" prefHeight="710.0" prefWidth="1126.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5px;">
+         <children>
+            <TableView fx:id="table" focusTraversable="false" layoutX="31.0" layoutY="137.0" prefHeight="498.0" prefWidth="1046.0">
+               <columns>
+                  <TableColumn fx:id="idColumn" editable="false" prefWidth="56.0" text="STT" />
+                  <TableColumn fx:id="employee_idColumn" editable="false" prefWidth="136.79998016357422" text="Mã NV" />
+                  <TableColumn fx:id="nameColumn" editable="false" prefWidth="162.39996337890625" text="Họ và Tên" />
+                  <TableColumn fx:id="dateColumn" editable="false" prefWidth="169.60006713867188" text="Ngày " />
+                  <TableColumn fx:id="time_inColumn" editable="false" prefWidth="186.4000244140625" text="Giờ vào " />
+                  <TableColumn fx:id="time_outColumn" editable="false" prefWidth="166.4000244140625" text="Giờ ra " />
+                  <TableColumn fx:id="statusColumn" editable="false" prefWidth="164.800048828125" text="Trạng thái " />
+               </columns>
+            </TableView>
+            <Button layoutX="740.0" layoutY="32.0" mnemonicParsing="false" onAction="#ChooseFile" style="-fx-background-color: #ffe4c4;" text="..." textFill="#964343" />
+            <Text layoutX="220.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Chọn file" />
+            <TextField fx:id="textField" editable="false" layoutX="311.0" layoutY="31.0" prefHeight="31.0" prefWidth="411.0" />
+            <Button fx:id="Nhap" layoutX="442.0" layoutY="82.0" mnemonicParsing="false" onAction="#NhapFile" prefHeight="31.0" prefWidth="151.0" text="Nhập " />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>
