@@ -131,7 +131,7 @@ public class UnitWorkerAttendanceController implements Initializable{
 		String unit_id = report.getUnit_id();
 		int month = report.getMonth();
 		float total_work_hour = report.getTotal_hour_work();
-		float total_overtime = report.getTotal_overtime();
+		float total_overtime = report.getTotal_overtime();	
 		return new ReportMonthlyWorkerTable(name, worker_id, unit_id, month, total_work_hour, total_overtime);
 	}
 }

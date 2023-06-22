@@ -95,11 +95,11 @@ public class GetReportWorker implements IDBReport<ReportUnitWorker>{
 			while(rs.next()) {
 
 				String name = rs.getString("Employee");
-				String employee_id=rs.getString("EmployeeID");
+				String employee_id = rs.getString("EmployeeID");
 				String unit_id = rs.getString("UnitID");
 				Integer month = (int) rs.getInt("Month");
-				Float total_hour_work = (float) rs.getDouble("TotalWorkingHours");
-				Float total_overtime = (float) rs.getDouble("OvertimeHours");
+				Float total_hour_work = (float) rs.getFloat("TotalWorkingHours");
+				Float total_overtime = (float) rs.getFloat("OvertimeHours");
 				
 				ReportUnitWorker report = new ReportUnitWorker(name, employee_id, unit_id, month, total_hour_work, total_overtime);
 				ReportUnitWorkers.add(report);

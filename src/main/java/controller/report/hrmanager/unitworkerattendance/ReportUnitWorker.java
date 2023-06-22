@@ -12,6 +12,8 @@ public class ReportUnitWorker extends ReportGeneral{
 	
 	public ReportUnitWorker(String name, String employee_id, String unit_id, int month, float total_hour_work, float total_overtime) {
 		super(name, employee_id, unit_id, month);
+		this.total_hour_work = total_hour_work;
+		this.total_overtime = total_overtime;
 	}
 
 	public float getTotal_hour_work() {
