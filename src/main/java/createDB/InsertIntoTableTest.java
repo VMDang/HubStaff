@@ -11,7 +11,7 @@ public class InsertIntoTableTest {
 //		Employee nv = new Employee("nv11","Nguyen Duy Hung@11" ,"Van Phong","UN02", "170102",3);
 //		EmployeeDAO.getInstance().update(nv);
 		for(int i = 1 ; i <=10 ; i++) {
-			Employee nv = new Employee("nv"+i,"Nguyen Duy Hung@" + i,"Van Phong","UN02", "1",i%5+1);
+			Employee nv = new Employee("nv"+i,"Nguyen Duy Hung@" + i,"Van Phong","UN02", "170102",i%5+1);
 			EmployeeDAO.getInstance().insert(nv);
 		}
 //		
