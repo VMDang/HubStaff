@@ -5,6 +5,7 @@ import java.sql.Time;
 import java.util.ResourceBundle;
 
 import controller.auth.Authentication;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,7 +16,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.text.Text;
 import model.logtimekeeping.LogTimekeepingWorker;
 
-public class TimekeepingDayDetailController {
+public class TimekeepingDayWorkerDetailController {
 	private static LogTimekeepingWorker log; 
 	
     public LogTimekeepingWorker getLog() {
@@ -23,7 +24,7 @@ public class TimekeepingDayDetailController {
 	}
 
 	public void setLog(LogTimekeepingWorker log) {
-		TimekeepingDayDetailController.log = log;
+		TimekeepingDayWorkerDetailController.log = log;
 	}
 
 	@FXML
@@ -49,6 +50,9 @@ public class TimekeepingDayDetailController {
 
     @FXML
     private TableColumn<LogTimekeepingWorker, Float> shift3Col;
+    
+    @FXML
+    private TableColumn<LogTimekeepingWorker, Integer> salaryCol;
 
     @FXML
     private TableColumn<LogTimekeepingWorker, Time> time_inCol;
@@ -74,6 +78,19 @@ public class TimekeepingDayDetailController {
     	shift2Col.setCellValueFactory(new PropertyValueFactory<LogTimekeepingWorker,Float>("shift2"));
     	shift3Col.setCellValueFactory(new PropertyValueFactory<LogTimekeepingWorker,Float>("shift3"));
     	
+    	salaryCol.setCellValueFactory(cellData -> {
+            // Perform the salary calculation based on the Employee object
+    		LogTimekeepingWorker log = cellData.getValue();
+            int salary = calculateSalary(log);
+            return new SimpleIntegerProperty(salary).asObject();
+        });
+    	
+    	
+    	
     	tableDetail.setItems(logRow);
+    }
+    
+    private int calculateSalary(LogTimekeepingWorker log) {
+    	return (int) Math.round(30000*(log.getShift1() + log.getShift2()) + 60000*log.getShift3());
     }
 }

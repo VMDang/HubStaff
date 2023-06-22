@@ -1,6 +1,7 @@
 package controller.timekeeping.personal.monthly;
 
-import static controller.fxml.FxmlConstains.TIMEKEEPING_DAY_DETAIL_VIEW;
+import static controller.fxml.FxmlConstains.TIMEKEEPING_DAY_WORKER_DETAIL_VIEW;
+import static controller.fxml.FxmlConstains.TIMEKEEPING_DAY_OFFICER_DETAIL_VIEW;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -10,7 +11,8 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import controller.auth.Authentication;
-import controller.timekeeping.personal.monthly.day.TimekeepingDayDetailController;
+import controller.timekeeping.personal.monthly.day.TimekeepingDayOfficerDetailController;
+import controller.timekeeping.personal.monthly.day.TimekeepingDayWorkerDetailController;
 import dbtimekeeping.GetTimekeepingOfficer;
 import dbtimekeeping.GetTimekeepingWorker;
 import javafx.collections.FXCollections;
@@ -34,13 +36,15 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+import model.employee.Employee;
 import model.employee.worker.Worker;
 import model.employee.worker.WorkerUnitManager;
 import model.logtimekeeping.LogTimekeepingOfficer;
 import model.logtimekeeping.LogTimekeepingWorker;
 
 public class MonthlyTimekeepingController implements Initializable {
-	public static LocalDate today;
+	private static LocalDate today;
+	private Employee user;
 	
     @FXML
     private AnchorPane basePane;
@@ -150,19 +154,24 @@ public class MonthlyTimekeepingController implements Initializable {
             if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
                 // Lấy hàng được chọn
             	TimekeepingEmployeeTableRow selectedItem = tableTimekeepingMonth.getSelectionModel().getSelectedItem();
-                System.out.println(selectedItem.toString());
-                // Hiển thị màn hình chi tiết dưới dạng pop-up
-                showDetailPopup(selectedItem);
+            	if (selectedItem != null) {
+            		if (Authentication.authentication instanceof Worker || Authentication.authentication instanceof WorkerUnitManager) {                       
+                        showDetailPopupWorker(selectedItem);
+                    } else {
+                    	showDetailPopupOfficer(selectedItem);
+                    }
+            	}
+                
             }
         });
 	}
     
-    private void showDetailPopup(TimekeepingEmployeeTableRow selectedItem) {
+    private void showDetailPopupWorker(TimekeepingEmployeeTableRow selectedItem) {
         try {
             // Tạo một FXMLLoader để tải màn hình chi tiết từ file FXML
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(TIMEKEEPING_DAY_DETAIL_VIEW));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(TIMEKEEPING_DAY_WORKER_DETAIL_VIEW));
             fxmlLoader.setControllerFactory(controllerClass -> {
-            	TimekeepingDayDetailController detailController = new TimekeepingDayDetailController();
+            	TimekeepingDayWorkerDetailController detailController = new TimekeepingDayWorkerDetailController();
                 detailController.setLog(new LogTimekeepingWorker("", Authentication.authentication.getId(), selectedItem.getDate() ,selectedItem.getTime_in(), selectedItem.getTime_out(), selectedItem.getShift1(), selectedItem.getShift2(),selectedItem.getShift3() ));
                 return detailController;
             });
@@ -175,8 +184,40 @@ public class MonthlyTimekeepingController implements Initializable {
             detailStage.initOwner(tableTimekeepingMonth.getScene().getWindow()); // Đặt màn hình chính là chủ sở hữu
 
          // Truyền dữ liệu cho màn hình chi tiết nếu cần thiết
-            TimekeepingDayDetailController detailController = fxmlLoader.getController();
-            detailController.initialize(null, null);;
+            TimekeepingDayWorkerDetailController detailController = fxmlLoader.getController();
+            detailController.initialize(null, null);
+            
+            // Đặt nội dung FXML vào Scene của Stage
+            Scene detailScene = new Scene(detailRoot);
+            detailStage.setScene(detailScene);
+            detailStage.show();
+            
+            
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
+    private void showDetailPopupOfficer(TimekeepingEmployeeTableRow selectedItem) {
+        try {
+            // Tạo một FXMLLoader để tải màn hình chi tiết từ file FXML
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(TIMEKEEPING_DAY_OFFICER_DETAIL_VIEW));
+            fxmlLoader.setControllerFactory(controllerClass -> {
+            	TimekeepingDayOfficerDetailController detailController = new TimekeepingDayOfficerDetailController();
+                detailController.setLog(new LogTimekeepingOfficer("", Authentication.authentication.getId(), selectedItem.getDate() ,selectedItem.getTime_in(), selectedItem.getTime_out(), selectedItem.isMorning(), selectedItem.isAfternoon() ));
+                return detailController;
+            });
+            Parent detailRoot = fxmlLoader.load();
+            
+            // Tạo một Stage mới cho màn hình chi tiết
+            Stage detailStage = new Stage();
+            detailStage.initStyle(StageStyle.UTILITY);
+            detailStage.initModality(Modality.APPLICATION_MODAL);
+            detailStage.initOwner(tableTimekeepingMonth.getScene().getWindow()); // Đặt màn hình chính là chủ sở hữu
+
+         // Truyền dữ liệu cho màn hình chi tiết nếu cần thiết
+            TimekeepingDayOfficerDetailController detailController = fxmlLoader.getController();
+            detailController.initialize(null, null);
             
             // Đặt nội dung FXML vào Scene của Stage
             Scene detailScene = new Scene(detailRoot);
