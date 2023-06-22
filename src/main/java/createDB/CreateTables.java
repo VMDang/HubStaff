@@ -94,10 +94,10 @@ public class CreateTables {
 			e.printStackTrace();
 		}
 	}
-	
 	public static void main(String[] args) {
 		CreateTables.createTableEmployees();
 		CreateTables.createTableLogTimekeepingOfficer();
 		CreateTables.createTableLogTimekeepingWorker();
 	}
+	
 }
