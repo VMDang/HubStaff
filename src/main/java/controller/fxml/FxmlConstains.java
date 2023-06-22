@@ -8,4 +8,5 @@ public class FxmlConstains {
 	public static String WUM_REPORT_SELECTION_VIEW = "/controller/report/unitmanager/WUM_report_selection_view.fxml";
 	public static String IMPORT_SELECTION_VIEW = "/controller/importdata/import_selection_view.fxml";
 	public static String TIMEKEEPING_MONTHLY_VIEW = "/controller/timekeeping/monthly/timekeeping_monthly_view.fxml";
+	public static String REPORT_MONTHLY_UNIT_WORKER_VIEW = "/controller/report/hrmanager/unitworkerattendance/Report_monthly_unit_worker_view.fxml";
 }
