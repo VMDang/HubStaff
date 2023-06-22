@@ -34,9 +34,6 @@ public class GeneralInformationController implements Initializable {
     private Label info5;
 
     @FXML
-    private Label info6;
-
-    @FXML
     private Label label1;
 
     @FXML
@@ -50,9 +47,9 @@ public class GeneralInformationController implements Initializable {
 
     @FXML
     private Label label5;
-
+    
     @FXML
-    private Label label6;
+    private Label viewLabel;
 
     @FXML
     private ChoiceBox<String> monthBox;
@@ -169,72 +166,75 @@ public class GeneralInformationController implements Initializable {
     		if(monthBtn.isSelected()) {
     			int month = Integer.parseInt(monthBox.getValue().toString());
     			int year = Integer.parseInt(monthYearBox.getValue().toString());
+    			viewLabel.setText("Toàn doanh nghiệp Tháng "+ month + " Năm " + year);
     			
     			label1.setText("Chấm công ca 1");
-    			double timeShift1Month = GetTimekeepingWorker.getInstance().countTimeShift1ByMonth(month, year);
+    			double timeShift1Month = GeneralInformationWorker.countTimeShift1ByMonth(month, year);
     			info1.setText(""+timeShift1Month);
     			
     			label2.setText("Chấm công ca 2");
-    			double timeShift2Month = GetTimekeepingWorker.getInstance().countTimeShift2ByMonth(month, year);
+    			double timeShift2Month = GeneralInformationWorker.countTimeShift2ByMonth(month, year);
     			info2.setText(""+timeShift2Month);
     			
     			label3.setText("Chấm công ca 3");
-    			double timeShift3Month = GetTimekeepingWorker.getInstance().countTimeShift3ByMonth(month, year);
+    			double timeShift3Month = GeneralInformationWorker.countTimeShift3ByMonth(month, year);
     			info3.setText(""+timeShift3Month);
     			
     			label4.setText("Số giờ đi muộn");
-    			double hourLate = GetTimekeepingOfficer.getInstance().countHourEarlyByMonth(month, year);
+    			double hourLate = GeneralInformationOfficer.countHourLateByMonth(month, year);
     			info4.setText(""+hourLate);
     			
     			label5.setText("Số giờ về sớm");
-    			double hourEarly = GetTimekeepingOfficer.getInstance().countHourEarlyByMonth(month, year);
+    			double hourEarly = GeneralInformationOfficer.countHourEarlyByMonth(month, year);
     			info5.setText(""+hourEarly);
     		}
     		else if(quarterBtn.isSelected()) {
     			int quarter = Integer.parseInt(quarterBox.getValue().toString());
     			int year = Integer.parseInt(quarterYearBox.getValue().toString());
+    			viewLabel.setText("Toàn doanh nghiệp Quý "+ quarter + " Năm " + year);
     			
     			label1.setText("Chấm công ca 1");
-    			double timeShift1Quarter = GetTimekeepingWorker.getInstance().countTimeShift1ByQuarter(quarter, year);
+    			double timeShift1Quarter = GeneralInformationWorker.countTimeShift1ByQuarter(quarter, year);
     			info1.setText(""+timeShift1Quarter);
     			
     			label2.setText("Chấm công ca 2");
-    			double timeShift2Quarter = GetTimekeepingWorker.getInstance().countTimeShift2ByQuarter(quarter, year);
+    			double timeShift2Quarter = GeneralInformationWorker.countTimeShift2ByQuarter(quarter, year);
     			info2.setText(""+timeShift2Quarter);
     			
     			label3.setText("Chấm công ca 3");
-    			double timeShift3Quarter = GetTimekeepingWorker.getInstance().countTimeShift3ByQuarter(quarter, year);
+    			double timeShift3Quarter = GeneralInformationWorker.countTimeShift3ByQuarter(quarter, year);
     			info3.setText(""+timeShift3Quarter);
     			
     			label4.setText("Số giờ đi muộn");
-    			double hourLateQuarter = GetTimekeepingOfficer.getInstance().countHourEarlyByQuarter(quarter, year);
+    			double hourLateQuarter = GeneralInformationOfficer.countHourLateByQuarter(quarter, year);
     			info4.setText(""+hourLateQuarter);
     			
     			label5.setText("Số giờ về sớm");
-    			double hourEarlyQuarter = GetTimekeepingOfficer.getInstance().countHourEarlyByQuarter(quarter, year);
+    			double hourEarlyQuarter = GeneralInformationOfficer.countHourEarlyByQuarter(quarter, year);
     			info5.setText(""+hourEarlyQuarter);
     		}
     		else {
     			int year = Integer.parseInt(yearBox.getValue().toString());
+    			viewLabel.setText("Toàn doanh nghiệp" + " Năm " + year);
     			
     			label1.setText("Chấm công ca 1");
-    			double timeShift1Year = GetTimekeepingWorker.getInstance().countTimeShift1ByYear(year);
+    			double timeShift1Year = GeneralInformationWorker.countTimeShift1ByYear(year);
     			info1.setText(""+timeShift1Year);
     			
     			label2.setText("Chấm công ca 2");
-    			double timeShift2Year = GetTimekeepingWorker.getInstance().countTimeShift2ByYear(year);
+    			double timeShift2Year = GeneralInformationWorker.countTimeShift2ByYear(year);
     			info2.setText(""+timeShift2Year);
     			
     			label3.setText("Chấm công ca 3");
-    			double timeShift3Year = GetTimekeepingWorker.getInstance().countTimeShift3ByYear(year);
+    			double timeShift3Year = GeneralInformationWorker.countTimeShift3ByYear(year);
     			info3.setText(""+timeShift3Year);
     			
     			label4.setText("Số giờ đi muộn");
-    			double hourLateYear = GetTimekeepingOfficer.getInstance().countHourLateByYear(year);
+    			double hourLateYear = GeneralInformationOfficer.countHourLateByYear(year);
     			info4.setText(""+hourLateYear);
     			
     			label5.setText("Số giờ về sớm");
-    			double hourEarlyYear = GetTimekeepingOfficer.getInstance().countHourEarlyByYear(year);
+    			double hourEarlyYear = GeneralInformationOfficer.countHourEarlyByYear(year);
     			info5.setText(""+hourEarlyYear);
     		}
     	}

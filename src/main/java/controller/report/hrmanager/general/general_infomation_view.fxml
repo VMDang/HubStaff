@@ -75,13 +75,13 @@
                   </Label>
                </children>
             </Pane>
-            <Pane layoutX="49.0" layoutY="155.0" prefHeight="407.0" prefWidth="1023.0" style="-fx-background-color: #ccffff; -fx-background-radius: 10px;">
+            <Pane layoutX="45.0" layoutY="199.0" prefHeight="407.0" prefWidth="1023.0" style="-fx-background-color: #ccffff; -fx-background-radius: 10px;">
                <children>
                   <Pane layoutX="25.0" layoutY="25.0" prefHeight="148.0" prefWidth="250.0" style="-fx-background-color: #66ffff; -fx-background-radius: 10;">
                      <children>
                         <ImageView fitHeight="62.0" fitWidth="109.0" layoutX="7.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../Downloads/wrench.png" />
+                              <Image url="@../../../../assets/img/wrench.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="label1" layoutX="75.0" layoutY="28.0" text="Chấm công ca 1" textFill="#130e0e">
@@ -100,7 +100,7 @@
                      <children>
                         <ImageView fitHeight="62.0" fitWidth="109.0" layoutX="7.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../../../../../Downloads/late.png" />
+                              <Image url="@../../../../assets/img/late.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="label4" layoutX="75.0" layoutY="28.0" text="Số giờ đi muộn" textFill="#130e0e">
@@ -119,7 +119,7 @@
                      <children>
                         <ImageView fitHeight="62.0" fitWidth="109.0" layoutX="7.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../../../../../Downloads/early.png" />
+                              <Image url="@../../../../assets/img/early.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="label2" layoutX="75.0" layoutY="28.0" text="Chấm công ca 2" textFill="#130e0e">
@@ -138,7 +138,7 @@
                      <children>
                         <ImageView fitHeight="62.0" fitWidth="109.0" layoutX="7.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../../../../../Downloads/overtime.png" />
+                              <Image url="@../../../../assets/img/overtime.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="label5" layoutX="75.0" layoutY="28.0" text="Số giờ về sớm" textFill="#130e0e">
@@ -157,7 +157,7 @@
                      <children>
                         <ImageView fitHeight="62.0" fitWidth="109.0" layoutX="7.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../../../../../../../Downloads/clock.png" />
+                              <Image url="@../../../../assets/img/clock.png" />
                            </image>
                         </ImageView>
                         <Label fx:id="label3" layoutX="69.0" layoutY="28.0" text="Chấm công ca 3" textFill="#130e0e">
@@ -172,25 +172,6 @@
                         </Label>
                      </children>
                   </Pane>
-                  <Pane layoutX="746.0" layoutY="215.0" prefHeight="148.0" prefWidth="260.0" style="-fx-background-color: #66ffff; -fx-background-radius: 10;">
-                     <children>
-                        <ImageView fitHeight="62.0" fitWidth="109.0" layoutX="7.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../../../../../../Downloads/hard-work.png" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="label6" layoutX="95.0" layoutY="28.0" text="Số ngày công " textFill="#130e0e">
-                           <font>
-                              <Font size="24.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="info6" layoutX="111.0" layoutY="81.0">
-                           <font>
-                              <Font size="36.0" />
-                           </font>
-                        </Label>
-                     </children>
-                  </Pane>
                </children>
             </Pane>
             <Button fx:id="submitBtn" layoutX="931.0" layoutY="36.0" mnemonicParsing="false" onAction="#handleSubmit" style="-fx-background-color: #1e73e8;" text="Kiểm tra" textFill="WHITE">
@@ -198,6 +179,11 @@
                   <Font size="24.0" />
                </font>
             </Button>
+            <Label fx:id="viewLabel" alignment="BASELINE_CENTER" layoutX="113.0" layoutY="127.0" prefHeight="53.0" prefWidth="770.0" text="Thông tin tổng hợp" textAlignment="CENTER" textFill="#6a5fdc">
+               <font>
+                  <Font name="System Bold" size="36.0" />
+               </font>
+            </Label>
          </children>
       </Pane>
    </children>
