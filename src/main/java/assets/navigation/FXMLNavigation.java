@@ -3,6 +3,9 @@ package assets.navigation;
 public class FXMLNavigation {
 	public static String HOME_VIEW = "/controller/home/home_view.fxml";
 	public static String LOGIN_VIEW = "/controller/auth/login/login_view.fxml";
+	
+	public static String DASHBOARD_VIEW = "/controller/dashboard/dashboard_view.fxml";
+										  
 
 	public static String TIMEKEEPING_SELECTION_VIEW = "/controller/timekeeping/timekeeping_selection_view.fxml";
 	public static String TIMEKEEPING_MONTHLY_VIEW = "/controller/timekeeping/personal/monthly/timekeeping_monthly_view.fxml";
@@ -17,6 +20,6 @@ public class FXMLNavigation {
 
 	public static String IMPORT_SELECTION_VIEW = "/controller/importdata/import_selection_view.fxml";
 	public static String EXCEL_IMPORT_VIEW="/controller/importdata/excel/excel_import_view.fxml";
-
+	
 
 }
