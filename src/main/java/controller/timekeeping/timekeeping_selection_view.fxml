@@ -1,21 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.effect.*?>
-<?import javafx.scene.text.*?>
-<?import javafx.scene.image.*?>
-<?import java.lang.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="basePane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.timekeeping.TimekeepingSelectionController">
+<AnchorPane fx:id="basePane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.timekeeping.TimekeepingSelectionController">
    <children>
       <AnchorPane layoutX="-142.0" layoutY="-90.0" prefHeight="709.0" prefWidth="1126.0" style="-fx-background-color: #e5e5e5;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Pane fx:id="btnTimekeepingMonthly" layoutX="174.0" layoutY="90.0" onMouseClicked="#switchToTimekeepingMonthly" prefHeight="178.0" prefWidth="289.0" style="-fx-background-color: #d2d2d2; -fx-background-radius: 20px;">
                <children>
-                  <Label alignment="BASELINE_LEFT" layoutX="13.0" layoutY="131.0" prefHeight="38.0" prefWidth="268.0" text="Chấm công theo tháng">
+                  <Label alignment="BASELINE_LEFT" layoutX="10.0" layoutY="131.0" prefHeight="38.0" prefWidth="268.0" text="   Chấm công cá nhân " textAlignment="CENTER">
                      <font>
                         <Font size="26.0" />
                      </font>
