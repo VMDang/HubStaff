@@ -2,6 +2,7 @@ package controller.report.hrmanager.generalinformation;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -95,6 +96,7 @@ public class HRMGeneralInformationReportController implements Initializable {
     String[] listMonth = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
     String[] listQuarter = {"01", "02", "03", "04"};
     String[] listYear = {"2023", "2022", "2021", "2020"};
+    Set<String> listUnit = GeneralInformationUnit.getListUnit();
     
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -108,6 +110,8 @@ public class HRMGeneralInformationReportController implements Initializable {
 		monthYearBox.setValue("2023");
 		quarterYearBox.getItems().addAll(listYear);
 		quarterYearBox.setValue("2023");
+		unitNameBox.getItems().addAll(listUnit);
+		unitNameBox.setValue(listUnit.iterator().next());
 		
 		allBtn.setOnAction(event -> {
 			unitNameBox.setVisible(false);
