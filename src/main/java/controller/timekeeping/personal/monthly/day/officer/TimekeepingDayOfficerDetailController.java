@@ -89,9 +89,11 @@ public class TimekeepingDayOfficerDetailController {
     	
     	salaryCol.setCellValueFactory(cellData -> {
             // Perform the salary calculation based on the Employee object
-    		LogTimekeepingOfficer log = cellData.getValue();
-            int salary = calculateSalary(log);
-            return new SimpleIntegerProperty(salary).asObject();
+    		if(log.getTime_in() != null) { 
+	    		LogTimekeepingOfficer log = cellData.getValue();
+	            int salary = calculateSalary(log);
+	            return new SimpleIntegerProperty(salary).asObject();
+    		}else return new SimpleIntegerProperty(0).asObject();
         });
     	
     	

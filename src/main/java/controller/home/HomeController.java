@@ -7,22 +7,32 @@ import java.util.ResourceBundle;
 import controller.auth.Authentication;
 import controller.layouts.LayoutController;
 import static assets.navigation.FXMLNavigation.*;
-
-import javafx.animation.TranslateTransition;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.geometry.Rectangle2D;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.util.Duration;
+import javafx.stage.Screen;
+import javafx.stage.Stage;
 import model.employee.HRManager;
 import model.employee.officer.OfficerUnitManager;
 import model.employee.worker.WorkerUnitManager;
 
 public class HomeController implements Initializable {
     private final LayoutController layout = new LayoutController();
+    
+    @FXML
+    private Label tieude;
+    
+    @FXML
+    private ImageView dropdown;
 
     @FXML
     private Pane dashboardBtn;
@@ -52,30 +62,36 @@ public class HomeController implements Initializable {
     private Button drawerImage;
     
     @FXML
+    private ImageView logoutBtn;
+    
+    @FXML
     private AnchorPane drawerPane;
     
-    private boolean isDrawerOpen = true;
 
     @FXML
     void switchToDashboard(MouseEvent event) throws IOException {
         highlightSidebar(dashboardBtn);
-//        layout.changeAnchorPane(basePane, TIMEKEEPING_SELECTION_VIEW);
+        setTextTitle("Dashboard");
+        layout.changeAnchorPane(basePane, DASHBOARD_VIEW);
     }
 
     @FXML
     void switchToProfile(MouseEvent event) throws IOException {
         highlightSidebar(profileBtn);
+        setTextTitle("Profile");
 //        layout.changeAnchorPane(basePane, TIMEKEEPING_SELECTION_VIEW);
     }
     @FXML
     void switchToTimekeeping(MouseEvent event) throws IOException {
         highlightSidebar(timekeepingBtn);
+        setTextTitle("Timekeeping");
     	layout.changeAnchorPane(basePane, TIMEKEEPING_SELECTION_VIEW);
     }
 
     @FXML
     void switchToReport(MouseEvent event) throws IOException {
         highlightSidebar(reportBtn);
+        setTextTitle("Report");
         if (Authentication.authentication instanceof HRManager){
             layout.changeAnchorPane(basePane, HRM_REPORT_SELECTION_VIEW);
         }
@@ -88,20 +104,45 @@ public class HomeController implements Initializable {
     @FXML
     void switchToImport(MouseEvent event) throws IOException {
         highlightSidebar(importBtn);
+        setTextTitle("Import");
         if (Authentication.authentication instanceof  HRManager){
             layout.changeAnchorPane(basePane, IMPORT_SELECTION_VIEW);
         }
     }
-
+    
+    @FXML
+    void logout(MouseEvent event) throws IOException {
+    	Authentication.authentication = null;
+    	Stage currentStage = (Stage) basePane.getScene().getWindow();
+    	currentStage.close();
+    	
+    	Stage newStage = new Stage();
+        
+        // Tải file FXML của màn hình mới
+        Parent root = FXMLLoader.load(getClass().getResource(LOGIN_VIEW));
+        
+        // Tạo một Scene với nội dung của màn hình mới
+        Scene scene = new Scene(root);
+        
+        // Đặt vị trí của màn hình mới là chính giữa màn hình máy tính
+        double newX = 450 ;
+        double newY = 200;
+        newStage.setX(newX);
+        newStage.setY(newY);
+        
+        // Đặt Scene cho màn hình mới và hiển thị nó
+        newStage.setScene(scene);
+        newStage.show();
+    }
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        if (isDrawerOpen) {
-            drawerPane.setTranslateX(0);
-        } else {
-            drawerPane.setTranslateX(-240);
-        }
-		    drawerImage.setOnMouseClicked(event -> toggleDrawer());      
+    	try {
+			switchToDashboard(null);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
       
         if(!(Authentication.authentication instanceof  HRManager)) {
             importBtn.setVisible(false);
@@ -111,6 +152,7 @@ public class HomeController implements Initializable {
             reportBtn.setVisible(false);
         }
         usernameLabel.setText(Authentication.authentication.getName());
+        
     }
 
     public void highlightSidebar(Pane btn) {
@@ -121,17 +163,10 @@ public class HomeController implements Initializable {
         importBtn.setStyle("-fx-background-color: #0A4969");
         btn.setStyle("-fx-background-color: #054df6");
     }
-  
-    private void toggleDrawer() {
-        TranslateTransition transition = new TranslateTransition(Duration.millis(200), drawerPane);
-        if (isDrawerOpen) {
-            transition.setToX(-240);
-        } else {
-            transition.setToX(0);
-        }
-        transition.play();
-
-        isDrawerOpen = !isDrawerOpen;
+    
+    public void setTextTitle(String title) {
+    	tieude.setText(title);
     }
+    
     
 }
