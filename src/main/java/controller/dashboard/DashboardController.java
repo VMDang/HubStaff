@@ -1,6 +1,6 @@
 package controller.dashboard;
 
 
-public class dashboardController {
+public class DashboardController {
 
 }
