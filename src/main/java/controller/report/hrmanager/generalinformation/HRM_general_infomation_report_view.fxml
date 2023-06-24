@@ -5,13 +5,11 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleGroup?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="709.0" prefWidth="1126.0" style="-fx-background-color: e4e4e4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.report.hrmanager.generalinformation.HRMGeneralInformationReportController">
+<AnchorPane fx:id="basePane" prefHeight="709.0" prefWidth="1126.0" style="-fx-background-color: e4e4e4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.report.hrmanager.generalinformation.HRMGeneralInformationReportController">
    <children>
       <Pane layoutX="7.0" layoutY="30.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5px;" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="7.0" AnchorPane.rightAnchor="7.0" AnchorPane.topAnchor="30.0">
          <children>
@@ -77,97 +75,110 @@
             </Pane>
             <Pane layoutX="45.0" layoutY="199.0" prefHeight="407.0" prefWidth="1023.0" style="-fx-background-color: #ccffff; -fx-background-radius: 10px;">
                <children>
-                  <Pane layoutX="25.0" layoutY="25.0" prefHeight="148.0" prefWidth="250.0" style="-fx-background-color: #66ffff; -fx-background-radius: 10;">
+                  <Pane layoutX="16.0" layoutY="14.0" prefHeight="382.0" prefWidth="485.0" style="-fx-background-color: #66ffff; -fx-background-radius: 10;">
                      <children>
-                        <ImageView fitHeight="62.0" fitWidth="109.0" layoutX="7.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../assets/img/wrench.png" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="label1" layoutX="75.0" layoutY="28.0" text="Chấm công ca 1" textFill="#130e0e">
+                        <Label layoutX="184.0" layoutY="14.0" text="Công nhân" textFill="#274bb7">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <Label fx:id="info1" layoutX="106.0" layoutY="83.0">
+                        <Label layoutX="48.0" layoutY="60.0" text="Số giờ làm việc ca 1" textFill="#1c2aa6">
                            <font>
-                              <Font size="36.0" />
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="48.0" layoutY="100.0" text="Số giờ làm việc ca 2" textFill="#1c2aa6">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="48.0" layoutY="140.0" text="Số giờ làm việc ca 3" textFill="#1c2aa6">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="48.0" layoutY="180.0" text="Số giờ đi muộn" textFill="#1c2aa6">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="48.0" layoutY="220.0" text="Số giờ về sớm" textFill="#1c2aa6">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="workerShift1Label" layoutX="346.0" layoutY="60.0" text="11" textFill="#1c2aa6">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="workerShift2Label" layoutX="346.0" layoutY="100.0" text="11" textFill="#1c2aa6">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="workerShift3Label" layoutX="346.0" layoutY="140.0" text="11" textFill="#1c2aa6">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="workerLateLabel" layoutX="346.0" layoutY="180.0" text="11" textFill="#1c2aa6">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="workerEarlyLabel" layoutX="346.0" layoutY="220.0" text="11" textFill="#1c2aa6">
+                           <font>
+                              <Font size="18.0" />
                            </font>
                         </Label>
                      </children>
                   </Pane>
-                  <Pane layoutX="25.0" layoutY="215.0" prefHeight="148.0" prefWidth="250.0" style="-fx-background-color: #66ffff; -fx-background-radius: 10;">
+                  <Pane layoutX="524.0" layoutY="14.0" prefHeight="382.0" prefWidth="485.0" style="-fx-background-color: #66ffff; -fx-background-radius: 10;">
                      <children>
-                        <ImageView fitHeight="62.0" fitWidth="109.0" layoutX="7.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../assets/img/late.png" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="label4" layoutX="75.0" layoutY="28.0" text="Số giờ đi muộn" textFill="#130e0e">
+                        <Label layoutX="129.0" layoutY="14.0" text="Nhân viên văn phòng" textFill="#274bb7">
                            <font>
                               <Font size="24.0" />
                            </font>
                         </Label>
-                        <Label fx:id="info4" layoutX="106.0" layoutY="83.0">
+                        <Label layoutX="48.0" layoutY="60.0" text="Số buổi làm việc ca sáng" textFill="#1c2aa6">
                            <font>
-                              <Font size="36.0" />
+                              <Font size="18.0" />
                            </font>
                         </Label>
-                     </children>
-                  </Pane>
-                  <Pane layoutX="421.0" layoutY="25.0" prefHeight="148.0" prefWidth="250.0" style="-fx-background-color: #66ffff; -fx-background-radius: 10;">
-                     <children>
-                        <ImageView fitHeight="62.0" fitWidth="109.0" layoutX="7.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../assets/img/early.png" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="label2" layoutX="75.0" layoutY="28.0" text="Chấm công ca 2" textFill="#130e0e">
+                        <Label layoutX="48.0" layoutY="100.0" text="Số buổi làm việc ca chiều" textFill="#1c2aa6">
                            <font>
-                              <Font size="24.0" />
+                              <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="info2" layoutX="106.0" layoutY="83.0">
+                        <Label layoutX="48.0" layoutY="140.0" text="Số giờ đi muộn" textFill="#1c2aa6">
                            <font>
-                              <Font size="36.0" />
+                              <Font size="18.0" />
                            </font>
                         </Label>
-                     </children>
-                  </Pane>
-                  <Pane layoutX="421.0" layoutY="215.0" prefHeight="148.0" prefWidth="250.0" style="-fx-background-color: #66ffff; -fx-background-radius: 10;">
-                     <children>
-                        <ImageView fitHeight="62.0" fitWidth="109.0" layoutX="7.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../assets/img/overtime.png" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="label5" layoutX="75.0" layoutY="28.0" text="Số giờ về sớm" textFill="#130e0e">
+                        <Label layoutX="48.0" layoutY="180.0" text="Số giờ về sớm" textFill="#1c2aa6">
                            <font>
-                              <Font size="24.0" />
+                              <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="info5" layoutX="106.0" layoutY="83.0">
+                        <Label fx:id="officerMorningLabel" layoutX="346.0" layoutY="62.0" text="11" textFill="#1c2aa6">
                            <font>
-                              <Font size="36.0" />
+                              <Font size="18.0" />
                            </font>
                         </Label>
-                     </children>
-                  </Pane>
-                  <Pane layoutX="746.0" layoutY="25.0" prefHeight="148.0" prefWidth="252.0" style="-fx-background-color: #66ffff; -fx-background-radius: 10;">
-                     <children>
-                        <ImageView fitHeight="62.0" fitWidth="109.0" layoutX="7.0" layoutY="8.0" pickOnBounds="true" preserveRatio="true">
-                           <image>
-                              <Image url="@../../../../assets/img/clock.png" />
-                           </image>
-                        </ImageView>
-                        <Label fx:id="label3" layoutX="69.0" layoutY="28.0" text="Chấm công ca 3" textFill="#130e0e">
+                        <Label fx:id="officerAfternoonLabel" layoutX="346.0" layoutY="100.0" text="11" textFill="#1c2aa6">
                            <font>
-                              <Font size="24.0" />
+                              <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="info3" layoutX="120.0" layoutY="81.0">
+                        <Label fx:id="officerLateLabel" layoutX="346.0" layoutY="140.0" text="11" textFill="#1c2aa6">
                            <font>
-                              <Font size="36.0" />
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="officerEarlyLabel" layoutX="346.0" layoutY="180.0" text="11" textFill="#1c2aa6">
+                           <font>
+                              <Font size="18.0" />
                            </font>
                         </Label>
                      </children>
@@ -179,7 +190,7 @@
                   <Font size="24.0" />
                </font>
             </Button>
-            <Label fx:id="viewLabel" alignment="BASELINE_CENTER" layoutX="113.0" layoutY="127.0" prefHeight="53.0" prefWidth="770.0" text="Thông tin tổng hợp" textAlignment="CENTER" textFill="#6a5fdc">
+            <Label fx:id="viewLabel" alignment="BASELINE_CENTER" layoutX="223.0" layoutY="126.0" prefHeight="53.0" prefWidth="666.0" text="Thông tin tổng hợp" textAlignment="CENTER" textFill="#6a5fdc">
                <font>
                   <Font name="System Bold" size="36.0" />
                </font>

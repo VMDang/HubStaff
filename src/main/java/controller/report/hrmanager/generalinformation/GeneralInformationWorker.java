@@ -1,6 +1,7 @@
 package controller.report.hrmanager.generalinformation;
 
 import java.util.Date;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
@@ -28,6 +29,24 @@ public class GeneralInformationWorker {
     	SimpleDateFormat sdf = new SimpleDateFormat("YYYY");
     	String year = sdf.format(date);
     	return Integer.parseInt(year);
+    }
+    
+    public static double convertToDouble(String time) {
+        String[] parts = time.split(":");
+        int hours = Integer.parseInt(parts[0]);
+        int minutes = Integer.parseInt(parts[1]);
+        int seconds = Integer.parseInt(parts[2]);
+        double decimalTime = hours + (minutes / 60.0) + (seconds / 3600.0);
+        DecimalFormat df = new DecimalFormat("#.#");
+        return Double.parseDouble(df.format(decimalTime));
+    }
+    
+    public static double roundouble(double db) {
+        DecimalFormat df = new DecimalFormat("#.#");
+        if(db <= 0) {
+        	return 0.0;
+        }
+        return Double.parseDouble(df.format(db));
     }
     
 	public static double countTimeShift1ByMonth(int month, int year) {
@@ -119,7 +138,68 @@ public class GeneralInformationWorker {
 		}
 		return count;
 	}
+	
+	public static double countHourLateByMonth(int month, int year) {
+		double count = 0;
+		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
+			if(getMonthFromDate(logTimekeepingWorker.getDate()) == month && getYearFromDate(logTimekeepingWorker.getDate()) == year) {
+				count = count + ((convertToDouble(logTimekeepingWorker.getTime_in().toString()) - 7.5) > 0 ? (convertToDouble(logTimekeepingWorker.getTime_in().toString()) - 7.5) : 0);
+			}
+		}
+		return roundouble(count);
+	}
+	
+	public static double countHourEarlyByMonth(int month, int year) {
+		double count = 0;
+		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
+			if(getMonthFromDate(logTimekeepingWorker.getDate()) == month && getYearFromDate(logTimekeepingWorker.getDate()) == year) {
+				count = count + ((17.5 - convertToDouble(logTimekeepingWorker.getTime_out().toString())) > 0 ? (17.5 - convertToDouble(logTimekeepingWorker.getTime_out().toString())) : 0);
+			}
+		}
+		return roundouble(count);
+	}
+	
+	public static double countHourLateByQuarter(int quarter, int year) {
+		double count = 0;
+		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
+			if(getQuarterFromDate(logTimekeepingWorker.getDate()) == quarter && getYearFromDate(logTimekeepingWorker.getDate()) == year) {
+				count = count + ((convertToDouble(logTimekeepingWorker.getTime_in().toString()) - 7.5) > 0 ? (convertToDouble(logTimekeepingWorker.getTime_in().toString()) - 7.5) : 0);
+			}
+		}
+		return roundouble(count);
+	}
+	
+	public static double countHourEarlyByQuarter(int quarter, int year) {
+		double count = 0;
+		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
+			if(getQuarterFromDate(logTimekeepingWorker.getDate()) == quarter && getYearFromDate(logTimekeepingWorker.getDate()) == year) {
+				count = count + ((17.5 - convertToDouble(logTimekeepingWorker.getTime_out().toString())) > 0 ? (17.5 - convertToDouble(logTimekeepingWorker.getTime_out().toString())) : 0);
+			}
+		}
+		return roundouble(count);
+	}
+	
+	public static double countHourLateByYear(int year) {
+		double count = 0;
+		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
+			if(getYearFromDate(logTimekeepingWorker.getDate()) == year) {
+				count = count + ((convertToDouble(logTimekeepingWorker.getTime_in().toString()) - 7.5) > 0 ? (convertToDouble(logTimekeepingWorker.getTime_in().toString()) - 7.5) : 0);
+			}
+		}
+		return roundouble(count);
+	}
+	
+	public static double countHourEarlyByYear(int year) {
+		double count = 0;
+		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
+			if(getYearFromDate(logTimekeepingWorker.getDate()) == year) {
+				count = count + ((17.5 - convertToDouble(logTimekeepingWorker.getTime_out().toString())) > 0 ? (17.5 - convertToDouble(logTimekeepingWorker.getTime_out().toString())) : 0);
+			}
+		}
+		return roundouble(count);
+	}
+	
 	public static void main(String[] args) {
-		System.out.println(getYearFromDate(logTimekeepingWorkers.get(0).getDate()));
+		System.out.println(countHourEarlyByMonth(6, 2023));
 	}
 }

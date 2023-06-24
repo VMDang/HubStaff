@@ -1,5 +1,6 @@
 package controller.report.hrmanager.generalinformation;
 
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -30,7 +31,25 @@ public class GeneralInformationUnitWorker {
     	return Integer.parseInt(year);
     }
 	
-	public static double countTimeShift1ByMonthUnit(String unit_id, int month, int year) {
+    public static double convertToDouble(String time) {
+        String[] parts = time.split(":");
+        int hours = Integer.parseInt(parts[0]);
+        int minutes = Integer.parseInt(parts[1]);
+        int seconds = Integer.parseInt(parts[2]);
+        double decimalTime = hours + (minutes / 60.0) + (seconds / 3600.0);
+        DecimalFormat df = new DecimalFormat("#.#");
+        return Double.parseDouble(df.format(decimalTime));
+    }
+    
+    public static double roundouble(double db) {
+        DecimalFormat df = new DecimalFormat("#.#");
+        if(db <= 0) {
+        	return 0.0;
+        }
+        return Double.parseDouble(df.format(db));
+    }
+    
+	public static double countTimeShift1ByMonth(String unit_id, int month, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -43,7 +62,7 @@ public class GeneralInformationUnitWorker {
 		}
 		return count;
 	}
-	public static double countTimeShift2ByMonthUnit(String unit_id, int month, int year) {
+	public static double countTimeShift2ByMonth(String unit_id, int month, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -56,7 +75,7 @@ public class GeneralInformationUnitWorker {
 		}
 		return count;
 	}
-	public static double countTimeShift3ByMonthUnit(String unit_id, int month, int year) {
+	public static double countTimeShift3ByMonth(String unit_id, int month, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -69,7 +88,7 @@ public class GeneralInformationUnitWorker {
 		}
 		return count;
 	}
-	public static double countTimeShift1ByQuarterUnit(String unit_id, int quarter, int year) {
+	public static double countTimeShift1ByQuarter(String unit_id, int quarter, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -82,7 +101,7 @@ public class GeneralInformationUnitWorker {
 		}
 		return count;
 	}
-	public static double countTimeShift2ByQuarterUnit(String unit_id, int quarter, int year) {
+	public static double countTimeShift2ByQuarter(String unit_id, int quarter, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -95,7 +114,7 @@ public class GeneralInformationUnitWorker {
 		}
 		return count;
 	}
-	public static double countTimeShift3ByQuarterUnit(String unit_id, int quarter, int year) {
+	public static double countTimeShift3ByQuarter(String unit_id, int quarter, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -108,7 +127,7 @@ public class GeneralInformationUnitWorker {
 		}
 		return count;
 	}
-	public static double countTimeShift1ByYearUnit(String unit_id, int year) {
+	public static double countTimeShift1ByYear(String unit_id, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -121,7 +140,7 @@ public class GeneralInformationUnitWorker {
 		}
 		return count;
 	}
-	public static double countTimeShift2ByYearUnit(String unit_id, int year) {
+	public static double countTimeShift2ByYear(String unit_id, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -134,7 +153,7 @@ public class GeneralInformationUnitWorker {
 		}
 		return count;
 	}
-	public static double countTimeShift3ByYearUnit(String unit_id, int year) {
+	public static double countTimeShift3ByYear(String unit_id, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -147,4 +166,89 @@ public class GeneralInformationUnitWorker {
 		}
 		return count;
 	}
+	
+	public static double countHourLateByMonth(String unit_id, int month, int year) {
+		double count = 0;
+		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
+		for (Employee employee : employees) {
+			ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = GetTimekeepingWorker.getInstance().getTimekeepingsByEmployeeID(employee.getId());
+			for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
+				if(getMonthFromDate(logTimekeepingWorker.getDate()) == month && getYearFromDate(logTimekeepingWorker.getDate()) == year) {
+					count = count + ((convertToDouble(logTimekeepingWorker.getTime_in().toString()) - 7.5) > 0 ? (convertToDouble(logTimekeepingWorker.getTime_in().toString()) - 7.5) : 0);
+				}				
+			}
+		}
+		return roundouble(count);
+	}
+	
+	public static double countHourEarlyByMonth(String unit_id, int month, int year) {
+		double count = 0;
+		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
+		for (Employee employee : employees) {
+			ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = GetTimekeepingWorker.getInstance().getTimekeepingsByEmployeeID(employee.getId());
+			for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
+				if(getMonthFromDate(logTimekeepingWorker.getDate()) == month && getYearFromDate(logTimekeepingWorker.getDate()) == year) {
+					count = count + ((17.5 - convertToDouble(logTimekeepingWorker.getTime_out().toString())) > 0 ? (17.5 - convertToDouble(logTimekeepingWorker.getTime_out().toString())) : 0);
+				}				
+			}
+		}
+		return roundouble(count);
+	}
+	
+	public static double countHourLateByQuarter(String unit_id, int quarter, int year) {
+		double count = 0;
+		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
+		for (Employee employee : employees) {
+			ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = GetTimekeepingWorker.getInstance().getTimekeepingsByEmployeeID(employee.getId());
+			for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
+				if(getQuarterFromDate(logTimekeepingWorker.getDate()) == quarter && getYearFromDate(logTimekeepingWorker.getDate()) == year) {
+					count = count + ((convertToDouble(logTimekeepingWorker.getTime_in().toString()) - 7.5) > 0 ? (convertToDouble(logTimekeepingWorker.getTime_in().toString()) - 7.5) : 0);
+				}				
+			}
+		}
+		return roundouble(count);
+	}
+	
+	public static double countHourEarlyByQuarter(String unit_id, int quarter, int year) {
+		double count = 0;
+		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
+		for (Employee employee : employees) {
+			ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = GetTimekeepingWorker.getInstance().getTimekeepingsByEmployeeID(employee.getId());
+			for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
+				if(getQuarterFromDate(logTimekeepingWorker.getDate()) == quarter && getYearFromDate(logTimekeepingWorker.getDate()) == year) {
+					count = count + ((17.5 - convertToDouble(logTimekeepingWorker.getTime_out().toString())) > 0 ? (17.5 - convertToDouble(logTimekeepingWorker.getTime_out().toString())) : 0);
+				}				
+			}
+		}
+		return roundouble(count);
+	}
+	
+	public static double countHourLateByYear(String unit_id, int year) {
+		double count = 0;
+		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
+		for (Employee employee : employees) {
+			ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = GetTimekeepingWorker.getInstance().getTimekeepingsByEmployeeID(employee.getId());
+			for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
+				if(getYearFromDate(logTimekeepingWorker.getDate()) == year) {
+					count = count + ((convertToDouble(logTimekeepingWorker.getTime_in().toString()) - 7.5) > 0 ? (convertToDouble(logTimekeepingWorker.getTime_in().toString()) - 7.5) : 0);
+				}				
+			}
+		}
+		return roundouble(count);
+	}
+	
+	public static double countHourEarlyByYear(String unit_id, int year) {
+		double count = 0;
+		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
+		for (Employee employee : employees) {
+			ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = GetTimekeepingWorker.getInstance().getTimekeepingsByEmployeeID(employee.getId());
+			for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
+				if(getYearFromDate(logTimekeepingWorker.getDate()) == year) {
+					count = count + ((17.5 - convertToDouble(logTimekeepingWorker.getTime_out().toString())) > 0 ? (17.5 - convertToDouble(logTimekeepingWorker.getTime_out().toString())) : 0);
+				}				
+			}
+		}
+		return roundouble(count);
+	}
+	
 }

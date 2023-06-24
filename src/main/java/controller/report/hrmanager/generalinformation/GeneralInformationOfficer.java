@@ -84,4 +84,67 @@ public class GeneralInformationOfficer {
 		}
 		return count;   	
     }
+    
+    public static int countMorningByMonth(int month, int year) {
+    	int count = 0;
+		for (LogTimekeepingOfficer logTimekeepingOfficer : logTimekeepingOfficers) {
+			if(getMonthFromDate(logTimekeepingOfficer.getDate()) == month && getYearFromDate(logTimekeepingOfficer.getDate()) == year) {
+				count = count + (logTimekeepingOfficer.isMorning() ? 1 :0);
+			}
+		}
+    	return count;
+    }
+    
+    public static int countAfternoonByMonth(int month, int year) {
+    	int count = 0;
+		for (LogTimekeepingOfficer logTimekeepingOfficer : logTimekeepingOfficers) {
+			if(getMonthFromDate(logTimekeepingOfficer.getDate()) == month && getYearFromDate(logTimekeepingOfficer.getDate()) == year) {
+				count = count + (logTimekeepingOfficer.isAfternoon() ? 1 :0);
+			}
+		}
+    	return count;
+    }
+    
+    public static int countMorningByQuarter(int quarter, int year) {
+    	int count = 0;
+		for (LogTimekeepingOfficer logTimekeepingOfficer : logTimekeepingOfficers) {
+			if(getQuarterFromDate(logTimekeepingOfficer.getDate()) == quarter && getYearFromDate(logTimekeepingOfficer.getDate()) == year) {
+				count = count + (logTimekeepingOfficer.isMorning() ? 1 :0);
+			}
+		}
+    	return count;
+    }
+    
+    public static int countAfternoonByQuarter(int quarter, int year) {
+    	int count = 0;
+		for (LogTimekeepingOfficer logTimekeepingOfficer : logTimekeepingOfficers) {
+			if(getQuarterFromDate(logTimekeepingOfficer.getDate()) == quarter && getYearFromDate(logTimekeepingOfficer.getDate()) == year) {
+				count = count + (logTimekeepingOfficer.isAfternoon() ? 1 :0);
+			}
+		}
+    	return count;
+    }
+    
+    public static int countMorningByYear(int year) {
+    	int count = 0;
+		for (LogTimekeepingOfficer logTimekeepingOfficer : logTimekeepingOfficers) {
+			if(getYearFromDate(logTimekeepingOfficer.getDate()) == year) {
+				count = count + (logTimekeepingOfficer.isMorning() ? 1 :0);
+			}
+		}
+    	return count;
+    }
+    
+    public static int countAfternoonByYear(int year) {
+    	int count = 0;
+		for (LogTimekeepingOfficer logTimekeepingOfficer : logTimekeepingOfficers) {
+			if(getYearFromDate(logTimekeepingOfficer.getDate()) == year) {
+				count = count + (logTimekeepingOfficer.isAfternoon() ? 1 :0);
+			}
+		}
+    	return count;
+    }
+    public static void main(String[] args) {
+		System.out.println(logTimekeepingOfficers.get(0).isMorning());
+	}
 }
