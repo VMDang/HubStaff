@@ -1,15 +1,17 @@
 package controller.report.hrmanager.unitworkerattendance;
 
 import java.net.URL;
+
 import java.time.LocalDate;
-import java.time.YearMonth;
+
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.HashMap;
+
 import java.util.ResourceBundle;
 
 import dbtimekeeping.GetTimekeepingWorker;
 import hrsystem.GetAllEmployees;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -23,6 +25,15 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
+
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+
 import model.employee.Employee;
 import model.employee.worker.Worker;
 import model.logtimekeeping.LogTimekeepingWorker;
@@ -31,9 +42,7 @@ public class UnitWorkerAttendanceReportController implements Initializable{
 	
 	public static LocalDate today;
 	
-	private ObservableList<HRMUnitWorkerAttendanceReportRow> listRecord = FXCollections.observableArrayList();
-	
-	private HashMap<String, Worker> currentWorkers = new HashMap<String, Worker>();
+	private  static ObservableList<HRMUnitWorkerAttendanceReportRow> listRecord = FXCollections.observableArrayList();
 	
 	@FXML
     private AnchorPane basePane;
@@ -48,7 +57,16 @@ public class UnitWorkerAttendanceReportController implements Initializable{
     private Label monthBtn;
 	
 	@FXML
+	private Label unit_idText;
+	
+	@FXML
+	private Label unit_manager;
+	
+	@FXML
     private Button refresh;
+	
+	@FXML
+	private Button export_excel;
 	
 	@FXML
 	private TextField unitField;
@@ -77,36 +95,87 @@ public class UnitWorkerAttendanceReportController implements Initializable{
 	String[] listMonth = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
 	String[] listYear = {"2023", "2022", "2021", "2020"};
 	
+	String name_unit_manager;
+	
 	@FXML
 	void viewreport(ActionEvent event) {
-		listRecord.removeAll();
-        tableReport.getItems().clear();
-        
         String month = chooseMonth.getValue();
         monthBtn.setText("Báo cáo tháng "+month);
+        String unit_id_text = unitField.getText();
+        unit_idText.setText(""+unit_id_text);
+        listRecord = FXCollections.observableArrayList();
         setListRecord();
+        unit_manager.setText(name_unit_manager);
+
         tableReport.setItems(listRecord);
 	}
 	
+	@FXML
+	void export_excel(ActionEvent event) throws IOException {
+		// Choose directory
+	    DirectoryChooser directoryChooser = new DirectoryChooser();
+	    directoryChooser.setTitle("Choose Directory to Save Attendance Report");
+
+	    // Get directory
+	    File selectedDirectory = directoryChooser.showDialog(basePane.getScene().getWindow());
+	    if (selectedDirectory != null) {
+	        String directoryPath = selectedDirectory.getAbsolutePath();
+
+	        // Create workbook and sheet
+	        Workbook workbook = new XSSFWorkbook();
+	        Sheet sheet = workbook.createSheet("Attendance Report");
+
+	        // Title Column
+	        Row headerRow = sheet.createRow(0);
+	        headerRow.createCell(0).setCellValue("Name");
+	        headerRow.createCell(1).setCellValue("Worker ID");
+	        headerRow.createCell(2).setCellValue("Unit ID");
+	        headerRow.createCell(3).setCellValue("Month");
+	        headerRow.createCell(4).setCellValue("Total Hours Work");
+	        headerRow.createCell(5).setCellValue("Total Overtime Work");
+
+	        // Data
+	        int rowIndex = 1;
+	        for (HRMUnitWorkerAttendanceReportRow row : listRecord) {
+	            Row dataRow = sheet.createRow(rowIndex++);
+	            dataRow.createCell(0).setCellValue(row.getName());
+	            dataRow.createCell(1).setCellValue(row.getWorker_id());
+	            dataRow.createCell(2).setCellValue(row.getUnit_id());
+	            dataRow.createCell(3).setCellValue(row.getMonth());
+	            dataRow.createCell(4).setCellValue(row.getTotal_hour_work());
+	            dataRow.createCell(5).setCellValue(row.getTotal_overtime());
+	        }
+
+	        // Create file name
+	        String fileName = "Attendance_Report_" + "month_" + chooseMonth.getValue() + "_" + unitField.getText() + ".xlsx";
+	        String filePath = directoryPath + File.separator + fileName;
+
+	        // Save workbook into file
+	        try (FileOutputStream fileOutputStream = new FileOutputStream(filePath)) {
+	            workbook.write(fileOutputStream);
+	        } catch (IOException e) {
+	            e.printStackTrace();
+	        }
+	        
+	        workbook.close();
+	    }
+	}
+	
 	public void setListRecord() {
-		ArrayList<Worker> workers = new ArrayList<Worker>();
-        workers.addAll(getAllWorkerUnit(unitField.getText()));
-        
-        String monthFilter = chooseMonth.getValue() + "/" + chooseYear.getValue();
+		String unit_text_id = unitField.getText();
+		ArrayList<Worker> workers = getAllWorkerUnit(unit_text_id);
+        String month = chooseMonth.getValue();
+        String year = chooseYear.getValue();
 
         for (Worker w : workers) {
+        	
             ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = new ArrayList<LogTimekeepingWorker>();
             logTimekeepingWorkers.addAll(getTimeKeepingAWorker(w.getId()));
 
             ArrayList<LogTimekeepingWorker> logTimekeepingByMonth = new ArrayList<LogTimekeepingWorker>();
-            logTimekeepingByMonth.addAll(getTimekeepingByMonth(logTimekeepingWorkers, monthFilter));
+            logTimekeepingByMonth.addAll(getTimekeepingByMonth(logTimekeepingWorkers, month,year ));
 
             if (!logTimekeepingByMonth.isEmpty()){
-
-
-                if (monthFilter.equals(LocalDate.now().format(DateTimeFormatter.ofPattern("MM/yyyy")))){
-                    currentWorkers.put(w.getId(), w);
-                }
                 float totalHoursWork = 0, totalHoursOT = 0;
                 String hoursWork = "", hoursOT = "";
 
@@ -117,22 +186,26 @@ public class UnitWorkerAttendanceReportController implements Initializable{
                     hoursWork = String.valueOf(totalHoursWork) + " / " + String.valueOf(logTimekeepingByMonth.size()*2*4);
                     hoursOT = String.valueOf(totalHoursOT) + " / " + String.valueOf(logTimekeepingByMonth.size()*4);
                 }
-
-                listRecord.add(new HRMUnitWorkerAttendanceReportRow(w.getName(), w.getId(), w.getUnit_id(),unitField.getText(), hoursWork, hoursOT));
+                HRMUnitWorkerAttendanceReportRow row = new HRMUnitWorkerAttendanceReportRow(w.getName(), w.getId(), w.getUnit_id(),unitField.getText(), hoursWork, hoursOT);
+                
+                listRecord.add(row);
             }
         }
 	}
 	
 	public ArrayList<Worker> getAllWorkerUnit(String unit_id){
-        GetAllEmployees getAllEmployees = GetAllEmployees.getInstance();
-        ArrayList<Employee> allEmployees = getAllEmployees.getAllEmployees();
+        ArrayList<Employee> allEmployees = GetAllEmployees.getInstance().getAllEmployees();
         ArrayList<Worker> allWorker = new ArrayList<Worker>();
 
         for (Employee e: allEmployees) {
-            if ((e.getRole_id() == 3) && (e.getUnit_id().equals(unit_id))) {
+            if ((e.getRole_id() == 1 || e.getRole_id() == 3) && (e.getUnit_id().equals(unit_id))) {
+            	if(e.getRole_id() == 3) {
+            		name_unit_manager = e.getName();
+            	}
                 allWorker.add(new Worker(e.getId(), e.getName(), e.getUnit_id(), e.getPassword()));
             }
         }
+        
         return allWorker;
     }
 
@@ -143,18 +216,15 @@ public class UnitWorkerAttendanceReportController implements Initializable{
         return logTimekeepingWorkers;
     }
 
-    public ArrayList<LogTimekeepingWorker> getTimekeepingByMonth(ArrayList<LogTimekeepingWorker> logs, String monthFilter){
+    public ArrayList<LogTimekeepingWorker> getTimekeepingByMonth(ArrayList<LogTimekeepingWorker> logs, String month, String year){
         ArrayList<LogTimekeepingWorker> logFilterByMonth = new ArrayList<LogTimekeepingWorker>();
-
         for (LogTimekeepingWorker log : logs) {
-            YearMonth yearMonth = YearMonth.of(log.getDate().toLocalDate().getYear(), log.getDate().toLocalDate().getMonth());
-            String monthReport = yearMonth.format(DateTimeFormatter.ofPattern("MM/yyyy"));
-
-            if (monthReport.equals(monthFilter)){
+           String logMonth = log.getDate().toString().split("-")[1];
+           String logYear = log.getDate().toString().split("-")[0];
+            if (logMonth.equals(month) && logYear.equals(year)){
                 logFilterByMonth.add(log);
             }
         }
-
         return logFilterByMonth;
     }
 
@@ -169,7 +239,7 @@ public class UnitWorkerAttendanceReportController implements Initializable{
         
         monthBtn.setText("Báo cáo tháng "+month);
 
-        setListRecord();
+        listRecord = FXCollections.observableArrayList();
         
         nameCol.setCellValueFactory(new PropertyValueFactory<HRMUnitWorkerAttendanceReportRow, String>("name"));
 		worker_idCol.setCellValueFactory(new PropertyValueFactory<HRMUnitWorkerAttendanceReportRow, String>("worker_id"));
