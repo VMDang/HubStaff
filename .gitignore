@@ -42,4 +42,4 @@ src/main/resources/
 ### Mac OS ###
 .DS_Store
 
-!**/src/main/java/javafx1/
+src/main/java/javafx1/
