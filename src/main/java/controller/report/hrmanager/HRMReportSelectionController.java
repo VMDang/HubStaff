@@ -25,8 +25,8 @@ public class HRMReportSelectionController {
     private Pane btnReportGeneral;
 
     @FXML
-    void switchToReportUnitWorker(MouseEvent event) {
-
+    void switchToReportUnitWorker(MouseEvent event) throws IOException {
+    	layout.changeAnchorPane(basePane, HRM_UNIT_WORKER_ATTENDANCE_VIEW);
     }
 
     @FXML
