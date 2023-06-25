@@ -29,7 +29,7 @@ public class GeneralInformationOfficerUnit {
     	return Integer.parseInt(year);
     }
 	
-	public static double countHourEarlyByMonth(String unit_id, int month, int year) {
+	public double countHourEarlyByMonth(String unit_id, int month, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -42,7 +42,7 @@ public class GeneralInformationOfficerUnit {
 		}
 		return count;
 	}
-	public static double countHourLateByMonth(String unit_id, int month, int year) {
+	public double countHourLateByMonth(String unit_id, int month, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -55,7 +55,7 @@ public class GeneralInformationOfficerUnit {
 		}
 		return count;
 	}
-	public static double countHourEarlyByQuarter(String unit_id, int quarter, int year) {
+	public double countHourEarlyByQuarter(String unit_id, int quarter, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -68,7 +68,7 @@ public class GeneralInformationOfficerUnit {
 		}
 		return count;
 	}
-	public static double countHourLateByQuarter(String unit_id, int quarter, int year) {
+	public double countHourLateByQuarter(String unit_id, int quarter, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -81,7 +81,7 @@ public class GeneralInformationOfficerUnit {
 		}
 		return count;
 	}
-	public static double countHourEarlyByYear(String unit_id, int year) {
+	public double countHourEarlyByYear(String unit_id, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -94,7 +94,7 @@ public class GeneralInformationOfficerUnit {
 		}
 		return count;
 	}
-	public static double countHourLateByYear(String unit_id, int year) {
+	public double countHourLateByYear(String unit_id, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -107,7 +107,7 @@ public class GeneralInformationOfficerUnit {
 		}
 		return count;
 	}
-	public static int countMorningByMonth(String unit_id, int month, int year) {
+	public int countMorningByMonth(String unit_id, int month, int year) {
 		int count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -120,7 +120,7 @@ public class GeneralInformationOfficerUnit {
 		}
 		return count;
 	}
-	public static int countAfternoonByMonth(String unit_id, int month, int year) {
+	public int countAfternoonByMonth(String unit_id, int month, int year) {
 		int count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -133,7 +133,7 @@ public class GeneralInformationOfficerUnit {
 		}
 		return count;
 	}
-	public static int countMorningByQuarter(String unit_id, int quarter, int year) {
+	public int countMorningByQuarter(String unit_id, int quarter, int year) {
 		int count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -146,7 +146,7 @@ public class GeneralInformationOfficerUnit {
 		}
 		return count;
 	}
-	public static int countAfternoonByQuarter(String unit_id, int quarter, int year) {
+	public int countAfternoonByQuarter(String unit_id, int quarter, int year) {
 		int count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -159,7 +159,7 @@ public class GeneralInformationOfficerUnit {
 		}
 		return count;
 	}
-	public static int countMorningByYear(String unit_id, int year) {
+	public int countMorningByYear(String unit_id, int year) {
 		int count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -172,7 +172,7 @@ public class GeneralInformationOfficerUnit {
 		}
 		return count;
 	}
-	public static int countAfternoonByYear(String unit_id, int year) {
+	public int countAfternoonByYear(String unit_id, int year) {
 		int count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {

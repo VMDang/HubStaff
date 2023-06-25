@@ -9,7 +9,7 @@ import dbtimekeeping.GetTimekeepingWorker;
 import model.employee.Employee;
 import model.logtimekeeping.LogTimekeepingWorker;
 
-public class GeneralInformationUnitWorker {
+public class GeneralInformationWorkerUnit {
 	
     public static int getMonthFromDate(Date date) {
         SimpleDateFormat sdf = new SimpleDateFormat("MM");
@@ -49,7 +49,7 @@ public class GeneralInformationUnitWorker {
         return Double.parseDouble(df.format(db));
     }
     
-	public static double countTimeShift1ByMonth(String unit_id, int month, int year) {
+	public double countTimeShift1ByMonth(String unit_id, int month, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -62,7 +62,7 @@ public class GeneralInformationUnitWorker {
 		}
 		return count;
 	}
-	public static double countTimeShift2ByMonth(String unit_id, int month, int year) {
+	public double countTimeShift2ByMonth(String unit_id, int month, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -75,7 +75,7 @@ public class GeneralInformationUnitWorker {
 		}
 		return count;
 	}
-	public static double countTimeShift3ByMonth(String unit_id, int month, int year) {
+	public double countTimeShift3ByMonth(String unit_id, int month, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -88,7 +88,7 @@ public class GeneralInformationUnitWorker {
 		}
 		return count;
 	}
-	public static double countTimeShift1ByQuarter(String unit_id, int quarter, int year) {
+	public double countTimeShift1ByQuarter(String unit_id, int quarter, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -101,7 +101,7 @@ public class GeneralInformationUnitWorker {
 		}
 		return count;
 	}
-	public static double countTimeShift2ByQuarter(String unit_id, int quarter, int year) {
+	public double countTimeShift2ByQuarter(String unit_id, int quarter, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -114,7 +114,7 @@ public class GeneralInformationUnitWorker {
 		}
 		return count;
 	}
-	public static double countTimeShift3ByQuarter(String unit_id, int quarter, int year) {
+	public double countTimeShift3ByQuarter(String unit_id, int quarter, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -127,7 +127,7 @@ public class GeneralInformationUnitWorker {
 		}
 		return count;
 	}
-	public static double countTimeShift1ByYear(String unit_id, int year) {
+	public double countTimeShift1ByYear(String unit_id, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -140,7 +140,7 @@ public class GeneralInformationUnitWorker {
 		}
 		return count;
 	}
-	public static double countTimeShift2ByYear(String unit_id, int year) {
+	public double countTimeShift2ByYear(String unit_id, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -153,7 +153,7 @@ public class GeneralInformationUnitWorker {
 		}
 		return count;
 	}
-	public static double countTimeShift3ByYear(String unit_id, int year) {
+	public double countTimeShift3ByYear(String unit_id, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -167,7 +167,7 @@ public class GeneralInformationUnitWorker {
 		return count;
 	}
 	
-	public static double countHourLateByMonth(String unit_id, int month, int year) {
+	public double countHourLateByMonth(String unit_id, int month, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -181,7 +181,7 @@ public class GeneralInformationUnitWorker {
 		return roundouble(count);
 	}
 	
-	public static double countHourEarlyByMonth(String unit_id, int month, int year) {
+	public double countHourEarlyByMonth(String unit_id, int month, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -195,7 +195,7 @@ public class GeneralInformationUnitWorker {
 		return roundouble(count);
 	}
 	
-	public static double countHourLateByQuarter(String unit_id, int quarter, int year) {
+	public double countHourLateByQuarter(String unit_id, int quarter, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -209,7 +209,7 @@ public class GeneralInformationUnitWorker {
 		return roundouble(count);
 	}
 	
-	public static double countHourEarlyByQuarter(String unit_id, int quarter, int year) {
+	public double countHourEarlyByQuarter(String unit_id, int quarter, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -223,7 +223,7 @@ public class GeneralInformationUnitWorker {
 		return roundouble(count);
 	}
 	
-	public static double countHourLateByYear(String unit_id, int year) {
+	public double countHourLateByYear(String unit_id, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {
@@ -237,7 +237,7 @@ public class GeneralInformationUnitWorker {
 		return roundouble(count);
 	}
 	
-	public static double countHourEarlyByYear(String unit_id, int year) {
+	public double countHourEarlyByYear(String unit_id, int year) {
 		double count = 0;
 		ArrayList<Employee> employees = GeneralInformationUnit.getEmployeesByUnit(unit_id);
 		for (Employee employee : employees) {

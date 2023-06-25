@@ -30,7 +30,7 @@ public class GeneralInformationOfficer {
     	return Integer.parseInt(year);
     }
     
-    public static double countHourEarlyByMonth(int month, int year) {
+    public double countHourEarlyByMonth(int month, int year) {
 		double count = 0;
 		for (LogTimekeepingOfficer logTimekeepingOfficer : logTimekeepingOfficers) {
 			if(getMonthFromDate(logTimekeepingOfficer.getDate()) == month && getYearFromDate(logTimekeepingOfficer.getDate()) == year) {
@@ -39,7 +39,7 @@ public class GeneralInformationOfficer {
 		}
 		return count;   	
     }
-    public static double countHourLateByMonth(int month, int year) {
+    public double countHourLateByMonth(int month, int year) {
 		double count = 0;
 		for (LogTimekeepingOfficer logTimekeepingOfficer : logTimekeepingOfficers) {
 			if(getMonthFromDate(logTimekeepingOfficer.getDate()) == month && getYearFromDate(logTimekeepingOfficer.getDate()) == year) {
@@ -48,7 +48,7 @@ public class GeneralInformationOfficer {
 		}
 		return count;   	
     }
-    public static double countHourEarlyByQuarter(int quarter, int year) {
+    public double countHourEarlyByQuarter(int quarter, int year) {
 		double count = 0;
 		for (LogTimekeepingOfficer logTimekeepingOfficer : logTimekeepingOfficers) {
 			if(getQuarterFromDate(logTimekeepingOfficer.getDate()) == quarter && getYearFromDate(logTimekeepingOfficer.getDate()) == year) {
@@ -57,7 +57,7 @@ public class GeneralInformationOfficer {
 		}
 		return count;   	
     }
-    public static double countHourLateByQuarter(int quarter, int year) {
+    public double countHourLateByQuarter(int quarter, int year) {
 		double count = 0;
 		for (LogTimekeepingOfficer logTimekeepingOfficer : logTimekeepingOfficers) {
 			if(getQuarterFromDate(logTimekeepingOfficer.getDate()) == quarter && getYearFromDate(logTimekeepingOfficer.getDate()) == year) {
@@ -66,7 +66,7 @@ public class GeneralInformationOfficer {
 		}
 		return count;   	
     }
-    public static double countHourEarlyByYear(int year) {
+    public double countHourEarlyByYear(int year) {
 		double count = 0;
 		for (LogTimekeepingOfficer logTimekeepingOfficer : logTimekeepingOfficers) {
 			if(getYearFromDate(logTimekeepingOfficer.getDate()) == year) {
@@ -75,7 +75,7 @@ public class GeneralInformationOfficer {
 		}
 		return count;   	
     }
-    public static double countHourLateByYear(int year) {
+    public double countHourLateByYear(int year) {
 		double count = 0;
 		for (LogTimekeepingOfficer logTimekeepingOfficer : logTimekeepingOfficers) {
 			if(getYearFromDate(logTimekeepingOfficer.getDate()) == year) {
@@ -85,7 +85,7 @@ public class GeneralInformationOfficer {
 		return count;   	
     }
     
-    public static int countMorningByMonth(int month, int year) {
+    public int countMorningByMonth(int month, int year) {
     	int count = 0;
 		for (LogTimekeepingOfficer logTimekeepingOfficer : logTimekeepingOfficers) {
 			if(getMonthFromDate(logTimekeepingOfficer.getDate()) == month && getYearFromDate(logTimekeepingOfficer.getDate()) == year) {
@@ -95,7 +95,7 @@ public class GeneralInformationOfficer {
     	return count;
     }
     
-    public static int countAfternoonByMonth(int month, int year) {
+    public int countAfternoonByMonth(int month, int year) {
     	int count = 0;
 		for (LogTimekeepingOfficer logTimekeepingOfficer : logTimekeepingOfficers) {
 			if(getMonthFromDate(logTimekeepingOfficer.getDate()) == month && getYearFromDate(logTimekeepingOfficer.getDate()) == year) {
@@ -105,7 +105,7 @@ public class GeneralInformationOfficer {
     	return count;
     }
     
-    public static int countMorningByQuarter(int quarter, int year) {
+    public int countMorningByQuarter(int quarter, int year) {
     	int count = 0;
 		for (LogTimekeepingOfficer logTimekeepingOfficer : logTimekeepingOfficers) {
 			if(getQuarterFromDate(logTimekeepingOfficer.getDate()) == quarter && getYearFromDate(logTimekeepingOfficer.getDate()) == year) {
@@ -115,7 +115,7 @@ public class GeneralInformationOfficer {
     	return count;
     }
     
-    public static int countAfternoonByQuarter(int quarter, int year) {
+    public int countAfternoonByQuarter(int quarter, int year) {
     	int count = 0;
 		for (LogTimekeepingOfficer logTimekeepingOfficer : logTimekeepingOfficers) {
 			if(getQuarterFromDate(logTimekeepingOfficer.getDate()) == quarter && getYearFromDate(logTimekeepingOfficer.getDate()) == year) {
@@ -125,7 +125,7 @@ public class GeneralInformationOfficer {
     	return count;
     }
     
-    public static int countMorningByYear(int year) {
+    public int countMorningByYear(int year) {
     	int count = 0;
 		for (LogTimekeepingOfficer logTimekeepingOfficer : logTimekeepingOfficers) {
 			if(getYearFromDate(logTimekeepingOfficer.getDate()) == year) {
@@ -135,7 +135,7 @@ public class GeneralInformationOfficer {
     	return count;
     }
     
-    public static int countAfternoonByYear(int year) {
+    public int countAfternoonByYear(int year) {
     	int count = 0;
 		for (LogTimekeepingOfficer logTimekeepingOfficer : logTimekeepingOfficers) {
 			if(getYearFromDate(logTimekeepingOfficer.getDate()) == year) {
@@ -144,7 +144,7 @@ public class GeneralInformationOfficer {
 		}
     	return count;
     }
-    public static void main(String[] args) {
+    public void main(String[] args) {
 		System.out.println(logTimekeepingOfficers.get(0).isMorning());
 	}
 }
