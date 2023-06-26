@@ -2,6 +2,7 @@ package controller.report.hrmanager.generalinformation;
 
 import java.net.URL;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,40 +12,42 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.layout.AnchorPane;
 
 public class HRMGeneralInformationReportController implements Initializable {
+
+    @FXML
+    private AnchorPane basePane;
+
     @FXML
     private RadioButton allBtn;
 
     @FXML
-    private Label info1;
+    private Label officerAfternoonLabel;
 
     @FXML
-    private Label info2;
+    private Label officerEarlyLabel;
 
     @FXML
-    private Label info3;
+    private Label officerLateLabel;
 
     @FXML
-    private Label info4;
+    private Label officerMorningLabel;
+    
+    @FXML
+    private Label workerEarlyLabel;
 
     @FXML
-    private Label info5;
+    private Label workerLateLabel;
 
     @FXML
-    private Label label1;
+    private Label workerShift1Label;
 
     @FXML
-    private Label label2;
+    private Label workerShift2Label;
 
     @FXML
-    private Label label3;
-
-    @FXML
-    private Label label4;
-
-    @FXML
-    private Label label5;
+    private Label workerShift3Label;
     
     @FXML
     private Label viewLabel;
@@ -90,11 +93,20 @@ public class HRMGeneralInformationReportController implements Initializable {
     
     @FXML
     private Label quarterYearLabel;
+    
+    private GeneralInformationOfficer informationOfficer = new GeneralInformationOfficer();
+    
+    private GeneralInformationOfficerUnit informationOfficerUnit = new GeneralInformationOfficerUnit();
+    
+    private GeneralInformationWorker informationWorker = new GeneralInformationWorker();
+    
+    private GeneralInformationWorkerUnit informationWorkerUnit = new GeneralInformationWorkerUnit();
 
     
     String[] listMonth = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
     String[] listQuarter = {"01", "02", "03", "04"};
     String[] listYear = {"2023", "2022", "2021", "2020"};
+    Set<String> listUnit = GeneralInformationUnit.getListUnit();
     
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -108,6 +120,8 @@ public class HRMGeneralInformationReportController implements Initializable {
 		monthYearBox.setValue("2023");
 		quarterYearBox.getItems().addAll(listYear);
 		quarterYearBox.setValue("2023");
+		unitNameBox.getItems().addAll(listUnit);
+		unitNameBox.setValue(listUnit.iterator().next());
 		
 		allBtn.setOnAction(event -> {
 			unitNameBox.setVisible(false);
@@ -131,6 +145,8 @@ public class HRMGeneralInformationReportController implements Initializable {
 			hideQuarter();
 			showYear();
 		});
+		
+		getAllInfo();
 	}
 	void showMonth() {
 		monthBox.setVisible(true);
@@ -158,83 +174,174 @@ public class HRMGeneralInformationReportController implements Initializable {
 	void hideYear() {
 		yearBox.setVisible(false);
 	}
+	
+	void getMonthInfo() {
+		int month = Integer.parseInt(monthBox.getValue().toString());
+		int year = Integer.parseInt(monthYearBox.getValue().toString());
+		double timeShift1W = informationWorker.countTimeShift1ByMonth(month, year);
+		workerShift1Label.setText(""+timeShift1W);
+		double timeShift2W = informationWorker.countTimeShift2ByMonth(month, year);
+		workerShift2Label.setText(""+timeShift2W);
+		double timeShift3W = informationWorker.countTimeShift3ByMonth(month, year);
+		workerShift3Label.setText(""+timeShift3W);
+		double hourLateO = informationOfficer.countHourLateByMonth(month, year);
+		officerLateLabel.setText(""+hourLateO);
+		double hourEarlyO = informationOfficer.countHourEarlyByMonth(month, year);
+		officerEarlyLabel.setText(""+hourEarlyO);
+		double hourLateW = informationWorker.countHourLateByMonth(month, year);
+		workerLateLabel.setText(""+hourLateW);
+		double hourEarlyW = informationWorker.countHourEarlyByMonth(month, year);
+		workerEarlyLabel.setText(""+hourEarlyW);
+		int morningO = informationOfficer.countMorningByMonth(month, year);
+		officerMorningLabel.setText(""+morningO);
+		int afternoonO = informationOfficer.countAfternoonByMonth(month, year);
+		officerAfternoonLabel.setText(""+afternoonO);
+	}
+	
+	void getMonthUnitInfo(String unit_id) {
+		int month = Integer.parseInt(monthBox.getValue().toString());
+		int year = Integer.parseInt(monthYearBox.getValue().toString());
+		double timeShift1W = informationWorkerUnit.countTimeShift1ByMonth(unit_id, month, year);
+		workerShift1Label.setText(""+timeShift1W);
+		double timeShift2W = informationWorkerUnit.countTimeShift2ByMonth(unit_id, month, year);
+		workerShift2Label.setText(""+timeShift2W);
+		double timeShift3W = informationWorkerUnit.countTimeShift3ByMonth(unit_id, month, year);
+		workerShift3Label.setText(""+timeShift3W);
+		double hourLateO = informationOfficerUnit.countHourLateByMonth(unit_id, month, year);
+		officerLateLabel.setText(""+hourLateO);
+		double hourEarlyO = informationOfficerUnit.countHourEarlyByMonth(unit_id, month, year);
+		officerEarlyLabel.setText(""+hourEarlyO);
+		double hourLateW = informationWorkerUnit.countHourLateByMonth(unit_id, month, year);
+		workerLateLabel.setText(""+hourLateW);
+		double hourEarlyW = informationWorkerUnit.countHourEarlyByMonth(unit_id, month, year);
+		workerEarlyLabel.setText(""+hourEarlyW);
+		int morningO = informationOfficerUnit.countMorningByMonth(unit_id, month, year);
+		officerMorningLabel.setText(""+morningO);
+		int afternoonO = informationOfficerUnit.countAfternoonByMonth(unit_id, month, year);
+		officerAfternoonLabel.setText(""+afternoonO);
+	}
+	
+	void getQuarterInfo() {
+		int quarter = Integer.parseInt(quarterBox.getValue().toString());
+		int year = Integer.parseInt(quarterYearBox.getValue().toString());
+		double timeShift1W = informationWorker.countTimeShift1ByQuarter(quarter, year);
+		workerShift1Label.setText(""+timeShift1W);
+		double timeShift2W = informationWorker.countTimeShift2ByQuarter(quarter, year);
+		workerShift2Label.setText(""+timeShift2W);
+		double timeShift3W = informationWorker.countTimeShift3ByQuarter(quarter, year);
+		workerShift3Label.setText(""+timeShift3W);
+		double hourLateO = informationOfficer.countHourLateByQuarter(quarter, year);
+		officerLateLabel.setText(""+hourLateO);
+		double hourEarlyO = informationOfficer.countHourEarlyByQuarter(quarter, year);
+		officerEarlyLabel.setText(""+hourEarlyO);
+		double hourLateW = informationWorker.countHourLateByQuarter(quarter, year);
+		workerLateLabel.setText(""+hourLateW);
+		double hourEarlyW = informationWorker.countHourEarlyByMonth(quarter, year);
+		workerEarlyLabel.setText(""+hourEarlyW);
+		int morningO = informationOfficer.countMorningByQuarter(quarter, year);
+		officerMorningLabel.setText(""+morningO);
+		int afternoonO = informationOfficer.countAfternoonByQuarter(quarter, year);
+		officerAfternoonLabel.setText(""+afternoonO);
+	}
+	
+	void getQuarterUnitInfo(String unit_id) {
+		int quarter = Integer.parseInt(quarterBox.getValue().toString());
+		int year = Integer.parseInt(quarterYearBox.getValue().toString());
+		double timeShift1W = informationWorkerUnit.countTimeShift1ByQuarter(unit_id, quarter, year);
+		workerShift1Label.setText(""+timeShift1W);
+		double timeShift2W = informationWorkerUnit.countTimeShift2ByQuarter(unit_id, quarter, year);
+		workerShift2Label.setText(""+timeShift2W);
+		double timeShift3W = informationWorkerUnit.countTimeShift3ByQuarter(unit_id, quarter, year);
+		workerShift3Label.setText(""+timeShift3W);
+		double hourLateO = informationOfficerUnit.countHourLateByQuarter(unit_id, quarter, year);
+		officerLateLabel.setText(""+hourLateO);
+		double hourEarlyO = informationOfficerUnit.countHourEarlyByQuarter(unit_id, quarter, year);
+		officerEarlyLabel.setText(""+hourEarlyO);
+		double hourLateW = informationWorkerUnit.countHourLateByQuarter(unit_id, quarter, year);
+		workerLateLabel.setText(""+hourLateW);
+		double hourEarlyW = informationWorkerUnit.countHourEarlyByMonth(unit_id, quarter, year);
+		workerEarlyLabel.setText(""+hourEarlyW);
+		int morningO = informationOfficerUnit.countMorningByQuarter(unit_id, quarter, year);
+		officerMorningLabel.setText(""+morningO);
+		int afternoonO = informationOfficerUnit.countAfternoonByQuarter(unit_id, quarter, year);
+		officerAfternoonLabel.setText(""+afternoonO);
+	}
+	
+	void getYearInfo() {
+		int year = Integer.parseInt(yearBox.getValue().toString());
+		double timeShift1W = informationWorker.countTimeShift1ByYear(year);
+		workerShift1Label.setText(""+timeShift1W);
+		double timeShift2W = informationWorker.countTimeShift2ByYear(year);
+		workerShift2Label.setText(""+timeShift2W);
+		double timeShift3W = informationWorker.countTimeShift3ByYear(year);
+		workerShift3Label.setText(""+timeShift3W);
+		double hourLateO = informationOfficer.countHourLateByYear(year);
+		officerLateLabel.setText(""+hourLateO);
+		double hourEarlyO = informationOfficer.countHourEarlyByYear(year);
+		officerEarlyLabel.setText(""+hourEarlyO);
+		double hourLateW = informationWorker.countHourLateByYear(year);
+		workerLateLabel.setText(""+hourLateW);
+		double hourEarlyW = informationWorker.countHourLateByYear(year);
+		workerEarlyLabel.setText(""+hourEarlyW);
+		int morningO = informationOfficer.countMorningByYear(year);
+		officerMorningLabel.setText(""+morningO);
+		int afternoonO = informationOfficer.countAfternoonByYear(year);
+		officerAfternoonLabel.setText(""+afternoonO);
+	}
+	
+	void getYearUnitInfo(String unit_id) {
+		int year = Integer.parseInt(yearBox.getValue().toString());
+		double timeShift1W = informationWorkerUnit.countTimeShift1ByYear(unit_id, year);
+		workerShift1Label.setText(""+timeShift1W);
+		double timeShift2W = informationWorkerUnit.countTimeShift2ByYear(unit_id, year);
+		workerShift2Label.setText(""+timeShift2W);
+		double timeShift3W = informationWorkerUnit.countTimeShift3ByYear(unit_id, year);
+		workerShift3Label.setText(""+timeShift3W);
+		double hourLateO = informationOfficerUnit.countHourLateByYear(unit_id, year);
+		officerLateLabel.setText(""+hourLateO);
+		double hourEarlyO = informationOfficerUnit.countHourEarlyByYear(unit_id, year);
+		officerEarlyLabel.setText(""+hourEarlyO);
+		double hourLateW = informationWorkerUnit.countHourLateByYear(unit_id, year);
+		workerLateLabel.setText(""+hourLateW);
+		double hourEarlyW = informationWorkerUnit.countHourLateByYear(unit_id, year);
+		workerEarlyLabel.setText(""+hourEarlyW);
+		int morningO = informationOfficerUnit.countMorningByYear(unit_id, year);
+		officerMorningLabel.setText(""+morningO);
+		int afternoonO = informationOfficerUnit.countAfternoonByYear(unit_id, year);
+		officerAfternoonLabel.setText(""+afternoonO);
+	}
+	
+	void getAllInfo() {
+		if(monthBtn.isSelected()) {
+			getMonthInfo();
+		}
+		else if(quarterBtn.isSelected()) {
+			getQuarterInfo();
+		}
+		else {
+			getYearInfo();
+		}
+	}
+	
+	void getUnitInfo() {
+		String unit_id = unitNameBox.getValue().toString();
+		if(monthBtn.isSelected()) {
+			getMonthUnitInfo(unit_id);
+		}
+		else if(quarterBtn.isSelected()) {
+			getQuarterUnitInfo(unit_id);
+		}
+		else {
+			getYearUnitInfo(unit_id);
+		}
+	}
     @FXML
     void handleSubmit(ActionEvent event) {
     	if(allBtn.isSelected()) {
-    		if(monthBtn.isSelected()) {
-    			int month = Integer.parseInt(monthBox.getValue().toString());
-    			int year = Integer.parseInt(monthYearBox.getValue().toString());
-    			viewLabel.setText("Toàn doanh nghiệp Tháng "+ month + " Năm " + year);
-    			
-    			label1.setText("Chấm công ca 1");
-    			double timeShift1Month = GeneralInformationWorker.countTimeShift1ByMonth(month, year);
-    			info1.setText(""+timeShift1Month);
-    			
-    			label2.setText("Chấm công ca 2");
-    			double timeShift2Month = GeneralInformationWorker.countTimeShift2ByMonth(month, year);
-    			info2.setText(""+timeShift2Month);
-    			
-    			label3.setText("Chấm công ca 3");
-    			double timeShift3Month = GeneralInformationWorker.countTimeShift3ByMonth(month, year);
-    			info3.setText(""+timeShift3Month);
-    			
-    			label4.setText("Số giờ đi muộn");
-    			double hourLate = GeneralInformationOfficer.countHourLateByMonth(month, year);
-    			info4.setText(""+hourLate);
-    			
-    			label5.setText("Số giờ về sớm");
-    			double hourEarly = GeneralInformationOfficer.countHourEarlyByMonth(month, year);
-    			info5.setText(""+hourEarly);
-    		}
-    		else if(quarterBtn.isSelected()) {
-    			int quarter = Integer.parseInt(quarterBox.getValue().toString());
-    			int year = Integer.parseInt(quarterYearBox.getValue().toString());
-    			viewLabel.setText("Toàn doanh nghiệp Quý "+ quarter + " Năm " + year);
-    			
-    			label1.setText("Chấm công ca 1");
-    			double timeShift1Quarter = GeneralInformationWorker.countTimeShift1ByQuarter(quarter, year);
-    			info1.setText(""+timeShift1Quarter);
-    			
-    			label2.setText("Chấm công ca 2");
-    			double timeShift2Quarter = GeneralInformationWorker.countTimeShift2ByQuarter(quarter, year);
-    			info2.setText(""+timeShift2Quarter);
-    			
-    			label3.setText("Chấm công ca 3");
-    			double timeShift3Quarter = GeneralInformationWorker.countTimeShift3ByQuarter(quarter, year);
-    			info3.setText(""+timeShift3Quarter);
-    			
-    			label4.setText("Số giờ đi muộn");
-    			double hourLateQuarter = GeneralInformationOfficer.countHourLateByQuarter(quarter, year);
-    			info4.setText(""+hourLateQuarter);
-    			
-    			label5.setText("Số giờ về sớm");
-    			double hourEarlyQuarter = GeneralInformationOfficer.countHourEarlyByQuarter(quarter, year);
-    			info5.setText(""+hourEarlyQuarter);
-    		}
-    		else {
-    			int year = Integer.parseInt(yearBox.getValue().toString());
-    			viewLabel.setText("Toàn doanh nghiệp" + " Năm " + year);
-    			
-    			label1.setText("Chấm công ca 1");
-    			double timeShift1Year = GeneralInformationWorker.countTimeShift1ByYear(year);
-    			info1.setText(""+timeShift1Year);
-    			
-    			label2.setText("Chấm công ca 2");
-    			double timeShift2Year = GeneralInformationWorker.countTimeShift2ByYear(year);
-    			info2.setText(""+timeShift2Year);
-    			
-    			label3.setText("Chấm công ca 3");
-    			double timeShift3Year = GeneralInformationWorker.countTimeShift3ByYear(year);
-    			info3.setText(""+timeShift3Year);
-    			
-    			label4.setText("Số giờ đi muộn");
-    			double hourLateYear = GeneralInformationOfficer.countHourLateByYear(year);
-    			info4.setText(""+hourLateYear);
-    			
-    			label5.setText("Số giờ về sớm");
-    			double hourEarlyYear = GeneralInformationOfficer.countHourEarlyByYear(year);
-    			info5.setText(""+hourEarlyYear);
-    		}
+    		getAllInfo();
+    	}
+    	else {
+    		getUnitInfo();
     	}
     }
 }
