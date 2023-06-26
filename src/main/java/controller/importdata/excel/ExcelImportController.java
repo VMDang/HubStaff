@@ -2,13 +2,17 @@ package controller.importdata.excel;
 
 
 
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
@@ -52,42 +56,106 @@ public class ExcelImportController  {
 	@FXML
 	private AnchorPane basePane;
 	@FXML
-	private javafx.scene.control.TextField textField ;
-	String url;
+	private javafx.scene.control.TextField textFieldIn ;
 	@FXML
-	Button Nhap;
+	private TextField textFieldOut;
+	private String url_in;
+	private String url_out;
 	@FXML
-	public void ChooseFile (ActionEvent e) {
+	Button nhapButton;
+	@FXML
+	Button xemButton;
+	
+	public void ChooseFileIn (ActionEvent e) {
 		Stage stage =(Stage) basePane.getScene().getWindow();
 		FileChooser fc = new FileChooser();
-		fc.setTitle("Choose Excel File ");
 		FileChooser.ExtensionFilter excelFilter = new FileChooser.ExtensionFilter("Excel Files", "*.xlsx");
-		Nhap.setDisable(true);
-		textField.textProperty().addListener((observable,oldValue,newValue)->{
-			Nhap.setDisable(false);
-		});
 		fc.getExtensionFilters().add(excelFilter);
 		File file = fc.showOpenDialog(stage);
 		if(file!=null) {
-			url = file.toURI().toString();
-			url = url.substring(6);
-			System.out.println(url);
+			url_in = file.toURI().toString();
+			url_in = url_in.substring(6);
 			String abc = file.getName();
-			textField.setText(abc); 
+			textFieldIn.setText(abc); 
 		}
 	}
-	public void NhapFile (ActionEvent e)  {
-		
-		 try {
-			  if (url==null)return;
-			  String excelFilePath = url;
-			  excelImportRows = ReadExcel.readExcel(excelFilePath);
+	public void ChooseFileOut (ActionEvent e) {
+		Stage stage =(Stage) basePane.getScene().getWindow();
+		FileChooser fc = new FileChooser();
+		FileChooser.ExtensionFilter excelFilter = new FileChooser.ExtensionFilter("Excel Files", "*.xlsx");
+		fc.getExtensionFilters().add(excelFilter);
+		File file = fc.showOpenDialog(stage);
+		if(file!=null) {
+			url_out = file.toURI().toString();
+			url_out = url_out.substring(6);
+			String abc = file.getName();
+			textFieldOut.setText(abc); 
+		}
+	}
+	public void showAlert(String title , String messeage) {
+		Alert alert = new Alert(Alert.AlertType.INFORMATION);
+		alert.setTitle(title);
+		alert.setHeaderText(null);
+		alert.setContentText(messeage);
+		alert.setOnHidden(event ->{
+			alert.close();
+			alert.setResult(null);
+		});
+		alert.showAndWait();
+	}
+	public void XemFile(ActionEvent e) {
+		try {
+			  if (url_in==null&&url_out==null) {
+				  showAlert("Thông báo", "Hãy nhập file ");
+				  return;
+			  }
+			  String excelFileInPath = url_in;
+			  String excelFileOutPath = url_out;
+		      excelImportRows = controller.importdata.excel.ReadExcelIn.readExcel(excelFileInPath);
+		      ReadExcelOut.readExcel(excelFileOutPath, excelImportRows);
 			 
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
+	} catch (IOException e1) {
+		// TODO Auto-generated catch block
 			e1.printStackTrace();
 			
 		}
+		
+			excelImportRowList = FXCollections.observableArrayList(excelImportRows);
+			idColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, Integer>("id"));
+			employee_idColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("employee_id"));
+			dateColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("date"));
+			time_inColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("time_in"));
+			time_outColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("time_out"));
+			nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
+			statusColumn.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
+//			nameColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("name") );
+//			nameColumn.setCellValueFactory(cellData ->{
+//				ExcelImportRow row = cellData.getValue();
+//				StringProperty nameProperty = row.getNameProperty();
+//				nameProperty.addListener((observable, oldValue, newValue)->{
+//					TablePosition<ExcelImportRow, String> pos = new TablePosition(table, 0, dateColumn)
+//				});
+//			});
+//			statusColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("status"));
+			table.setItems(excelImportRowList);
+		
+	}
+	public void delete(ActionEvent e) {
+		int i = 0;
+		ExcelImportRow selected = table.getSelectionModel().getSelectedItem();
+		excelImportRowList.remove(selected);
+		excelImportRows.remove(selected);
+		
+	}
+	public void refresh(ActionEvent e) {
+		textFieldIn.setText("");
+		textFieldOut.setText("");
+		excelImportRowList.removeAll(excelImportRows);
+		excelImportRows=null;
+		url_in="";
+		url_out="";
+	}
+	public void NhapFile (ActionEvent e)  {
 		for (ExcelImportRow excelImportRow : excelImportRows) {
 			Employee employee1 = GetAEmployee.getInstance().getAEmployee(excelImportRow.getEmployee_id());
 			if (employee1!=null) {
@@ -291,16 +359,18 @@ public class ExcelImportController  {
 				  }
 				}
 		}
-	    excelImportRowList = FXCollections.observableArrayList(excelImportRows);
-		idColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, Integer>("id"));
-		employee_idColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("employee_id"));
-		dateColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("date"));
-		time_inColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("time_in"));
-		time_outColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("time_out"));
+//	    excelImportRowList = FXCollections.observableArrayList(excelImportRows);
+//		idColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, Integer>("id"));
+//		employee_idColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("employee_id"));
+//		dateColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("date"));
+//		time_inColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("time_in"));
+//		time_outColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("time_out"));
 		nameColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("name") );
-		statusColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("status"));
+//		statusColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("status"));
 		table.setItems(excelImportRowList);
 	
 	
 	}	
-}
+	}
+
+

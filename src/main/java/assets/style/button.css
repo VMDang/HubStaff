@@ -1,0 +1,16 @@
+.button-valorant {
+    -fx-background-color: #0051FF;
+    -fx-background-radius: 20;
+    -fx-text-fill: white;
+    -fx-font-size: 14px;
+    -fx-font-family: "Segoe UI", sans-serif;
+    -fx-padding: 8px 16px;
+}
+
+.button-valorant:hover {
+    -fx-background-color: #0047D4;
+}
+
+.button-valorant:pressed {
+    -fx-background-color: #0038A4;
+}
