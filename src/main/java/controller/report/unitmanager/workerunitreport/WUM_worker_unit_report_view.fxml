@@ -1,34 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.report.unitmanager.workerunitreport.WUMWorkerUnitReportController">
    <children>
       <AnchorPane layoutX="56.0" layoutY="2.0" prefHeight="709.0" prefWidth="1126.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
-            <DatePicker fx:id="searchByMonth" layoutX="965.0" layoutY="39.0" onAction="#searchByMonth" prefHeight="32.0" prefWidth="129.0" AnchorPane.rightAnchor="16.0" />
-            <Button fx:id="resetPage" alignment="TOP_LEFT" layoutX="965.0" layoutY="80.0" mnemonicParsing="false" onAction="#resetPage" prefHeight="32.0" prefWidth="129.0" text="Làm mới" textFill="#0400ff" AnchorPane.rightAnchor="16.0">
+            <Button fx:id="btnReloadPage" contentDisplay="RIGHT" layoutX="1002.0" layoutY="74.0" mnemonicParsing="false" onAction="#reloadPage" prefHeight="30.0" prefWidth="102.0" text="Làm mới" textFill="RED" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="86.0">
                <font>
-                  <Font size="16.0" />
+                  <Font size="14.0" />
                </font>
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../assets/img/reset.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
             </Button>
-            <TableView fx:id="tableReport" focusTraversable="false" layoutX="16.0" layoutY="123.0" prefHeight="586.0" prefWidth="1094.0" stylesheets="@../../../../assets/style/table.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="128.0">
+            <TableView fx:id="tableReport" focusTraversable="false" layoutX="16.0" layoutY="123.0" prefHeight="586.0" prefWidth="1094.0" stylesheets="@../../../../assets/style/table.css" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="128.0">
                <columns>
                   <TableColumn fx:id="index" editable="false" prefWidth="48.0" style="-fx-alignment: CENTER;" text="STT" />
                   <TableColumn fx:id="worker_id" editable="false" prefWidth="152.79998779296875" text="Mã NV" />
                   <TableColumn fx:id="name" editable="false" prefWidth="234.39999389648438" text="Họ và Tên" />
                   <TableColumn fx:id="month" editable="false" prefWidth="205.5999755859375" text="Tháng" />
                   <TableColumn fx:id="hoursWork" editable="false" prefWidth="247.0" text="Tổng số giờ làm việc" />
-                  <TableColumn fx:id="hoursOT" editable="false" prefWidth="207.0" text="Tổng số giờ tăng ca" />
+                  <TableColumn fx:id="hoursOT" editable="false" prefWidth="205.60001220703134" text="Tổng số giờ tăng ca" />
                </columns>
             </TableView>
             <Label layoutX="16.0" layoutY="56.0" text="Mã đơn vị:" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="48.0" />
@@ -44,18 +49,23 @@
             <Label fx:id="countWorkers" alignment="TOP_LEFT" layoutX="340.0" layoutY="80.0" text="countWorkers" AnchorPane.leftAnchor="442.0" AnchorPane.topAnchor="80.0" />
             <Label fx:id="department" alignment="TOP_LEFT" layoutX="275.0" layoutY="48.0" text="Nhà máy sản xuất" AnchorPane.leftAnchor="335.0" AnchorPane.topAnchor="48.0" />
             <Label fx:id="unit_id" alignment="TOP_LEFT" layoutX="121.0" layoutY="48.0" text="unit_id" AnchorPane.leftAnchor="80.0" AnchorPane.topAnchor="48.0" />
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="31.0" layoutX="981.0" layoutY="40.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.5" width="104.0" />
-            <ImageView fitHeight="20.0" fitWidth="20.0" layoutX="1075.0" layoutY="88.0" pickOnBounds="true" preserveRatio="true">
-               <image>
-                  <Image url="@../../../../assets/img/reset.png" />
-               </image>
-            </ImageView>
-            <Label fx:id="monthSelected" layoutX="991.0" layoutY="42.0">
+            <Label layoutX="782.0" layoutY="48.0" text="Tháng :  " AnchorPane.leftAnchor="740.0" AnchorPane.topAnchor="48.0" />
+            <ChoiceBox fx:id="chooseMonth" layoutX="828.0" layoutY="42.0" prefHeight="25.0" prefWidth="60.0" AnchorPane.leftAnchor="790.0" AnchorPane.topAnchor="45.0" />
+            <Label layoutX="894.0" layoutY="48.0" text="Năm :" AnchorPane.leftAnchor="873.0" AnchorPane.topAnchor="48.0" />
+            <Button fx:id="btnSearch" contentDisplay="RIGHT" defaultButton="true" layoutX="1018.0" layoutY="46.0" mnemonicParsing="false" onAction="#searchByMonth" prefHeight="30.0" prefWidth="102.0" text="Tìm kiếm" textFill="#0400ff" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="42.0">
                <font>
-                  <Font size="16.0" />
+                  <Font size="14.0" />
                </font>
-            </Label>
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../assets/img/search.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
          </children>
       </AnchorPane>
+      <ChoiceBox fx:id="chooseYear" layoutX="890.0" layoutY="45.0" prefHeight="25.0" prefWidth="74.0" AnchorPane.leftAnchor="915.0" AnchorPane.topAnchor="45.0" />
    </children>
 </AnchorPane>
