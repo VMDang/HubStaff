@@ -63,10 +63,10 @@ public class TimekeepingDayOfficerDetailController {
     private Label timebtn;
     
     public void initialize(URL arg0, ResourceBundle arg1) {
-    	department.setText(Authentication.authentication.getDepartment());
-    	employeeID.setText(Authentication.authentication.getId());
-    	nameEmployee.setText(Authentication.authentication.getName());
-    	unit.setText(Authentication.authentication.getUnit_id());
+    	department.setText(Authentication.getInstance().getAuthentication().getDepartment());
+    	employeeID.setText(Authentication.getInstance().getAuthentication().getId());
+    	nameEmployee.setText(Authentication.getInstance().getAuthentication().getName());
+    	unit.setText(Authentication.getInstance().getAuthentication().getUnit_id());
     	
     	timebtn.setText(log.getDate().toString());
     	ObservableList<LogTimekeepingOfficer> logRow = FXCollections.observableArrayList();

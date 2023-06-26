@@ -120,10 +120,10 @@ public class MonthlyTimekeepingController implements Initializable {
     	updateDay();
     	String month = today.toString().split("-")[1];
     	String year = today.toString().split("-")[0];
-    	department.setText(Authentication.authentication.getDepartment());
-    	employeeID.setText(Authentication.authentication.getId());
-    	nameEmployee.setText(Authentication.authentication.getName());
-    	unit.setText(Authentication.authentication.getUnit_id());
+    	department.setText(Authentication.getInstance().getAuthentication().getDepartment());
+    	employeeID.setText(Authentication.getInstance().getAuthentication().getId());
+    	nameEmployee.setText(Authentication.getInstance().getAuthentication().getName());
+    	unit.setText(Authentication.getInstance().getAuthentication().getUnit_id());
     	
 		chooseMonth.getItems().addAll(listMonth);
 		chooseMonth.setValue(month);
@@ -155,7 +155,7 @@ public class MonthlyTimekeepingController implements Initializable {
                 // Lấy hàng được chọn
             	TimekeepingEmployeeTableRow selectedItem = tableTimekeepingMonth.getSelectionModel().getSelectedItem();
             	if (selectedItem != null) {
-            		if (Authentication.authentication instanceof Worker || Authentication.authentication instanceof WorkerUnitManager) {                       
+            		if (Authentication.getInstance().getAuthentication() instanceof Worker || Authentication.getInstance().getAuthentication() instanceof WorkerUnitManager) {
                         showDetailPopupWorker(selectedItem);
                     } else {
                     	showDetailPopupOfficer(selectedItem);
@@ -172,7 +172,7 @@ public class MonthlyTimekeepingController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(TIMEKEEPING_DAY_WORKER_DETAIL_VIEW));
             fxmlLoader.setControllerFactory(controllerClass -> {
             	TimekeepingDayWorkerDetailController detailController = new TimekeepingDayWorkerDetailController();
-                detailController.setLog(new LogTimekeepingWorker("", Authentication.authentication.getId(), selectedItem.getDate() ,selectedItem.getTime_in(), selectedItem.getTime_out(), selectedItem.getShift1(), selectedItem.getShift2(),selectedItem.getShift3() ));
+                detailController.setLog(new LogTimekeepingWorker("", Authentication.getInstance().getAuthentication().getId(), selectedItem.getDate() ,selectedItem.getTime_in(), selectedItem.getTime_out(), selectedItem.getShift1(), selectedItem.getShift2(),selectedItem.getShift3() ));
                 return detailController;
             });
             Parent detailRoot = fxmlLoader.load();
@@ -204,7 +204,7 @@ public class MonthlyTimekeepingController implements Initializable {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(TIMEKEEPING_DAY_OFFICER_DETAIL_VIEW));
             fxmlLoader.setControllerFactory(controllerClass -> {
             	TimekeepingDayOfficerDetailController detailController = new TimekeepingDayOfficerDetailController();
-                detailController.setLog(new LogTimekeepingOfficer("", Authentication.authentication.getId(), selectedItem.getDate() ,selectedItem.getTime_in(), selectedItem.getTime_out(), selectedItem.isMorning(), selectedItem.isAfternoon() ));
+                detailController.setLog(new LogTimekeepingOfficer("", Authentication.getInstance().getAuthentication().getId(), selectedItem.getDate() ,selectedItem.getTime_in(), selectedItem.getTime_out(), selectedItem.isMorning(), selectedItem.isAfternoon() ));
                 return detailController;
             });
             Parent detailRoot = fxmlLoader.load();
@@ -255,10 +255,10 @@ public class MonthlyTimekeepingController implements Initializable {
        
 	public static void getDataMonth(String month, String year) {
 		if(Integer.parseInt(year) % 4 ==0 ) listDayMonth[1] = 29;
-		if (Authentication.authentication instanceof Worker || Authentication.authentication instanceof WorkerUnitManager) {
-			System.out.println("worker : " + Authentication.authentication.getId());
+		if (Authentication.getInstance().getAuthentication() instanceof Worker || Authentication.getInstance().getAuthentication() instanceof WorkerUnitManager) {
+			System.out.println("worker : " + Authentication.getInstance().getAuthentication().getId());
 			ArrayList<LogTimekeepingWorker> arrLTW = GetTimekeepingWorker.getInstance()
-					.getTimekeepingsByEmployeeID(Authentication.authentication.getId());
+					.getTimekeepingsByEmployeeID(Authentication.getInstance().getAuthentication().getId());
 			for (int i = 1; i <= listDayMonth[Integer.parseInt(month)-1]; i++) {
 				boolean check = false; 
 				for (LogTimekeepingWorker log : arrLTW) {
@@ -275,9 +275,9 @@ public class MonthlyTimekeepingController implements Initializable {
 				}
 			}
 		} else {
-			System.out.println("officer : " + Authentication.authentication.getId());
+			System.out.println("officer : " + Authentication.getInstance().getAuthentication().getId());
 			ArrayList<LogTimekeepingOfficer> arrLTW = GetTimekeepingOfficer.getInstance()
-					.getTimekeepingsByEmployeeID(Authentication.authentication.getId());
+					.getTimekeepingsByEmployeeID(Authentication.getInstance().getAuthentication().getId());
 			for (int i = 1; i <= listDayMonth[Integer.parseInt(month)-1]; i++) {
 				boolean check = false; 
 				for (LogTimekeepingOfficer log : arrLTW) {
