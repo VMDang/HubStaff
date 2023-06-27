@@ -4,7 +4,7 @@ import model.logtimekeeping.LogTimekeepingWorker;
 import java.sql.Date;
 import java.sql.Time;
 
-import services.logtimekeeping.LogTimekeepingWorkerService;
+import dbtimekeeping.inserttimekeeping.InsertTimekeepingWorker;
 public class test {
 	public static void main(String[] args) {
 		
@@ -35,7 +35,7 @@ public class test {
 		
 		for(int i = 1; i<=10; i++) {
 			LogTimekeepingWorker log = new LogTimekeepingWorker("LOG"+i+99,"nv10",Date.valueOf("2023-01-03"),Time.valueOf("08:00:00"),Time.valueOf("18:12:00"), 4, 4, 4);
-			LogTimekeepingWorkerService.getInstance().insert(log);
+			InsertTimekeepingWorker.getInstance().insert(log);
 		}
 		
 	}
