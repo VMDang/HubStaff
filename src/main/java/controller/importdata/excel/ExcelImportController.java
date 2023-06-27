@@ -23,10 +23,10 @@ import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
-import dbtimekeeping.GetTimekeepingOfficer;
-import dbtimekeeping.GetTimekeepingWorker;
-import services.logtimekeeping.LogTimekeepingOfficerService;
-import services.logtimekeeping.LogTimekeepingWorkerService;
+import dbtimekeeping.gettimekeeping.GetTimekeepingOfficer;
+import dbtimekeeping.gettimekeeping.GetTimekeepingWorker;
+import dbtimekeeping.inserttimekeeping.InsertTimekeepingOfficer;
+import dbtimekeeping.inserttimekeeping.InsertTimekeepingWorker;
 import hrsystem.GetAEmployee;
 public class ExcelImportController   {
 	List<ExcelImportRow> excelImportRows;
@@ -236,7 +236,7 @@ public class ExcelImportController   {
 							Long k = time2.getTime()-time1.getTime();
 							newlog.setHour_early((float)k/3600000);
 						}
-						LogTimekeepingOfficerService.getInstance().insert(newlog);
+						InsertTimekeepingOfficer.getInstance().insert(newlog);
 						continue;	
 					}
 					int check=1;
@@ -290,7 +290,7 @@ public class ExcelImportController   {
 							Long k = time2.getTime()-time1.getTime();
 							newlog.setHour_early((float)k/3600000);
 						}
-						LogTimekeepingOfficerService.getInstance().insert(newlog);
+						InsertTimekeepingOfficer.getInstance().insert(newlog);
 						continue;
 				  }
 				}
@@ -324,7 +324,7 @@ public class ExcelImportController   {
 							newlog.setShift2(4);
 							newlog.setShift3(t-8);
 						}
-						LogTimekeepingWorkerService.getInstance().insert(newlog);
+						InsertTimekeepingWorker.getInstance().insert(newlog);
 						continue;
 					}
 					int check=1;
@@ -368,7 +368,7 @@ public class ExcelImportController   {
 							newlog.setShift2(4);
 							newlog.setShift3(t-8);
 						}
-						LogTimekeepingWorkerService.getInstance().insert(newlog);
+						InsertTimekeepingWorker.getInstance().insert(newlog);
 						}
 				  }
 				}

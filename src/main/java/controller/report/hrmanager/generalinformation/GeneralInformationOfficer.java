@@ -4,7 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import dbtimekeeping.GetTimekeepingOfficer;
+import dbtimekeeping.gettimekeeping.GetTimekeepingOfficer;
 import model.logtimekeeping.LogTimekeepingOfficer;
 
 public class GeneralInformationOfficer {

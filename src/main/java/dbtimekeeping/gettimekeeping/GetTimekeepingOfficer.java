@@ -1,4 +1,4 @@
-package dbtimekeeping;
+package dbtimekeeping.gettimekeeping;
 
 import java.sql.Connection;
 import java.sql.Date;
@@ -10,10 +10,9 @@ import java.sql.Time;
 import java.util.ArrayList;
 
 import database.JDBCUtil;
-import hrsystem.GetAllEmployees;
 import model.logtimekeeping.LogTimekeepingOfficer;
 
-public class GetTimekeepingOfficer implements IDBTimekeeping<LogTimekeepingOfficer>{
+public class GetTimekeepingOfficer implements IGetTimekeeping<LogTimekeepingOfficer> {
 	
 	public static GetTimekeepingOfficer getInstance() {
 		return new GetTimekeepingOfficer();

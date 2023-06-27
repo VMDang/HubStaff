@@ -1,8 +1,8 @@
-package dbtimekeeping;
+package dbtimekeeping.gettimekeeping;
 
 import java.util.ArrayList;
 
-public interface IDBTimekeeping<T> {
+public interface IGetTimekeeping<T> {
 	
     public T getATimekeepingByID(String id);
     

@@ -10,7 +10,7 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import dbtimekeeping.GetTimekeepingWorker;
+import dbtimekeeping.gettimekeeping.GetTimekeepingWorker;
 import hrsystem.GetAllEmployees;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
@@ -41,64 +41,64 @@ import model.employee.worker.Worker;
 import model.logtimekeeping.LogTimekeepingWorker;
 
 public class HRMUnitWorkerAttendanceReportController implements Initializable{
-	
+
 	public static LocalDate today;
-	
+
 	private  static ObservableList<HRMUnitWorkerAttendanceReportRow> listRecord = FXCollections.observableArrayList();
-	
+
 	@FXML
     private AnchorPane basePane;
-	
+
 	@FXML
     private ChoiceBox<String> chooseMonth;
-	
+
 	@FXML
     private ChoiceBox<String> chooseYear;
-	
+
 	@FXML
     private Label monthBtn;
-	
+
 	@FXML
 	private Label unit_idText;
-	
+
 	@FXML
 	private Label unit_manager;
-	
+
 	@FXML
     private ChoiceBox<String> unitNameBox;
-	
+
 	@FXML
     private Button refresh;
-	
+
 	@FXML
 	private Button export_excel;
-	
+
 	@FXML
 	private TableView<HRMUnitWorkerAttendanceReportRow> tableReport;
-	
+
 	@FXML
 	private TableColumn<HRMUnitWorkerAttendanceReportRow, Integer> index;
-	
+
 	@FXML
 	private TableColumn<HRMUnitWorkerAttendanceReportRow, String> nameCol;
-	
+
 	@FXML
 	private TableColumn<HRMUnitWorkerAttendanceReportRow, String> worker_idCol;
-	
+
 	@FXML
 	private TableColumn<HRMUnitWorkerAttendanceReportRow, String> monthCol;
-	
+
 	@FXML
 	private TableColumn<HRMUnitWorkerAttendanceReportRow, String> total_hour_workCol;
-	
+
 	@FXML
 	private TableColumn<HRMUnitWorkerAttendanceReportRow, String> total_overtime_workCol;
-	
+
 	String[] listMonth = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
 	String[] listYear = {"2023", "2022", "2021", "2020"};
-	
+
 	String name_unit_manager;
-	
+
 	@FXML
 	void viewreport(ActionEvent event) {
         String month = chooseMonth.getValue();
@@ -115,7 +115,7 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
             tableReport.setItems(listRecord);
         }
 	}
-	
+
 	@FXML
 	void export_excel(ActionEvent event) throws IOException {
 		// Choose directory
@@ -164,11 +164,11 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
-	        
+
 	        workbook.close();
 	    }
 	}
-	
+
 	private void showSuccessExport(String message) {
         Alert alert = new Alert(AlertType.INFORMATION);
         alert.setTitle("Export report");
@@ -176,7 +176,7 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
         alert.setContentText(message);
         alert.showAndWait();
     }
-	
+
 	private void showUnitNotFound(String message) {
 		Alert alert = new Alert(AlertType.INFORMATION);
 		alert.setTitle("ID of Unit");
@@ -184,7 +184,7 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
         alert.setContentText(message);
         alert.showAndWait();
 	}
-	
+
 	public void setListRecord() {
 		String unit_text_id = unitNameBox.getValue().toString();
 		ArrayList<Worker> workers = getAllWorkerUnit(unit_text_id);
@@ -192,7 +192,7 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
         String year = chooseYear.getValue();
 
         for (Worker w : workers) {
-        	
+
             ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = new ArrayList<LogTimekeepingWorker>();
             logTimekeepingWorkers.addAll(getTimeKeepingAWorker(w.getId()));
 
@@ -211,25 +211,25 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
                     hoursOT = String.valueOf(totalHoursOT) + " / " + String.valueOf(logTimekeepingByMonth.size()*4);
                 }
                 HRMUnitWorkerAttendanceReportRow row = new HRMUnitWorkerAttendanceReportRow(w.getName(), w.getId(), w.getUnit_id(),unitNameBox.getValue().toString(), hoursWork, hoursOT);
-                
+
                 listRecord.add(row);
             }
         }
 	}
-	
+
 	public Set<String> getListUnit(){
 		ArrayList<Employee> allEmployees = GetAllEmployees.getInstance().getAllEmployees();
 		Set<String> set = new HashSet<>();
-        
+
         for (Employee e: allEmployees) {
             if ((e.getRole_id() == 1 || e.getRole_id() == 3)) {
             	set.add(e.getUnit_id());
             }
         }
-        
+
         return set;
 	}
-	
+
 	public ArrayList<Worker> getAllWorkerUnit(String unit_id){
         ArrayList<Employee> allEmployees = GetAllEmployees.getInstance().getAllEmployees();
         ArrayList<Worker> allWorker = new ArrayList<Worker>();
@@ -242,7 +242,7 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
                 allWorker.add(new Worker(e.getId(), e.getName(), e.getUnit_id(), e.getPassword()));
             }
         }
-        
+
         return allWorker;
     }
 
@@ -276,11 +276,11 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
         chooseMonth.setValue(LocalDate.now().format(DateTimeFormatter.ofPattern("MM")));
         chooseYear.getItems().addAll(listYear);
         chooseYear.setValue(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
-        
+
         monthBtn.setText("Báo cáo tháng "+month);
 
         listRecord = FXCollections.observableArrayList();
-        
+
         index.setCellValueFactory(index -> new ReadOnlyObjectWrapper<Integer>(tableReport.getItems().indexOf(index.getValue())+1));
         index.setSortable(false);
         nameCol.setCellValueFactory(new PropertyValueFactory<HRMUnitWorkerAttendanceReportRow, String>("name"));
@@ -288,9 +288,9 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
 		monthCol.setCellValueFactory(new PropertyValueFactory<HRMUnitWorkerAttendanceReportRow, String>("month"));
 		total_hour_workCol.setCellValueFactory(new PropertyValueFactory<HRMUnitWorkerAttendanceReportRow, String>("total_hour_work"));
 		total_overtime_workCol.setCellValueFactory(new PropertyValueFactory<HRMUnitWorkerAttendanceReportRow, String>("total_overtime"));
-		
+
 		tableReport.setItems(listRecord);
-		
+
 	}
-	
+
 }
