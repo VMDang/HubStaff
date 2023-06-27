@@ -40,7 +40,7 @@ import model.employee.Employee;
 import model.employee.worker.Worker;
 import model.logtimekeeping.LogTimekeepingWorker;
 
-public class UnitWorkerAttendanceReportController implements Initializable{
+public class HRMUnitWorkerAttendanceReportController implements Initializable{
 	
 	public static LocalDate today;
 	

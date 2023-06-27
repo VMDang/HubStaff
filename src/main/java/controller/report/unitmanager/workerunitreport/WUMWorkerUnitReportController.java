@@ -104,7 +104,6 @@ public class WUMWorkerUnitReportController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         unit_id.setText(Authentication.getInstance().getAuthentication().getUnit_id());
         wum_name.setText(Authentication.getInstance().getAuthentication().getName());
-        countWorkers.setText(String.valueOf(listRecord.size()));
 
         chooseMonth.getItems().addAll(listMonth);
         chooseMonth.setValue(LocalDate.now().format(DateTimeFormatter.ofPattern("MM")));
@@ -112,6 +111,8 @@ public class WUMWorkerUnitReportController implements Initializable {
         chooseYear.setValue(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
 
         setListRecord();
+
+        countWorkers.setText(String.valueOf(listRecord.size()));
 
         index.setCellValueFactory(index -> new ReadOnlyObjectWrapper<Integer>(tableReport.getItems().indexOf(index.getValue())+1));
         index.setSortable(false);
