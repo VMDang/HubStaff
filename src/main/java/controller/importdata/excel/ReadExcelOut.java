@@ -67,13 +67,20 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 	                case COLUMN_INDEX_TIMESTAMP:
 	                	String timestamp = (String) getCellValue(cell);
 	                	excelImportRow.setDate(timestamp.substring(0, 10));
+	                	int a = -1;
 	                	for(ExcelImportRow list : lists) {
 	                		if(list.getEmployee_id().equals(excelImportRow.getEmployee_id())&&list.getDate().equals(excelImportRow.getDate())) {
 	                			list.setTime_out(timestamp.substring(11,19));
+	                			a = 1;
 	                		}
 	                	}
-	                	
-	                    break;
+	                	if(a==-1) {
+	                	excelImportRow.setTime_out(timestamp.substring(11,19));
+	                	lists.add(excelImportRow);
+	                	}
+	                	else {
+	                		break;
+	                	}
 	                default:
 	                    break;
 	                }
