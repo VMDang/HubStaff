@@ -17,6 +17,8 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
@@ -102,12 +104,16 @@ public class UnitWorkerAttendanceReportController implements Initializable{
         String month = chooseMonth.getValue();
         monthBtn.setText("Báo cáo tháng "+month);
         String unit_id_text = unitField.getText();
-        unit_idText.setText(""+unit_id_text);
-        listRecord = FXCollections.observableArrayList();
-        setListRecord();
-        unit_manager.setText(name_unit_manager);
+        if(unit_id_text.isEmpty()) {
+        	showUnitNotFound("Bạn chưa nhập mã đơn vị hoặc mã đơn vị không tồn tại");
+        } else {
+        	unit_idText.setText(""+unit_id_text);
+            listRecord = FXCollections.observableArrayList();
+            setListRecord();
+            unit_manager.setText(name_unit_manager);
 
-        tableReport.setItems(listRecord);
+            tableReport.setItems(listRecord);
+        }
 	}
 	
 	@FXML
@@ -153,12 +159,29 @@ public class UnitWorkerAttendanceReportController implements Initializable{
 	        // Save workbook into file
 	        try (FileOutputStream fileOutputStream = new FileOutputStream(filePath)) {
 	            workbook.write(fileOutputStream);
+	            showSuccessExport("Xuất báo cáo thành công!");
 	        } catch (IOException e) {
 	            e.printStackTrace();
 	        }
 	        
 	        workbook.close();
 	    }
+	}
+	
+	private void showSuccessExport(String message) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Export report");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+	
+	private void showUnitNotFound(String message) {
+		Alert alert = new Alert(AlertType.INFORMATION);
+		alert.setTitle("ID of Unit");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
 	}
 	
 	public void setListRecord() {
