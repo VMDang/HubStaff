@@ -102,9 +102,8 @@ public class WUMWorkerUnitReportController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        unit_id.setText(Authentication.authentication.getUnit_id());
-        wum_name.setText(Authentication.authentication.getName());
-        countWorkers.setText(String.valueOf(listRecord.size()));
+        unit_id.setText(Authentication.getInstance().getAuthentication().getUnit_id());
+        wum_name.setText(Authentication.getInstance().getAuthentication().getName());
 
         chooseMonth.getItems().addAll(listMonth);
         chooseMonth.setValue(LocalDate.now().format(DateTimeFormatter.ofPattern("MM")));
@@ -112,6 +111,8 @@ public class WUMWorkerUnitReportController implements Initializable {
         chooseYear.setValue(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
 
         setListRecord();
+
+        countWorkers.setText(String.valueOf(listRecord.size()));
 
         index.setCellValueFactory(index -> new ReadOnlyObjectWrapper<Integer>(tableReport.getItems().indexOf(index.getValue())+1));
         index.setSortable(false);
@@ -126,7 +127,7 @@ public class WUMWorkerUnitReportController implements Initializable {
 
     public void setListRecord() {
         ArrayList<Worker> workers = new ArrayList<Worker>();
-        workers.addAll(getAllWorkerUnit(Authentication.authentication.getUnit_id()));
+        workers.addAll(getAllWorkerUnit(Authentication.getInstance().getAuthentication().getUnit_id()));
 
         String monthFilter = chooseMonth.getValue() + "/" + chooseYear.getValue();
 

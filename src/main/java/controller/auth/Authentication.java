@@ -9,10 +9,25 @@ import model.employee.worker.Worker;
 import model.employee.worker.WorkerUnitManager;
 
 public class Authentication {
-	public static Employee authentication;
+	private static Authentication instance;
+	private Employee authentication;
 
-	public static void setAuthentication(Employee auth) {
-		Authentication.authentication = auth;
+	private Authentication() {
+
+	}
+
+	public static Authentication getInstance(){
+		if (instance == null) {
+			instance = new Authentication();
+		}
+
+		return instance;
+	}
+
+	public void setAuthentication(Employee auth) {
+		if (authentication == null){
+			authentication = auth;
+		}else return;
 
 		if (authentication.getRole_id() == 1){
 			authentication = new Worker(authentication.getId(), authentication.getName(), authentication.getUnit_id(), authentication.getPassword());
@@ -25,16 +40,23 @@ public class Authentication {
 		}else if (authentication.getRole_id() == 5){
 			authentication = new HRManager(authentication.getId(), authentication.getName(), authentication.getDepartment(), authentication.getUnit_id(), authentication.getPassword());
 		}
+	}
 
+	public Employee getAuthentication(){
+		return authentication;
+	}
+
+	public void destroyAuthencation(){
+		authentication = null;
 	}
 
 	public static void main(String[] args) {
-		Employee employee = new Employee("a", "b", "c", "d", "1", 1);	// LoginController
-		Authentication.setAuthentication(employee);																// LoginController
-
-		if (authentication instanceof Worker){
-			System.out.println("done");
-			System.out.println(authentication.getDepartment());
-		}
+//		Employee employee = new Employee("a", "b", "c", "d", "1", 5);	// LoginController
+//		Authentication.setAuthentication(employee);																// LoginController
+//
+//		if (getAuth() instanceof HRManager){
+//			System.out.println("done");
+//			System.out.println(authentication.getDepartment());
+//		}
 	}
 }
