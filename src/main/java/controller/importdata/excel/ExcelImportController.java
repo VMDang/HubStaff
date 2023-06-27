@@ -1,18 +1,12 @@
 package controller.importdata.excel;
-
-
-
-import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
-import javafx.scene.control.TablePosition;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.paint.Color;
@@ -23,16 +17,12 @@ import javafx.stage.Stage;
 import model.employee.Employee;
 import model.logtimekeeping.LogTimekeepingOfficer;
 import model.logtimekeeping.LogTimekeepingWorker;
-
 import java.io.File;
 import java.io.IOException;
-import java.net.URL;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ResourceBundle;
-
 import dbtimekeeping.GetTimekeepingOfficer;
 import dbtimekeeping.GetTimekeepingWorker;
 import services.logtimekeeping.LogTimekeepingOfficerService;
@@ -40,7 +30,6 @@ import services.logtimekeeping.LogTimekeepingWorkerService;
 import hrsystem.GetAEmployee;
 public class ExcelImportController   {
 	List<ExcelImportRow> excelImportRows;
-	
 	@FXML
 	private TableView<ExcelImportRow> table;
 	@FXML
@@ -70,8 +59,6 @@ public class ExcelImportController   {
 	Button nhapButton;
 	@FXML
 	Button xemButton;
-	
-	
 	public void ChooseFileIn (ActionEvent e) {
 		Stage stage =(Stage) basePane.getScene().getWindow();
 		FileChooser fc = new FileChooser();
@@ -123,9 +110,7 @@ public class ExcelImportController   {
 	} catch (IOException e1) {
 		// TODO Auto-generated catch block
 			e1.printStackTrace();
-			
 		}
-		
 			excelImportRowList = FXCollections.observableArrayList(excelImportRows);
 			idColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, Integer>("id"));
 			employee_idColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("employee_id"));
@@ -134,35 +119,23 @@ public class ExcelImportController   {
 			time_outColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("time_out"));
 			nameColumn.setCellValueFactory(cellData -> cellData.getValue().nameProperty());
 			statusColumn.setCellValueFactory(cellData -> cellData.getValue().statusProperty());
-//			nameColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("name") );
-//			nameColumn.setCellValueFactory(cellData ->{
-//				ExcelImportRow row = cellData.getValue();
-//				StringProperty nameProperty = row.getNameProperty();
-//				nameProperty.addListener((observable, oldValue, newValue)->{
-//					TablePosition<ExcelImportRow, String> pos = new TablePosition(table, 0, dateColumn)
-//				});
-//			});
-//			statusColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("status"));
 			 statusColumn.setCellFactory(column -> {
 		            return new TableCell<ExcelImportRow, String>() {
 		                @Override
 		                protected void updateItem(String item, boolean empty) {
 		                    super.updateItem(item, empty);
-		                    
 		                    if (item == null || empty) {
 		                        setText(null);
 		                        setTextFill(Color.BLACK);
 		                    } else {
-		                        setText(item);
-		                        
+		                        setText(item);	                        
 		                        if (item.equals("Failed")) {
 		                            setTextFill(Color.RED);
 		                        } else if (item.equals("Success")) {
 		                            setTextFill(Color.GREEN);
 		                        } else if (item.equals("Duplicate")) {
 		                        	setTextFill(Color.BROWN);
-		                        }
-		                        
+		                        }		                        
 		                        else {
 		                            setTextFill(Color.BLACK);
 		                        }
@@ -170,18 +143,15 @@ public class ExcelImportController   {
 		                }
 		            };
 		        });
-			table.setItems(excelImportRowList);
-		
+			table.setItems(excelImportRowList);		
 	}
 	public void delete(ActionEvent e) {
-		int i = 0;
 		ExcelImportRow selected = table.getSelectionModel().getSelectedItem();
 		if(selected==null) {
 			return;
 		}
 		excelImportRowList.remove(selected);
 		excelImportRows.remove(selected);
-		
 	}
 	public void refresh(ActionEvent e) {
 		textFieldIn.setText("");
@@ -208,9 +178,6 @@ public class ExcelImportController   {
 			if (employee1!=null) {
 				excelImportRow.setName(employee1.getName());
 				excelImportRow.setRole_id(employee1.getRole_id());
-//				if(excelImportRow.getRole_id()==5) {
-//					excelImportRow.setStatus("Failed");
-//				}
 				if(excelImportRow.getEmployee_id()==null||excelImportRow.getDate()==null||excelImportRow.getTime_in()==null||excelImportRow.getTime_out()==null) {
 					excelImportRow.setStatus("Failed because some fields being missing");
 				}
@@ -221,7 +188,6 @@ public class ExcelImportController   {
 			else {
 				excelImportRow.setStatus("Failed");
 			}
-			
 		}
 		ArrayList<LogTimekeepingOfficer> Log1 = GetTimekeepingOfficer.getInstance().getAllTimekeepings();
 		Integer count_log_office=Log1.size();
@@ -271,9 +237,7 @@ public class ExcelImportController   {
 							newlog.setHour_early((float)k/3600000);
 						}
 						LogTimekeepingOfficerService.getInstance().insert(newlog);
-						continue;
-						
-						
+						continue;	
 					}
 					int check=1;
 					for (LogTimekeepingOfficer officer : officers) {
@@ -285,7 +249,6 @@ public class ExcelImportController   {
 						else {
 							continue;
 						}
-						
 					}
 				  if(check==-1) continue;
 				  else {
@@ -363,8 +326,6 @@ public class ExcelImportController   {
 						}
 						LogTimekeepingWorkerService.getInstance().insert(newlog);
 						continue;
-						
-						
 					}
 					int check=1;
 					for (LogTimekeepingWorker worker : workers) {
@@ -412,21 +373,7 @@ public class ExcelImportController   {
 				  }
 				}
 		}
-	
-//	    excelImportRowList = FXCollections.observableArrayList(excelImportRows);
-//		idColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, Integer>("id"));
-//		employee_idColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("employee_id"));
-//		dateColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("date"));
-//		time_inColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("time_in"));
-//		time_outColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("time_out"));
-//		nameColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("name") );
-//		statusColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("status"));
-//		table.setItems(excelImportRowList);
-	
-	
 	}
-	
-		
 	}
 
 
