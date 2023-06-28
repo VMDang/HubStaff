@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.report.unitmanager.workerunitreport.WUMWorkerUnitReportController">
+<AnchorPane fx:id="basePane" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.report.unitmanager.workerunitreport.WUMWorkerUnitReportController">
    <children>
       <AnchorPane layoutX="56.0" layoutY="2.0" prefHeight="709.0" prefWidth="1126.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
@@ -64,8 +64,8 @@
                   </ImageView>
                </graphic>
             </Button>
+            <ChoiceBox fx:id="chooseYear" prefHeight="25.0" prefWidth="74.0" AnchorPane.leftAnchor="915.0" AnchorPane.topAnchor="45.0" />
          </children>
       </AnchorPane>
-      <ChoiceBox fx:id="chooseYear" layoutX="890.0" layoutY="45.0" prefHeight="25.0" prefWidth="74.0" AnchorPane.leftAnchor="915.0" AnchorPane.topAnchor="45.0" />
    </children>
 </AnchorPane>
