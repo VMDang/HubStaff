@@ -22,6 +22,7 @@ public class CreateTables {
 					+ "    UnitId varchar(255) NOT NULL,\r\n"
 					+ "    Password varchar(255) NOT NULL,\r\n"
 					+ "    RoleId int NOT NULL,\r\n"
+					+ "    Status TINYINT NOT NULL,\r\n"
 					+ "    PRIMARY KEY (ID)\r\n"
 					+ ");";
 			st.execute(sql);
@@ -96,8 +97,8 @@ public class CreateTables {
 	}
 	public static void main(String[] args) {
 		CreateTables.createTableEmployees();
-		CreateTables.createTableLogTimekeepingOfficer();
-		CreateTables.createTableLogTimekeepingWorker();
+//		CreateTables.createTableLogTimekeepingOfficer();
+//		CreateTables.createTableLogTimekeepingWorker();
 	}
 	
 }
