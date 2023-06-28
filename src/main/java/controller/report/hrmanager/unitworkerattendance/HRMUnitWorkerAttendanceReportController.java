@@ -239,7 +239,7 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
             	if(e.getRole_id() == 3) {
             		name_unit_manager = e.getName();
             	}
-                allWorker.add(new Worker(e.getId(), e.getName(), e.getUnit_id(), e.getPassword()));
+                allWorker.add(new Worker(e.getId(), e.getName(), e.getUnit_id(), e.getPassword(),e.getStatus()));
             }
         }
 
