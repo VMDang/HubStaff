@@ -35,7 +35,8 @@ public class LoginController {
         }   else {
 
             Employee employee = GetAEmployee.getInstance().getAEmployee(Id);
-            if (employee.getPassword().equals(Password)){
+            if(employee.getId() != null ) {
+            	if (employee.getPassword().equals(Password) && employee.getStatus()==1){
                     Authentication.getInstance().setAuthentication(employee);
 //                    LayoutController layout = new LayoutController();
 //                    layout.changeScene(event, HOME_VIEW);
@@ -43,8 +44,12 @@ public class LoginController {
                     Stage currentStage = (Stage) inputUsername.getScene().getWindow();
                     currentStage.close();
 
+            	}else {
+            		validate.setText("Mật khẩu sai! Vui lòng nhập lại");
+                    validate.setVisible(true);
+            	}
             }else {
-                validate.setText("Mã nhân viên hoặc mật khẩu sai! Vui lòng nhập lại");
+                validate.setText("Mã nhân viên sai! Vui lòng nhập lại");
                 validate.setVisible(true);
             }
         }

@@ -30,15 +30,15 @@ public class Authentication {
 		}else return;
 
 		if (authentication.getRole_id() == 1){
-			authentication = new Worker(authentication.getId(), authentication.getName(), authentication.getUnit_id(), authentication.getPassword());
+			authentication = new Worker(authentication.getId(), authentication.getName(), authentication.getUnit_id(), authentication.getPassword(),authentication.getStatus());
 		}else if(authentication.getRole_id() == 2){
-			authentication = new Officer(authentication.getId(), authentication.getName(), authentication.getDepartment(), authentication.getUnit_id(), authentication.getPassword());
+			authentication = new Officer(authentication.getId(), authentication.getName(), authentication.getDepartment(), authentication.getUnit_id(), authentication.getPassword(),authentication.getStatus());
 		}else if(authentication.getRole_id() == 3){
-			authentication = new WorkerUnitManager(authentication.getId(), authentication.getName(), authentication.getUnit_id(), authentication.getPassword());
+			authentication = new WorkerUnitManager(authentication.getId(), authentication.getName(), authentication.getUnit_id(), authentication.getPassword(),authentication.getStatus());
 		}else if (authentication.getRole_id() == 4){
-			authentication = new OfficerUnitManager(authentication.getId(), authentication.getName(), authentication.getDepartment(), authentication.getUnit_id(), authentication.getPassword());
+			authentication = new OfficerUnitManager(authentication.getId(), authentication.getName(), authentication.getDepartment(), authentication.getUnit_id(), authentication.getPassword(),authentication.getStatus());
 		}else if (authentication.getRole_id() == 5){
-			authentication = new HRManager(authentication.getId(), authentication.getName(), authentication.getDepartment(), authentication.getUnit_id(), authentication.getPassword());
+			authentication = new HRManager(authentication.getId(), authentication.getName(), authentication.getDepartment(), authentication.getUnit_id(), authentication.getPassword(),authentication.getStatus());
 		}
 	}
 

@@ -33,9 +33,10 @@ public class GetAEmployee implements IHRSystem<Employee>{
 				String Department = rs.getString("Department");
 				String UnitId = rs.getString("UnitId");
 				String Password = rs.getString("Password");
+				int Status = rs.getInt("Status");
 				int RoleId = rs.getInt("RoleId");
 			
-				nv = new Employee(ID, Name, Department, UnitId, Password, RoleId);
+				nv = new Employee(ID, Name, Department, UnitId, Password, RoleId,Status);
 			}
 			
 			JDBCUtil.closeConnection(con);
@@ -51,4 +52,9 @@ public class GetAEmployee implements IHRSystem<Employee>{
     public ArrayList<Employee> getAllEmployees() {
         return null;
     }
+//    public static void main(String[] args) {
+//		Employee nv = GetAEmployee.getInstance().getAEmployee("nv00");
+//		System.out.println(nv);
+//		if(nv.getId() == null) System.out.println("ko có");
+//	}
 }
