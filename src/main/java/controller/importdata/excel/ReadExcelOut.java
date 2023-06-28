@@ -9,6 +9,7 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -36,7 +37,13 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 	 
 	        // Get sheet
 	        Sheet sheet = workbook.getSheetAt(0);
-	 
+	        int numberOfColumns = sheet.getRow(0).getLastCellNum();
+	        int number = 2 ;
+	        if(numberOfColumns!=number) {
+	        	workbook.close();
+	 	        inputStream.close();
+	        	return;
+	        }
 	        // Get all rows
 	        Iterator<Row> iterator = sheet.iterator();
 	        while (iterator.hasNext()) {
@@ -66,7 +73,11 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 	                    break;
 	                case COLUMN_INDEX_TIMESTAMP:
 	                	String timestamp = (String) getCellValue(cell);
+	                	String pattern = "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}";
+	                	boolean isMatch = Pattern.matches(pattern, timestamp);
+	                	if(isMatch==true) {
 	                	excelImportRow.setDate(timestamp.substring(0, 10));
+	                	
 	                	int a = -1;
 	                	for(ExcelImportRow list : lists) {
 	                		if(list.getEmployee_id().equals(excelImportRow.getEmployee_id())&&list.getDate().equals(excelImportRow.getDate())) {
@@ -80,7 +91,7 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 	                	}
 	                	else {
 	                		break;
-	                	}
+	                	}}
 	                default:
 	                    break;
 	                }
