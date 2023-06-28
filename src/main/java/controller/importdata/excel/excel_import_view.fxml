@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="basePane" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.importdata.excel.ExcelImportController">
+<AnchorPane fx:id="basePane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.importdata.excel.ExcelImportController">
    <children>
       <AnchorPane layoutX="46.0" prefHeight="709.0" prefWidth="1126.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="-46.0" AnchorPane.topAnchor="0.0" />
       <Pane layoutX="-1.0" prefHeight="710.0" prefWidth="1126.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5px;" fx:id="xoaButton">
@@ -26,10 +26,10 @@
             </TableView>
             <Button layoutX="1050.0" layoutY="35.0" mnemonicParsing="false" onAction="#ChooseFileOut" style="-fx-background-color: #ffe4c4;" text="..." textFill="#964343" />
             <TextField fx:id="textFieldOut" editable="false" layoutX="632.0" layoutY="32.0" prefHeight="31.0" prefWidth="411.0" />
-            <Button fx:id="nhapButton" layoutX="923.0" layoutY="656.0" mnemonicParsing="false" onAction="#NhapFile" prefHeight="31.0" prefWidth="151.0" styleClass="button-valorant" stylesheets="@../../../assets/style/button.css" text="Nhập " />
+            <Button fx:id="nhapButton" layoutX="923.0" layoutY="656.0" mnemonicParsing="false" onAction="#NhapFile" prefHeight="31.0" prefWidth="151.0" style="-fx-background-color: #66A9E3;" styleClass="button-valorant" stylesheets="@../../../assets/style/button.css" text="Nhập " />
             <TextField fx:id="textFieldIn" editable="false" layoutX="78.0" layoutY="32.0" prefHeight="31.0" prefWidth="411.0" />
             <Button layoutX="494.0" layoutY="35.0" mnemonicParsing="false" onAction="#ChooseFileIn" style="-fx-background-color: #ffe4c4;" text="..." textFill="#964343" />
-            <Button layoutX="488.0" layoutY="82.0" mnemonicParsing="false" onAction="#XemFile" prefHeight="31.0" prefWidth="151.0" styleClass="button-valorant" stylesheets="@../../../assets/style/button.css" text="Xem" fx:id="xemButton" />
+            <Button layoutX="488.0" layoutY="82.0" mnemonicParsing="false" onAction="#XemFile" prefHeight="31.0" prefWidth="151.0" style="-fx-background-color: #66A9E3;" styleClass="button-valorant" stylesheets="@../../../assets/style/button.css" text="Xem" textFill="WHITE" fx:id="xemButton" />
             <Text layoutX="31.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="File in" />
             <Text layoutX="584.0" layoutY="52.0" strokeType="OUTSIDE" strokeWidth="0.0" text="File out" />
             <Button layoutX="940.0" layoutY="104.0" mnemonicParsing="false" onAction="#delete" text="Xóa" />

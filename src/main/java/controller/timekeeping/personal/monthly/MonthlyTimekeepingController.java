@@ -36,7 +36,9 @@ import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import model.employee.Employee;
+import model.employee.HRManager;
+import model.employee.officer.Officer;
+import model.employee.officer.OfficerUnitManager;
 import model.employee.worker.Worker;
 import model.employee.worker.WorkerUnitManager;
 import model.logtimekeeping.LogTimekeepingOfficer;
@@ -44,7 +46,6 @@ import model.logtimekeeping.LogTimekeepingWorker;
 
 public class MonthlyTimekeepingController implements Initializable {
 	private static LocalDate today;
-	private Employee user;
 	
     @FXML
     private AnchorPane basePane;
@@ -60,6 +61,9 @@ public class MonthlyTimekeepingController implements Initializable {
     
     @FXML
     private Text unit;
+    
+    @FXML
+    private Text role;
     
     String[] listMonth = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
     static Integer[] listDayMonth = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
@@ -120,17 +124,28 @@ public class MonthlyTimekeepingController implements Initializable {
     	updateDay();
     	String month = today.toString().split("-")[1];
     	String year = today.toString().split("-")[0];
+
+    	
+    	String chucvu  = "";
+    	if(Authentication.getInstance().getAuthentication() instanceof Worker) chucvu = "Công nhân";
+    	if(Authentication.getInstance().getAuthentication() instanceof WorkerUnitManager) chucvu = "Trưởng đơn vị công nhân";
+    	if(Authentication.getInstance().getAuthentication() instanceof Officer) chucvu = "Nhân viên văn phòng";
+    	if(Authentication.getInstance().getAuthentication() instanceof OfficerUnitManager) chucvu = "Trưởng đơn vị nhân viên";
+    	if(Authentication.getInstance().getAuthentication() instanceof HRManager) chucvu = "Quản lý nhân sự ";
+    	
+    	role.setText(chucvu);
     	department.setText(Authentication.getInstance().getAuthentication().getDepartment());
     	employeeID.setText(Authentication.getInstance().getAuthentication().getId());
     	nameEmployee.setText(Authentication.getInstance().getAuthentication().getName());
     	unit.setText(Authentication.getInstance().getAuthentication().getUnit_id());
+
     	
 		chooseMonth.getItems().addAll(listMonth);
 		chooseMonth.setValue(month);
 		chooseYear.getItems().addAll(listYear);
 		chooseYear.setValue(year);
 		monthBtn.setText("Tháng "+month);
-		
+		LogTimekeepingMonthList = FXCollections.observableArrayList();
 		getDataMonth(month, year);
     	calculateGenaralData(LogTimekeepingMonthList);
     	dateCol.setCellValueFactory(new PropertyValueFactory<TimekeepingEmployeeTableRow,Date>("date"));

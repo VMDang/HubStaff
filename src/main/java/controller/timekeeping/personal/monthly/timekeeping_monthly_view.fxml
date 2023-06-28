@@ -14,10 +14,10 @@
    <children>
       <AnchorPane layoutX="46.0" layoutY="-8.0" prefHeight="709.0" prefWidth="1126.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="-46.0" AnchorPane.topAnchor="-8.0">
          <children>
-            <Pane layoutX="-39.0" layoutY="30.0" prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5px;" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="-39.0" AnchorPane.rightAnchor="53.0" AnchorPane.topAnchor="30.0">
+            <Pane layoutX="-39.0" layoutY="9.0" prefHeight="703.0" prefWidth="1117.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5px;" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="-39.0" AnchorPane.rightAnchor="48.0" AnchorPane.topAnchor="9.0">
                <children>
                   <Button fx:id="refresh" layoutX="980.0" layoutY="71.0" mnemonicParsing="false" onAction="#resetTable" prefHeight="31.0" prefWidth="109.0" text="Làm mới" textFill="#d31111" />
-                  <TableView fx:id="tableTimekeepingMonth" focusTraversable="false" layoutX="26.0" layoutY="155.0" prefHeight="386.0" prefWidth="1061.0" stylesheets="@../../../../assets/style/table.css">
+                  <TableView fx:id="tableTimekeepingMonth" focusTraversable="false" layoutX="28.0" layoutY="205.0" prefHeight="386.0" prefWidth="1061.0" stylesheets="@../../../../assets/style/table.css">
                      <columns>
                         <TableColumn fx:id="dateCol" editable="false" prefWidth="156.0" text="Ngày" />
                         <TableColumn fx:id="time_inCol" prefWidth="184.79995727539062" text="Bắt đầu" />
@@ -27,36 +27,38 @@
                         <TableColumn fx:id="statusCol" prefWidth="118.39996337890625" text="Trạng thái " />
                      </columns>
                   </TableView>
-                  <TableView fx:id="tableGenaral" layoutX="27.0" layoutY="551.0" prefHeight="83.0" prefWidth="1061.0" stylesheets="@../../../../assets/style/table.css">
+                  <TableView fx:id="tableGenaral" layoutX="26.0" layoutY="606.0" prefHeight="83.0" prefWidth="1061.0" stylesheets="@../../../../assets/style/table.css">
                      <columns>
                         <TableColumn fx:id="total_day_workCol" prefWidth="180.79998779296875" text="Tổng số ngày đi làm " />
-                        <TableColumn fx:id="total_hour_workCol" prefWidth="295.20001220703125" text="Tổng số giờ làm " />
                         <TableColumn fx:id="total_overtimeCol" prefWidth="220.00006103515625" text="Tổng số giờ tăng ca " />
                         <TableColumn fx:id="salaryCol" prefWidth="366.40008544921875" text="Lương tạm tính " />
+                        <TableColumn fx:id="total_hour_workCol" prefWidth="295.20001220703125" text="Tổng số giờ làm " />
                      </columns>
                   </TableView>
-                  <Label layoutX="28.0" layoutY="50.0" text="Mã nhân viên:" />
-                  <Label layoutX="28.0" layoutY="76.0" text="Họ và tên : " />
-                  <Label layoutX="28.0" layoutY="21.0" text="Thông tin công nhân">
+                  <Label layoutX="28.0" layoutY="76.0" text="Mã nhân viên:" />
+                  <Label layoutX="28.0" layoutY="104.0" text="Họ và tên : " />
+                  <Label layoutX="24.0" layoutY="26.0" text="Thông tin công nhân">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>
                   </Label>
-                  <Text fx:id="unit" layoutX="384.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tổ 02" />
-                  <Text fx:id="nameEmployee" layoutX="120.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vũ Minh Đăng" />
-                  <Label layoutX="318.0" layoutY="50.0" text="Đơn vị " />
-                  <Text fx:id="employeeID" layoutX="133.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ABC" />
-                  <Label fx:id="monthBtn" alignment="CENTER" layoutX="501.0" layoutY="93.0" prefHeight="44.0" prefWidth="115.0" style="-fx-background-color: #66A9E3; -fx-background-radius: 10;" text="Tháng 5" textFill="WHITE">
+                  <Text fx:id="unit" layoutX="366.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Tổ 02" />
+                  <Text fx:id="nameEmployee" layoutX="117.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Vũ Minh Đăng" />
+                  <Label layoutX="302.0" layoutY="76.0" text="Đơn vị :" />
+                  <Text fx:id="employeeID" layoutX="117.0" layoutY="91.0" strokeType="OUTSIDE" strokeWidth="0.0" text="ABC" />
+                  <Label fx:id="monthBtn" alignment="CENTER" layoutX="501.0" layoutY="149.0" prefHeight="44.0" prefWidth="115.0" style="-fx-background-color: #66A9E3; -fx-background-radius: 10;" text="Tháng 5" textFill="WHITE">
                      <font>
                         <Font size="21.0" />
                      </font>
                   </Label>
                   <ChoiceBox fx:id="chooseMonth" layoutX="880.0" layoutY="34.0" prefHeight="25.0" prefWidth="60.0" />
                   <Label layoutX="831.0" layoutY="38.0" text="Tháng :  " />
-                  <Label layoutX="29.0" layoutY="106.0" text="Phòng ban :" />
-                  <Text fx:id="department" layoutX="120.0" layoutY="119.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nhà máy sản xuất" />
+                  <Label layoutX="28.0" layoutY="132.0" text="Phòng ban :" />
+                  <Text fx:id="department" layoutX="117.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nhà máy sản xuất" />
                   <ChoiceBox fx:id="chooseYear" layoutX="1011.0" layoutY="34.0" prefHeight="25.0" prefWidth="74.0" />
                   <Label layoutX="966.0" layoutY="38.0" text="Năm :" />
+                  <Label layoutX="302.0" layoutY="104.0" text="Chức vụ :" />
+                  <Text fx:id="role" layoutX="366.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Công nhân " />
                </children>
             </Pane>
          </children>

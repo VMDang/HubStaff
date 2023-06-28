@@ -71,27 +71,27 @@ public class HomeController implements Initializable {
     @FXML
     void switchToDashboard(MouseEvent event) throws IOException {
         highlightSidebar(dashboardBtn);
-        setTextTitle("Dashboard");
+        setTextTitle("Home page");
         layout.changeAnchorPane(basePane, DASHBOARD_VIEW);
     }
 
     @FXML
     void switchToProfile(MouseEvent event) throws IOException {
         highlightSidebar(profileBtn);
-        setTextTitle("Profile");
+        setTextTitle("Thông tin cá nhân");
 //        layout.changeAnchorPane(basePane, TIMEKEEPING_SELECTION_VIEW);
     }
     @FXML
     void switchToTimekeeping(MouseEvent event) throws IOException {
         highlightSidebar(timekeepingBtn);
-        setTextTitle("Timekeeping");
+        setTextTitle("Chấm công");
     	layout.changeAnchorPane(basePane, TIMEKEEPING_SELECTION_VIEW);
     }
 
     @FXML
     void switchToReport(MouseEvent event) throws IOException {
         highlightSidebar(reportBtn);
-        setTextTitle("Report");
+        setTextTitle("Báo cáo");
         if (Authentication.getInstance().getAuthentication() instanceof HRManager){
             layout.changeAnchorPane(basePane, HRM_REPORT_SELECTION_VIEW);
         }
