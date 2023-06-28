@@ -18,16 +18,21 @@ import model.employee.Employee;
 import model.logtimekeeping.LogTimekeepingOfficer;
 import model.logtimekeeping.LogTimekeepingWorker;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Date;
 import java.sql.Time;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.poi.ss.usermodel.Workbook;
+import com.mysql.cj.log.Log;
 import dbtimekeeping.gettimekeeping.GetTimekeepingOfficer;
 import dbtimekeeping.gettimekeeping.GetTimekeepingWorker;
 import dbtimekeeping.inserttimekeeping.InsertTimekeepingOfficer;
 import dbtimekeeping.inserttimekeeping.InsertTimekeepingWorker;
 import hrsystem.GetAEmployee;
+
 public class ExcelImportController   {
 	List<ExcelImportRow> excelImportRows;
 	@FXML
@@ -111,6 +116,10 @@ public class ExcelImportController   {
 		// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		if(excelImportRows==null) {
+	    	  showAlert("Thông báo", "File đầu vào không đúng ");
+	    	  return;
+	      }
 			excelImportRowList = FXCollections.observableArrayList(excelImportRows);
 			idColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, Integer>("id"));
 			employee_idColumn.setCellValueFactory(new PropertyValueFactory<ExcelImportRow, String>("employee_id"));
@@ -129,7 +138,7 @@ public class ExcelImportController   {
 		                        setTextFill(Color.BLACK);
 		                    } else {
 		                        setText(item);	                        
-		                        if (item.equals("Failed")) {
+		                        if (item.equals("Failed")||item.equals("Failed because time is error")||item.equals("Failed because time is error")) {
 		                            setTextFill(Color.RED);
 		                        } else if (item.equals("Success")) {
 		                            setTextFill(Color.GREEN);
@@ -169,13 +178,17 @@ public class ExcelImportController   {
 			  showAlert("Thông báo", "Hãy nhập file ");
 			  return;
 		  }
+		if(excelImportRows==null) {
+			showAlert("Thông báo","Chưa có dữ liệu ");
+			return ;
+		}
 		if(excelImportRows.isEmpty()==true) {
 			showAlert("Thông báo","Chưa có dữ liệu ");
 			return ;
 		}
 		for (ExcelImportRow excelImportRow : excelImportRows) {
 			Employee employee1 = GetAEmployee.getInstance().getAEmployee(excelImportRow.getEmployee_id());
-			if (employee1!=null) {
+			if (employee1.getName()!=null) {
 				excelImportRow.setName(employee1.getName());
 				excelImportRow.setRole_id(employee1.getRole_id());
 				if(excelImportRow.getEmployee_id()==null||excelImportRow.getDate()==null||excelImportRow.getTime_in()==null||excelImportRow.getTime_out()==null) {
@@ -200,7 +213,20 @@ public class ExcelImportController   {
 					if(officers.isEmpty()==true) {
 						excelImportRow.setStatus("Success");
 						LogTimekeepingOfficer newlog = new LogTimekeepingOfficer();
-						newlog.setLogID("log"+count_log_office.toString());
+						int kkg;
+						do {
+						kkg = -1;
+						LogTimekeepingOfficer checkid = GetTimekeepingOfficer.getInstance().getATimekeepingByID("log"+count_log_office.toString());
+					
+						if(checkid.getLogID()==null) {
+							newlog.setLogID("log"+count_log_office.toString());
+							kkg=1;
+						}
+						else {
+							count_log_office++;
+						}
+						}while(kkg==-1);
+						
 						count_log_office++;
 						newlog.setTime_in(Time.valueOf(excelImportRow.getTime_in()));
 						newlog.setTime_out(Time.valueOf(excelImportRow.getTime_out()));
@@ -254,7 +280,18 @@ public class ExcelImportController   {
 				  else {
 					  excelImportRow.setStatus("Success");
 						LogTimekeepingOfficer newlog = new LogTimekeepingOfficer();
-						newlog.setLogID("log"+count_log_office.toString());
+						int kkg;
+						do {
+						kkg = -1;
+						LogTimekeepingOfficer checkid = GetTimekeepingOfficer.getInstance().getATimekeepingByID("log"+count_log_office.toString());
+						if(checkid.getLogID()==null) {
+							newlog.setLogID("log"+count_log_office.toString());
+							kkg=1;
+						}
+						else {
+							count_log_office++;
+						}
+						}while(kkg==-1);
 						count_log_office++;
 						newlog.setTime_in(Time.valueOf(excelImportRow.getTime_in()));
 						newlog.setTime_out(Time.valueOf(excelImportRow.getTime_out()));
@@ -299,7 +336,18 @@ public class ExcelImportController   {
 					if(workers.isEmpty()==true) {
 						excelImportRow.setStatus("Success");
 						LogTimekeepingWorker newlog = new LogTimekeepingWorker();
-						newlog.setLogID("log"+count_log_worker.toString());
+						int kkg;
+						do {
+						kkg = -1;
+						LogTimekeepingWorker checkid = GetTimekeepingWorker.getInstance().getATimekeepingByID("log"+count_log_worker.toString());
+						if(checkid.getLogID()==null) {
+							newlog.setLogID("log"+count_log_worker.toString());
+							kkg=1;
+						}
+						else {
+							count_log_worker++;
+						}
+						}while(kkg==-1);
 						count_log_worker++;
 						newlog.setTime_in(Time.valueOf(excelImportRow.getTime_in()));
 						newlog.setTime_out(Time.valueOf(excelImportRow.getTime_out()));
@@ -343,7 +391,18 @@ public class ExcelImportController   {
 				  else {
 					  excelImportRow.setStatus("Success");
 						LogTimekeepingWorker newlog = new LogTimekeepingWorker();
-						newlog.setLogID("log"+count_log_worker.toString());
+						int kkg;
+						do {
+							kkg = -1;
+							LogTimekeepingWorker checkid = GetTimekeepingWorker.getInstance().getATimekeepingByID("log"+count_log_worker.toString());
+							if(checkid.getLogID()==null) {
+								newlog.setLogID("log"+count_log_worker.toString());
+								kkg=1;
+							}
+							else {
+								count_log_worker++;
+							}
+							}while(kkg==-1);
 						count_log_worker++;
 						newlog.setTime_in(Time.valueOf(excelImportRow.getTime_in()));
 						newlog.setTime_out(Time.valueOf(excelImportRow.getTime_out()));
@@ -373,7 +432,6 @@ public class ExcelImportController   {
 				  }
 				}
 		}
+		showAlert("Thông báo", "Nhập thành công ");
 	}
 	}
-
-
