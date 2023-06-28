@@ -13,7 +13,7 @@ public class FXMLNavigation {
 	public static String TIMEKEEPING_DAY_OFFICER_DETAIL_VIEW = "/controller/timekeeping/personal/monthly/day/officer/timekeeping_day_officer_detail_view.fxml";
 
 	public static String HRM_REPORT_SELECTION_VIEW = "/controller/report/hrmanager/HRM_report_selection_view.fxml";
-	public static String GENERAL_INFORMATION_VIEW = "/controller/report/hrmanager/generalinformation/HRM_general_infomation_report_view.fxml";
+	public static String GENERAL_INFORMATION_VIEW = "/controller/report/hrmanager/generalinformation/HRM_general_information_report_view.fxml";
 	public static String HRM_UNIT_WORKER_ATTENDANCE_VIEW = "/controller/report/hrmanager/unitworkerattendance/HRM_unit_worker_attendance_report_view.fxml";
   
 	public static String WUM_REPORT_SELECTION_VIEW = "/controller/report/unitmanager/WUM_report_selection_view.fxml";

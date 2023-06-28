@@ -1,6 +1,6 @@
 package createDB;
 
-import services.employee.EmployeeService;
+import services.employee.EmployeeInsertTimekeeping;
 import model.employee.Employee;
 
 
@@ -10,7 +10,7 @@ public class InsertIntoTableTest {
 //		EmployeeDAO.getInstance().update(nv);
 		for(int i = 1 ; i <=10 ; i++) {
 			Employee nv = new Employee("nv10","Nguyen Duy Hung@10" ,"Van Phong","UN02", "170102",i%5+1);
-			EmployeeService.getInstance().insert(nv);
+			EmployeeInsertTimekeeping.getInstance().insert(nv);
 		}
 //		
 //		ArrayList<Employee> allEmployees = EmployeeDAO.getInstance().selectAll(); 

@@ -92,10 +92,10 @@ public class HomeController implements Initializable {
     void switchToReport(MouseEvent event) throws IOException {
         highlightSidebar(reportBtn);
         setTextTitle("Report");
-        if (Authentication.authentication instanceof HRManager){
+        if (Authentication.getInstance().getAuthentication() instanceof HRManager){
             layout.changeAnchorPane(basePane, HRM_REPORT_SELECTION_VIEW);
         }
-        if (Authentication.authentication instanceof WorkerUnitManager){
+        if (Authentication.getInstance().getAuthentication() instanceof WorkerUnitManager){
             layout.changeAnchorPane(basePane, WUM_REPORT_SELECTION_VIEW);
         }
 
@@ -105,14 +105,14 @@ public class HomeController implements Initializable {
     void switchToImport(MouseEvent event) throws IOException {
         highlightSidebar(importBtn);
         setTextTitle("Import");
-        if (Authentication.authentication instanceof  HRManager){
+        if (Authentication.getInstance().getAuthentication() instanceof  HRManager){
             layout.changeAnchorPane(basePane, IMPORT_SELECTION_VIEW);
         }
     }
     
     @FXML
     void logout(MouseEvent event) throws IOException {
-    	Authentication.authentication = null;
+    	Authentication.getInstance().destroyAuthencation();
     	Stage currentStage = (Stage) basePane.getScene().getWindow();
     	currentStage.close();
     	
@@ -144,14 +144,16 @@ public class HomeController implements Initializable {
 			e.printStackTrace();
 		}
       
-        if(!(Authentication.authentication instanceof  HRManager)) {
+        if(!(Authentication.getInstance().getAuthentication() instanceof  HRManager)) {
             importBtn.setVisible(false);
         }
 
-        if (!(Authentication.authentication instanceof HRManager || Authentication.authentication instanceof WorkerUnitManager || Authentication.authentication instanceof OfficerUnitManager)){
+        if (!(Authentication.getInstance().getAuthentication() instanceof HRManager ||
+                Authentication.getInstance().getAuthentication() instanceof WorkerUnitManager ||
+                Authentication.getInstance().getAuthentication() instanceof OfficerUnitManager)){
             reportBtn.setVisible(false);
         }
-        usernameLabel.setText(Authentication.authentication.getName());
+        usernameLabel.setText(Authentication.getInstance().getAuthentication().getName());
         
     }
 
