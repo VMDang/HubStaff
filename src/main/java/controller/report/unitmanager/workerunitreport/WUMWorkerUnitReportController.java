@@ -239,7 +239,7 @@ public class WUMWorkerUnitReportController implements Initializable {
 
         for (Employee e: allEmployees) {
             if ((e.getRole_id() == 3 ||e.getRole_id() == 1) && (e.getUnit_id().equals(unit_id))) {
-                allWorker.add(new Worker(e.getId(), e.getName(), e.getUnit_id(), e.getPassword()));
+                allWorker.add(new Worker(e.getId(), e.getName(), e.getUnit_id(), e.getPassword(),e.getStatus()));
             }
         }
         return allWorker;

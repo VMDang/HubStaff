@@ -43,9 +43,10 @@ public class GetAllEmployees implements IHRSystem<Employee>{
 				String Department = rs.getString("Department");
 				String UnitId = rs.getString("UnitId");
 				String Password = rs.getString("Password");
+				int Status = rs.getInt("Status");
 				int RoleId = rs.getInt("RoleId");
 				
-				Employee nv = new Employee(ID, Name, Department, UnitId, Password, RoleId);
+				Employee nv = new Employee(ID, Name, Department, UnitId, Password, RoleId, Status);
 				allEmployees.add(nv);
 					
 			}
