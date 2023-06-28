@@ -18,6 +18,7 @@ public class Worker extends Employee {
 				", unit_id='" + unit_id + '\'' +
 				", password='" + password + '\'' +
 				", role_id=" + role_id +
+				", status=" + status +
 				'}';
 	}
 }

@@ -1,7 +1,6 @@
 package controller.report.unitmanager.workerunitreport;
 
 import controller.auth.Authentication;
-import controller.home.HomeController;
 import controller.layouts.LayoutController;
 import dbtimekeeping.gettimekeeping.GetTimekeepingWorker;
 import hrsystem.GetAllEmployees;
@@ -18,7 +17,6 @@ import javafx.scene.layout.AnchorPane;
 import model.employee.Employee;
 import model.employee.worker.Worker;
 import model.logtimekeeping.LogTimekeepingWorker;
-import assets.navigation.FXMLNavigation.*;
 
 import java.io.IOException;
 import java.net.URL;
@@ -33,8 +31,7 @@ import static assets.navigation.FXMLNavigation.TIMEKEEPING_MONTHLY_VIEW;
 
 public class WUMWorkerUnitReportController implements Initializable {
     private ObservableList<WUMWorkerUnitReportRow> listRecord = FXCollections.observableArrayList();
-
-    private HashMap<String, Worker> currentWorkers = new HashMap<String, Worker>();
+    private HashMap<String, Worker> currentWorkers = new HashMap<>();
 
     @FXML
     private TableView<WUMWorkerUnitReportRow> tableReport;
@@ -105,10 +102,6 @@ public class WUMWorkerUnitReportController implements Initializable {
 
         setListRecord();
         tableReport.setItems(listRecord);
-
-//        for (Map.Entry<String, Worker> w: currentWorkers.entrySet()) {
-//            System.out.println(w.getKey() + "  ---  " + w.getValue().toString());
-//        }
     }
 
     @Override
@@ -135,73 +128,24 @@ public class WUMWorkerUnitReportController implements Initializable {
 
         tableReport.setItems(listRecord);
 
-        tableReport.setRowFactory(tv -> new TableRow<WUMWorkerUnitReportRow>() {
-            @Override
-            protected void updateItem(WUMWorkerUnitReportRow item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (!empty && item != null) {
-                    // Kiểm tra điều kiện của dòng đặc biệt và thay đổi màu sắc tùy ý
-                    if (item.getWorkerID().equals(Authentication.getInstance().getAuthentication().getId())) {
-                        // Đặt màu nền cho dòng đặc biệt
-                        setStyle("-fx-background-color: #ffcccc;");
-                    } else {
-                        // Đặt màu nền mặc định cho các dòng khác
-                        setStyle("");
-                    }
-                } else {
-                    // Đặt màu nền mặc định cho các dòng rỗng
-                    setStyle("");
-                }
-            }
-        });
-
-        tableReport.setRowFactory(tv -> new TableRow<WUMWorkerUnitReportRow>() {
-            @Override
-            protected void updateItem(WUMWorkerUnitReportRow item, boolean empty) {
-                super.updateItem(item, empty);
-
-                if (!empty && item != null) {
-                    // Kiểm tra điều kiện của dòng đặc biệt và thay đổi màu sắc tùy ý
-                    if (item.getWorkerID().equals(Authentication.getInstance().getAuthentication().getId())) {
-                        // Đặt màu nền cho dòng đặc biệt
-                        setStyle("-fx-background-color: #acecea;");
-                    } else {
-                        // Đặt màu nền mặc định cho các dòng khác
-                        setStyle("");
-                    }
-                } else {
-                    // Đặt màu nền mặc định cho các dòng rỗng
-                    setStyle("");
-                }
-            }
-        });
-
-        tableReport.setOnMouseClicked(mouseEvent -> {
-            if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount()==1){
-                if(tableReport.getSelectionModel().getSelectedItem().getWorkerID().equals(Authentication.getInstance().getAuthentication().getId())){
-                    LayoutController layout = new LayoutController();
-                    try {
-                        layout.changeAnchorPane(basePane, TIMEKEEPING_MONTHLY_VIEW);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        });
+        switchToTimekeepingWUM();
     }
 
     private void setListRecord() {
+        String monthFilter = chooseMonth.getValue() + "/" + chooseYear.getValue();
+
         ArrayList<Worker> workers = new ArrayList<Worker>();
         workers.addAll(getAllWorkerUnit(Authentication.getInstance().getAuthentication().getUnit_id()));
-        for (Worker w : workers) {
-            if (Authentication.getInstance().getAuthentication().getId().equals(w.getId())){
-                workers.remove(w);
-                workers.add(0, w);
+
+        int indexWUM = 0;
+        for (int i = 0; i < workers.size(); i++) {
+            if (workers.get(i).getId().equals(Authentication.getInstance().getAuthentication().getId())){
+                indexWUM = i;
             }
         }
-
-        String monthFilter = chooseMonth.getValue() + "/" + chooseYear.getValue();
+        Worker workerTmp = workers.get(indexWUM);
+        workers.remove(indexWUM);
+        workers.add(0, workerTmp);
 
         for (Worker w : workers) {
             ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = new ArrayList<LogTimekeepingWorker>();
@@ -210,26 +154,24 @@ public class WUMWorkerUnitReportController implements Initializable {
             ArrayList<LogTimekeepingWorker> logTimekeepingByMonth = new ArrayList<LogTimekeepingWorker>();
             logTimekeepingByMonth.addAll(getTimekeepingByMonth(logTimekeepingWorkers, monthFilter));
 
-            if (!logTimekeepingByMonth.isEmpty()){
+            float totalHoursWork = 0, totalHoursOT = 0;
+            String hoursWork = "", hoursOT = "";
 
+            for (LogTimekeepingWorker log: logTimekeepingByMonth){
+                totalHoursWork += log.getShift1() + log.getShift2();
+                totalHoursOT += log.getShift3();
 
-                if (monthFilter.equals(LocalDate.now().format(DateTimeFormatter.ofPattern("MM/yyyy")))){
-                    currentWorkers.put(w.getId(), w);
-                }
-                float totalHoursWork = 0, totalHoursOT = 0;
-                String hoursWork = "", hoursOT = "";
+                hoursWork = String.valueOf(totalHoursWork) + " / " + String.valueOf(logTimekeepingByMonth.size()*2*4);
+                hoursOT = String.valueOf(totalHoursOT) + " / " + String.valueOf(logTimekeepingByMonth.size()*4);
+            }
 
-                for (LogTimekeepingWorker log: logTimekeepingByMonth){
-                    totalHoursWork += log.getShift1() + log.getShift2();
-                    totalHoursOT += log.getShift3();
-
-                    hoursWork = String.valueOf(totalHoursWork) + " / " + String.valueOf(logTimekeepingByMonth.size()*2*4);
-                    hoursOT = String.valueOf(totalHoursOT) + " / " + String.valueOf(logTimekeepingByMonth.size()*4);
-                }
-
+            if (monthFilter.equals(LocalDate.now().format(DateTimeFormatter.ofPattern("MM/yyyy"))) && !(w.getStatus()==0 && logTimekeepingByMonth.isEmpty())){
+                listRecord.add(new WUMWorkerUnitReportRow(w.getId(), w.getName(), monthFilter, hoursWork, hoursOT));
+            }else if (!logTimekeepingByMonth.isEmpty()){
                 listRecord.add(new WUMWorkerUnitReportRow(w.getId(), w.getName(), monthFilter, hoursWork, hoursOT));
             }
         }
+        highlightRow();
     }
 
     private ArrayList<Worker> getAllWorkerUnit(String unit_id){
@@ -240,7 +182,12 @@ public class WUMWorkerUnitReportController implements Initializable {
         for (Employee e: allEmployees) {
             if ((e.getRole_id() == 3 ||e.getRole_id() == 1) && (e.getUnit_id().equals(unit_id))) {
                 allWorker.add(new Worker(e.getId(), e.getName(), e.getUnit_id(), e.getPassword(),e.getStatus()));
+
+                if (e.getStatus() == 1){
+                    currentWorkers.put( e.getId(), new Worker(e.getId(), e.getName(), e.getUnit_id(), e.getPassword(),e.getStatus()));
+                }
             }
+
         }
         return allWorker;
     }
@@ -267,5 +214,36 @@ public class WUMWorkerUnitReportController implements Initializable {
         return logFilterByMonth;
     }
 
+    private void switchToTimekeepingWUM() {
+        tableReport.setOnMouseClicked(mouseEvent -> {
+            if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount()==1){
+                WUMWorkerUnitReportRow selectedItem = tableReport.getSelectionModel().getSelectedItem();
+                if(selectedItem != null && selectedItem.getWorkerID().equals(Authentication.getInstance().getAuthentication().getId())){
+                    LayoutController layout = new LayoutController();
+                    try {
+                        layout.changeAnchorPane(basePane, TIMEKEEPING_MONTHLY_VIEW);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
+    }
+
+    private void highlightRow(){
+        tableReport.setRowFactory(tv -> new TableRow<WUMWorkerUnitReportRow>() {
+            @Override
+            protected void updateItem(WUMWorkerUnitReportRow item, boolean empty) {
+                super.updateItem(item, empty);
+                if (!empty && item != null) {
+                    if (item.getWorkerID().equals(Authentication.getInstance().getAuthentication().getId())) {
+                        setStyle("-fx-background-color: #acecea;");
+                    } else if (!currentWorkers.containsKey(item.getWorkerID())){
+                        setStyle("-fx-background-color: #eaa6ab;");
+                    } else setStyle("");
+                }else setStyle("");
+            }
+        });
+    }
 
 }
