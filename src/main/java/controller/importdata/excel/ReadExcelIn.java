@@ -1,6 +1,7 @@
 package controller.importdata.excel;
 
-
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -11,6 +12,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.formula.functions.Column;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellType;
 import org.apache.poi.ss.usermodel.FormulaEvaluator;
@@ -36,7 +38,14 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 	 
 	        // Get sheet
 	        Sheet sheet = workbook.getSheetAt(0);
-	 
+	        //
+	        int numberOfColumns = sheet.getRow(0).getLastCellNum();
+	        int number = 2 ;
+	        if(numberOfColumns!=number) {
+	        	workbook.close();
+	 	        inputStream.close();
+	        	return null;
+	        }
 	        // Get all rows
 	        Iterator<Row> iterator = sheet.iterator();
 	        while (iterator.hasNext()) {
@@ -51,7 +60,9 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 	 
 	            // Read cells and set value for book object
 	            ExcelImportRow excelImportRow = new ExcelImportRow();
+	            int check = -1;
 	            while (cellIterator.hasNext()) {
+	            	
 	                //Read cell
 	                Cell cell = cellIterator.next();
 	                Object cellValue = getCellValue(cell);
@@ -65,23 +76,29 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 	                	excelImportRow.setEmployee_id((String) getCellValue(cell));
 	                    break;
 	                case COLUMN_INDEX_TIMESTAMP:
+	                	String pattern = "\\d{4}-\\d{2}-\\d{2} \\d{2}:\\d{2}:\\d{2}";
+	                	
 	                	String timestamp = (String) getCellValue(cell);
+	                	boolean isMatch = Pattern.matches(pattern, timestamp);
+	                	if(isMatch==true) {
 	                	excelImportRow.setDate(timestamp.substring(0, 10));
 	                	
 	                	excelImportRow.setTime_in(timestamp.substring(11,19));
-	                	
+	                	check = 1;
+	                	}
 	                    break;
 	                default:
 	                    break;
 	                }
 	 
 	            }
-	            excelImportRows.add(excelImportRow);
+	            if(check==1) {
+	            excelImportRows.add(excelImportRow);}
 	        }
 	 
 	        workbook.close();
 	        inputStream.close();
-	 
+	        System.out.println(numberOfColumns);
 	        return excelImportRows;
 	    }
 	 
