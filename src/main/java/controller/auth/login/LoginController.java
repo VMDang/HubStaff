@@ -35,9 +35,8 @@ public class LoginController {
         }   else {
 
             Employee employee = GetAEmployee.getInstance().getAEmployee(Id);
-
             if (employee.getPassword().equals(Password)){
-                    Authentication.setAuthentication(employee);
+                    Authentication.getInstance().setAuthentication(employee);
 //                    LayoutController layout = new LayoutController();
 //                    layout.changeScene(event, HOME_VIEW);
                     showNewScreen();

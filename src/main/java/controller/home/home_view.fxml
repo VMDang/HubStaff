@@ -69,7 +69,7 @@
                      <children>
                         <Pane fx:id="dashboardBtn" onMouseClicked="#switchToDashboard" prefHeight="54.0" prefWidth="240.0">
                            <children>
-                              <Label alignment="BASELINE_LEFT" layoutX="14.0" layoutY="9.0" prefHeight="37.0" prefWidth="208.0" text="Dashboard" textFill="WHITE">
+                              <Label alignment="BASELINE_LEFT" layoutX="14.0" layoutY="9.0" prefHeight="37.0" prefWidth="208.0" text="Home page" textFill="WHITE">
                                  <font>
                                     <Font name="System Bold" size="20.0" />
                                  </font>
