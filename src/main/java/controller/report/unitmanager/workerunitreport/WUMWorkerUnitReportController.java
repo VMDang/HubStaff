@@ -1,6 +1,8 @@
 package controller.report.unitmanager.workerunitreport;
 
 import controller.auth.Authentication;
+import controller.home.HomeController;
+import controller.layouts.LayoutController;
 import dbtimekeeping.gettimekeeping.GetTimekeepingWorker;
 import hrsystem.GetAllEmployees;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -11,10 +13,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.input.MouseButton;
+import javafx.scene.layout.AnchorPane;
 import model.employee.Employee;
 import model.employee.worker.Worker;
 import model.logtimekeeping.LogTimekeepingWorker;
+import assets.navigation.FXMLNavigation.*;
 
+import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.YearMonth;
@@ -22,6 +28,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
+
+import static assets.navigation.FXMLNavigation.TIMEKEEPING_MONTHLY_VIEW;
 
 public class WUMWorkerUnitReportController implements Initializable {
     private ObservableList<WUMWorkerUnitReportRow> listRecord = FXCollections.observableArrayList();
@@ -73,6 +81,9 @@ public class WUMWorkerUnitReportController implements Initializable {
     @FXML
     private Label wum_name;
 
+    @FXML
+    private AnchorPane basePane;
+
     String[] listMonth = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
     String[] listYear = {"2023", "2022", "2021", "2020"};
 
@@ -123,11 +134,72 @@ public class WUMWorkerUnitReportController implements Initializable {
         hoursOT.setCellValueFactory(new PropertyValueFactory<WUMWorkerUnitReportRow, String>("hoursOT"));
 
         tableReport.setItems(listRecord);
+
+        tableReport.setRowFactory(tv -> new TableRow<WUMWorkerUnitReportRow>() {
+            @Override
+            protected void updateItem(WUMWorkerUnitReportRow item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (!empty && item != null) {
+                    // Kiểm tra điều kiện của dòng đặc biệt và thay đổi màu sắc tùy ý
+                    if (item.getWorkerID().equals(Authentication.getInstance().getAuthentication().getId())) {
+                        // Đặt màu nền cho dòng đặc biệt
+                        setStyle("-fx-background-color: #ffcccc;");
+                    } else {
+                        // Đặt màu nền mặc định cho các dòng khác
+                        setStyle("");
+                    }
+                } else {
+                    // Đặt màu nền mặc định cho các dòng rỗng
+                    setStyle("");
+                }
+            }
+        });
+
+        tableReport.setRowFactory(tv -> new TableRow<WUMWorkerUnitReportRow>() {
+            @Override
+            protected void updateItem(WUMWorkerUnitReportRow item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (!empty && item != null) {
+                    // Kiểm tra điều kiện của dòng đặc biệt và thay đổi màu sắc tùy ý
+                    if (item.getWorkerID().equals(Authentication.getInstance().getAuthentication().getId())) {
+                        // Đặt màu nền cho dòng đặc biệt
+                        setStyle("-fx-background-color: #acecea;");
+                    } else {
+                        // Đặt màu nền mặc định cho các dòng khác
+                        setStyle("");
+                    }
+                } else {
+                    // Đặt màu nền mặc định cho các dòng rỗng
+                    setStyle("");
+                }
+            }
+        });
+
+        tableReport.setOnMouseClicked(mouseEvent -> {
+            if (mouseEvent.getButton() == MouseButton.PRIMARY && mouseEvent.getClickCount()==1){
+                if(tableReport.getSelectionModel().getSelectedItem().getWorkerID().equals(Authentication.getInstance().getAuthentication().getId())){
+                    LayoutController layout = new LayoutController();
+                    try {
+                        layout.changeAnchorPane(basePane, TIMEKEEPING_MONTHLY_VIEW);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
     }
 
-    public void setListRecord() {
+    private void setListRecord() {
         ArrayList<Worker> workers = new ArrayList<Worker>();
         workers.addAll(getAllWorkerUnit(Authentication.getInstance().getAuthentication().getUnit_id()));
+        for (Worker w : workers) {
+            if (Authentication.getInstance().getAuthentication().getId().equals(w.getId())){
+                workers.remove(w);
+                workers.add(0, w);
+            }
+        }
 
         String monthFilter = chooseMonth.getValue() + "/" + chooseYear.getValue();
 
@@ -160,7 +232,7 @@ public class WUMWorkerUnitReportController implements Initializable {
         }
     }
 
-    public ArrayList<Worker> getAllWorkerUnit(String unit_id){
+    private ArrayList<Worker> getAllWorkerUnit(String unit_id){
         GetAllEmployees getAllEmployees = GetAllEmployees.getInstance();
         ArrayList<Employee> allEmployees = getAllEmployees.getAllEmployees();
         ArrayList<Worker> allWorker = new ArrayList<Worker>();
@@ -173,14 +245,14 @@ public class WUMWorkerUnitReportController implements Initializable {
         return allWorker;
     }
 
-    public ArrayList<LogTimekeepingWorker> getTimeKeepingAWorker(String employee_id){
+    private ArrayList<LogTimekeepingWorker> getTimeKeepingAWorker(String employee_id){
         GetTimekeepingWorker getTimekeepingWorker = GetTimekeepingWorker.getInstance();
         ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = getTimekeepingWorker.getTimekeepingsByEmployeeID(employee_id);
 
         return logTimekeepingWorkers;
     }
 
-    public ArrayList<LogTimekeepingWorker> getTimekeepingByMonth(ArrayList<LogTimekeepingWorker> logs, String monthFilter){
+    private ArrayList<LogTimekeepingWorker> getTimekeepingByMonth(ArrayList<LogTimekeepingWorker> logs, String monthFilter){
         ArrayList<LogTimekeepingWorker> logFilterByMonth = new ArrayList<LogTimekeepingWorker>();
 
         for (LogTimekeepingWorker log : logs) {
@@ -194,4 +266,6 @@ public class WUMWorkerUnitReportController implements Initializable {
 
         return logFilterByMonth;
     }
+
+
 }
