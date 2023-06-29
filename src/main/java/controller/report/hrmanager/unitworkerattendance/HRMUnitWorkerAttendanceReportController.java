@@ -63,6 +63,9 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
 
 	@FXML
 	private Label unit_manager;
+	
+	@FXML
+	private Label num_worker;
 
 	@FXML
     private ChoiceBox<String> unitNameBox;
@@ -110,6 +113,9 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
         	unit_idText.setText(""+unit_id_text);
             listRecord = FXCollections.observableArrayList();
             setListRecord();
+            
+            num_worker.setText(String.valueOf(listRecord.size()));
+            
             unit_manager.setText(name_unit_manager);
 
             tableReport.setItems(listRecord);

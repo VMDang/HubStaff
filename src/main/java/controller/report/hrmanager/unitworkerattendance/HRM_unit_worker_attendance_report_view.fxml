@@ -48,7 +48,7 @@
                 <Button fx:id="export_excel" layoutX="1035.0" layoutY="655.0" mnemonicParsing="false" onAction="#export_excel" text="Xuất báo cáo" AnchorPane.bottomAnchor="16.0" AnchorPane.rightAnchor="16.0" />
                 <ChoiceBox fx:id="unitNameBox" layoutX="992.0" layoutY="14.0" prefHeight="25.0" prefWidth="118.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0" />
             <Label layoutX="245.0" layoutY="76.0" text="Số lượng công nhân:" />
-            <Text layoutX="362.0" layoutY="89.0" strokeType="OUTSIDE" strokeWidth="0.0" text="0" />
+            <Label fx:id="num_worker" layoutX="366.0" layoutY="76.0" text="0" />
             </children>
         </AnchorPane>
     </children>
