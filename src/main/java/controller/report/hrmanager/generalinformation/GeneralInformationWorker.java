@@ -6,11 +6,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 
 import dbtimekeeping.gettimekeeping.GetTimekeepingWorker;
+import model.employee.Employee;
 import model.logtimekeeping.LogTimekeepingWorker;
 
-public class GeneralInformationWorker {
-	private ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = GetTimekeepingWorker.getInstance().getAllTimekeepings();
-	
+public class GeneralInformationWorker extends GeneralInfomation {
     public static int getMonthFromDate(Date date) {
         SimpleDateFormat sdf = new SimpleDateFormat("MM");
         String month = sdf.format(date);
@@ -30,7 +29,7 @@ public class GeneralInformationWorker {
     	String year = sdf.format(date);
     	return Integer.parseInt(year);
     }
-    
+	
     public static double convertToDouble(String time) {
         String[] parts = time.split(":");
         int hours = Integer.parseInt(parts[0]);
@@ -48,154 +47,190 @@ public class GeneralInformationWorker {
         }
         return Double.parseDouble(df.format(db));
     }
-    
-	public double countTimeShift1ByMonth(int month, int year) {
-		double count = 0;
-		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
-			if(getMonthFromDate(logTimekeepingWorker.getDate()) == month && getYearFromDate(logTimekeepingWorker.getDate()) == year) {
-				count = count + logTimekeepingWorker.getShift1();
-			}
-		}
-		return count;
-	}
-
-	public double countTimeShift2ByMonth(int month, int year) {
-		double count = 0;
-		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
-			if(getMonthFromDate(logTimekeepingWorker.getDate()) == month && getYearFromDate(logTimekeepingWorker.getDate()) == year) {
-				count = count + logTimekeepingWorker.getShift2();
-			}
-		}
-		return count;
-	}
 	
-	public double countTimeShift3ByMonth(int month, int year) {
-		double count = 0;
-		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
-			if(getMonthFromDate(logTimekeepingWorker.getDate()) == month && getYearFromDate(logTimekeepingWorker.getDate()) == year) {
-				count = count + logTimekeepingWorker.getShift3();
-			}
-		}
-		return count;
-	}
-	
-	public double countTimeShift1ByQuarter(int quarter, int year) {
-		double count = 0;
-		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
-			if(getQuarterFromDate(logTimekeepingWorker.getDate()) == quarter && getYearFromDate(logTimekeepingWorker.getDate()) == year) {
-				count = count + logTimekeepingWorker.getShift1();
-			}
-		}
-		return count;
-	}
-	
-	public double countTimeShift2ByQuarter(int quarter, int year) {
-		double count = 0;
-		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
-			if(getQuarterFromDate(logTimekeepingWorker.getDate()) == quarter && getYearFromDate(logTimekeepingWorker.getDate()) == year) {
-				count = count + logTimekeepingWorker.getShift2();
-			}
-		}
-		return count;
-	}
-	
-	public double countTimeShift3ByQuarter(int quarter, int year) {
-		double count = 0;
-		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
-			if(getQuarterFromDate(logTimekeepingWorker.getDate()) == quarter && getYearFromDate(logTimekeepingWorker.getDate()) == year) {
-				count = count + logTimekeepingWorker.getShift3();
-			}
-		}
-		return count;
-	}
-	
-	public double countTimeShift1ByYear(int year) {
-		double count = 0;
-		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
-			if(getYearFromDate(logTimekeepingWorker.getDate()) == year) {
-				count = count + logTimekeepingWorker.getShift1();
-			}
-		}
-		return count;
-	}
-	
-	public double countTimeShift2ByYear(int year) {
-		double count = 0;
-		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
-			if(getYearFromDate(logTimekeepingWorker.getDate()) == year) {
-				count = count + logTimekeepingWorker.getShift2();
-			}
-		}
-		return count;
-	}
-	
-	public double countTimeShift3ByYear(int year) {
-		double count = 0;
-		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
-			if(getYearFromDate(logTimekeepingWorker.getDate()) == year) {
-				count = count + logTimekeepingWorker.getShift3();
-			}
-		}
-		return count;
-	}
-	
-	public double countHourLateByMonth(int month, int year) {
-		double count = 0;
+    public double countHourLateByMonthAEmployee(Employee employee, int month, int year) {
+    	double count = 0;
+		ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = GetTimekeepingWorker.getInstance().getTimekeepingsByEmployeeID(employee.getId());
 		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
 			if(getMonthFromDate(logTimekeepingWorker.getDate()) == month && getYearFromDate(logTimekeepingWorker.getDate()) == year) {
 				count = count + ((convertToDouble(logTimekeepingWorker.getTime_in().toString()) - 7.5) > 0 ? (convertToDouble(logTimekeepingWorker.getTime_in().toString()) - 7.5) : 0);
-			}
+			}				
+		}
+		return count;
+    }
+    
+    public double countHourLateByQuarterAEmployee(Employee employee, int quarter, int year) {
+    	double count = 0;
+		ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = GetTimekeepingWorker.getInstance().getTimekeepingsByEmployeeID(employee.getId());
+		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
+			if(getQuarterFromDate(logTimekeepingWorker.getDate()) == quarter && getYearFromDate(logTimekeepingWorker.getDate()) == year) {
+				count = count + ((convertToDouble(logTimekeepingWorker.getTime_in().toString()) - 7.5) > 0 ? (convertToDouble(logTimekeepingWorker.getTime_in().toString()) - 7.5) : 0);
+			}				
+		}
+		return count;
+    }
+    
+    public double countHourLateByYearAEmployee(Employee employee, int year) {
+    	double count = 0;
+		ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = GetTimekeepingWorker.getInstance().getTimekeepingsByEmployeeID(employee.getId());
+		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
+			if(getYearFromDate(logTimekeepingWorker.getDate()) == year) {
+				count = count + ((convertToDouble(logTimekeepingWorker.getTime_in().toString()) - 7.5) > 0 ? (convertToDouble(logTimekeepingWorker.getTime_in().toString()) - 7.5) : 0);
+			}				
+		}
+		return count;
+    }
+    
+    public double countHourEarlyByMonthAEmployee(Employee employee, int month, int year) {
+    	double count = 0;
+		ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = GetTimekeepingWorker.getInstance().getTimekeepingsByEmployeeID(employee.getId());
+		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
+			if(getMonthFromDate(logTimekeepingWorker.getDate()) == month && getYearFromDate(logTimekeepingWorker.getDate()) == year) {
+				count = count + ((17.5 - convertToDouble(logTimekeepingWorker.getTime_out().toString())) > 0 ? (17.5 - convertToDouble(logTimekeepingWorker.getTime_out().toString())) : 0);
+			}				
+		}
+		return count;
+    }
+    
+    public double countHourEarlyByQuarterAEmployee(Employee employee, int quarter, int year) {
+    	double count = 0;
+		ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = GetTimekeepingWorker.getInstance().getTimekeepingsByEmployeeID(employee.getId());
+		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
+			if(getQuarterFromDate(logTimekeepingWorker.getDate()) == quarter && getYearFromDate(logTimekeepingWorker.getDate()) == year) {
+				count = count + ((17.5 - convertToDouble(logTimekeepingWorker.getTime_out().toString())) > 0 ? (17.5 - convertToDouble(logTimekeepingWorker.getTime_out().toString())) : 0);
+			}				
+		}
+		return count;
+    }
+    
+    public double countHourEarlyByYearAEmployee(Employee employee, int year) {
+    	double count = 0;
+		ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = GetTimekeepingWorker.getInstance().getTimekeepingsByEmployeeID(employee.getId());
+		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
+			if(getYearFromDate(logTimekeepingWorker.getDate()) == year) {
+				count = count + ((17.5 - convertToDouble(logTimekeepingWorker.getTime_out().toString())) > 0 ? (17.5 - convertToDouble(logTimekeepingWorker.getTime_out().toString())) : 0);
+			}				
+		}
+		return count;
+    }
+    
+	public double countHourLateByMonth(int month, int year) {
+		double count = 0;
+		for (Employee employee : employees) {
+			count = count + countHourLateByMonthAEmployee(employee, month, year);
 		}
 		return roundouble(count);
 	}
 	
 	public double countHourEarlyByMonth(int month, int year) {
 		double count = 0;
-		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
-			if(getMonthFromDate(logTimekeepingWorker.getDate()) == month && getYearFromDate(logTimekeepingWorker.getDate()) == year) {
-				count = count + ((17.5 - convertToDouble(logTimekeepingWorker.getTime_out().toString())) > 0 ? (17.5 - convertToDouble(logTimekeepingWorker.getTime_out().toString())) : 0);
-			}
+		for (Employee employee : employees) {
+			count = count + countHourEarlyByMonthAEmployee(employee, month, year);
 		}
 		return roundouble(count);
 	}
 	
 	public double countHourLateByQuarter(int quarter, int year) {
 		double count = 0;
-		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
-			if(getQuarterFromDate(logTimekeepingWorker.getDate()) == quarter && getYearFromDate(logTimekeepingWorker.getDate()) == year) {
-				count = count + ((convertToDouble(logTimekeepingWorker.getTime_in().toString()) - 7.5) > 0 ? (convertToDouble(logTimekeepingWorker.getTime_in().toString()) - 7.5) : 0);
-			}
+		for (Employee employee : employees) {
+			count = count + countHourLateByQuarterAEmployee(employee, quarter, year);
 		}
 		return roundouble(count);
 	}
 	
 	public double countHourEarlyByQuarter(int quarter, int year) {
 		double count = 0;
-		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
-			if(getQuarterFromDate(logTimekeepingWorker.getDate()) == quarter && getYearFromDate(logTimekeepingWorker.getDate()) == year) {
-				count = count + ((17.5 - convertToDouble(logTimekeepingWorker.getTime_out().toString())) > 0 ? (17.5 - convertToDouble(logTimekeepingWorker.getTime_out().toString())) : 0);
-			}
+		for (Employee employee : employees) {
+			count = count + countHourEarlyByQuarterAEmployee(employee, quarter, year);
 		}
 		return roundouble(count);
 	}
 	
 	public double countHourLateByYear(int year) {
 		double count = 0;
-		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
-			if(getYearFromDate(logTimekeepingWorker.getDate()) == year) {
-				count = count + ((convertToDouble(logTimekeepingWorker.getTime_in().toString()) - 7.5) > 0 ? (convertToDouble(logTimekeepingWorker.getTime_in().toString()) - 7.5) : 0);
-			}
+		for (Employee employee : employees) {
+			count = count + countHourLateByYearAEmployee(employee, year);
 		}
 		return roundouble(count);
 	}
 	
 	public double countHourEarlyByYear(int year) {
 		double count = 0;
-		for (LogTimekeepingWorker logTimekeepingWorker : logTimekeepingWorkers) {
-			if(getYearFromDate(logTimekeepingWorker.getDate()) == year) {
-				count = count + ((17.5 - convertToDouble(logTimekeepingWorker.getTime_out().toString())) > 0 ? (17.5 - convertToDouble(logTimekeepingWorker.getTime_out().toString())) : 0);
-			}
+		for (Employee employee : employees) {
+			count = count + countHourEarlyByYearAEmployee(employee, year);
 		}
 		return roundouble(count);
+	}
+
+	@Override
+	public int countGoodMonth(int month, int year) {
+		int count = 0;
+		for (Employee employee : employees) {
+			if(employee.getDepartment().equals("Factory") == true)
+			if(this.countHourEarlyByMonthAEmployee(employee, month, year) + this.countHourLateByMonthAEmployee(employee, month, year) < 5) {
+				count = count + 1;
+			}
+		}
+		return count;
+	}
+
+	@Override
+	public int countGoodQuarter(int quarter, int year) {
+		int count = 0;
+		for (Employee employee : employees) {
+			if(employee.getDepartment().equals("Factory") == true)
+			if(this.countHourEarlyByQuarterAEmployee(employee, quarter, year) + this.countHourLateByQuarterAEmployee(employee, quarter, year) < 15) {
+				count = count + 1;
+			}
+		}
+		return count;
+	}
+
+	@Override
+	public int countGoodYear(int year) {
+		int count = 0;
+		for (Employee employee : employees) {
+			if(employee.getDepartment().equals("Factory") == true)
+			if(this.countHourEarlyByYearAEmployee(employee, year) + this.countHourLateByYearAEmployee(employee, year) < 60) {
+				count = count + 1;
+			}
+		}
+		return count;
+	}
+
+	@Override
+	public int countBadMonth(int month, int year) {
+		int count = 0;
+		for (Employee employee : employees) {
+			if(employee.getDepartment().equals("Factory") == true)
+			if(this.countHourEarlyByMonthAEmployee(employee, month, year) + this.countHourLateByMonthAEmployee(employee, month, year) >= 5) {
+				count = count + 1;
+			}
+		}
+		return count;
+	}
+
+	@Override
+	public int countBadQuarter(int quarter, int year) {
+		int count = 0;
+		for (Employee employee : employees) {
+			if(employee.getDepartment().equals("Factory") == true)
+			if(this.countHourEarlyByQuarterAEmployee(employee, quarter, year) + this.countHourLateByQuarterAEmployee(employee, quarter, year) >= 15) {
+				count = count + 1;
+			}
+		}
+		return count;
+	}
+
+	@Override
+	public int countBadYear(int year) {
+		int count = 0;
+		for (Employee employee : employees) {
+			if(employee.getDepartment().equals("Factory") == true)
+			if(this.countHourEarlyByYearAEmployee(employee, year) + this.countHourLateByYearAEmployee(employee, year) >= 60) {
+				count = count + 1;
+			}
+		}
+		return count;
 	}
 }
