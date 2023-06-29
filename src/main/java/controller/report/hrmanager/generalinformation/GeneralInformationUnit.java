@@ -11,7 +11,7 @@ public abstract class GeneralInformationUnit {
 	
 	public static void setUnitId(String unit_id){
 		GeneralInformationUnit.unit_id = unit_id;
-		employees = GeneralInfomation.getEmployeesByUnit(unit_id);
+		employees = GeneralInformation.getEmployeesByUnit(unit_id);
 	}
 	
 	public static String getDepartment() {

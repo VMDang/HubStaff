@@ -9,7 +9,7 @@ import dbtimekeeping.gettimekeeping.GetTimekeepingWorker;
 import model.employee.Employee;
 import model.logtimekeeping.LogTimekeepingWorker;
 
-public class GeneralInformationWorker extends GeneralInfomation {
+public class GeneralInformationWorker extends GeneralInformation {
     public static int getMonthFromDate(Date date) {
         SimpleDateFormat sdf = new SimpleDateFormat("MM");
         String month = sdf.format(date);

@@ -7,7 +7,7 @@ import java.util.Set;
 import hrsystem.GetAllEmployees;
 import model.employee.Employee;
 
-public abstract class GeneralInfomation {
+public abstract class GeneralInformation {
 
 	protected static ArrayList<Employee> employees = GetAllEmployees.getInstance().getAllEmployees();
 	

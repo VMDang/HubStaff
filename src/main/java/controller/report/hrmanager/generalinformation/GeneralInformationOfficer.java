@@ -11,7 +11,7 @@ import dbtimekeeping.gettimekeeping.GetTimekeepingOfficer;
 import model.employee.Employee;
 import model.logtimekeeping.LogTimekeepingOfficer;
 
-public class GeneralInformationOfficer extends GeneralInfomation {
+public class GeneralInformationOfficer extends GeneralInformation {
     public static int getMonthFromDate(Date date) {
         SimpleDateFormat sdf = new SimpleDateFormat("MM");
         String month = sdf.format(date);

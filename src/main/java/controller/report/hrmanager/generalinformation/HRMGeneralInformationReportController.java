@@ -120,11 +120,11 @@ public class HRMGeneralInformationReportController implements Initializable {
     @FXML
     private RadioButton yearBtn;
     
-    private GeneralInfomation informationOfficer = new GeneralInformationOfficer();
+    private GeneralInformation informationOfficer = new GeneralInformationOfficer();
     
     private GeneralInformationUnit informationOfficerUnit = new GeneralInformationOfficerUnit();
     
-    private GeneralInfomation informationWorker = new GeneralInformationWorker();
+    private GeneralInformation informationWorker = new GeneralInformationWorker();
     
     private GeneralInformationUnit informationWorkerUnit = new GeneralInformationWorkerUnit();
 
@@ -132,7 +132,7 @@ public class HRMGeneralInformationReportController implements Initializable {
     String[] listMonth = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
     String[] listQuarter = {"01", "02", "03", "04"};
     String[] listYear = {"2023", "2022", "2021", "2020"};
-    Set<String> listUnit = GeneralInfomation.getListUnit();
+    Set<String> listUnit = GeneralInformation.getListUnit();
     
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -281,9 +281,9 @@ public class HRMGeneralInformationReportController implements Initializable {
 		nameLabel.setText("Tên đơn vị:");
 		nameUnitLabel.setText("Doanh nghiệp");
 		departmentLabel.setText("Tổng số phòng ban:");
-		countDepartmentLabel.setText(""+GeneralInfomation.countNumberDepartment());
-		countWorkerLabel.setText(""+GeneralInfomation.countNumberWorker());
-		countOfficerLabel.setText(""+GeneralInfomation.countNumberOfficer());
+		countDepartmentLabel.setText(""+GeneralInformation.countNumberDepartment());
+		countWorkerLabel.setText(""+GeneralInformation.countNumberWorker());
+		countOfficerLabel.setText(""+GeneralInformation.countNumberOfficer());
 		workerPane.setDisable(false);
 		officerPane.setDisable(false);
 		if(monthBtn.isSelected()) {
