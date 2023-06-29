@@ -330,7 +330,7 @@ public class MonthlyTimekeepingController implements Initializable {
 		float hour_work = setFormatHour(log.getShift1() + log.getShift2() + log.getShift3());
 		float overtime = log.getShift3() ;
 		String status = "";
-		if(time_in.compareTo(Time.valueOf("07:30:00")) > 0 ) status +="Đi muộn";
+		if(time_in.compareTo(Time.valueOf("07:30:00")) > 0 ) status +="Đi muộn ";
 		if(time_out.compareTo(Time.valueOf("17:00:00")) < 0 ) status +="Về sớm";
 		if(time_in.compareTo(Time.valueOf("07:30:00")) <= 0 && time_out.compareTo(Time.valueOf("17:00:00")) >= 0) status = "Đạt";
 		return new TimekeepingEmployeeTableRow(date, time_in, time_out, hour_work, overtime, status, log.getShift1(), log.getShift2(), log.getShift3());
@@ -340,11 +340,22 @@ public class MonthlyTimekeepingController implements Initializable {
 		Time time_in = log.getTime_in();
 		Time time_out = log.getTime_out();
 		float hour_work = setFormatHour(((float)Time.valueOf("11:30:00").getTime() - (float)time_in.getTime())/(float)3600000 +  ((float)time_out.getTime()-(float)Time.valueOf("13:00:00").getTime())/(float)3600000);
-		float overtime = setFormatHour(hour_work-8.0f) < 0 ? 0.0f : setFormatHour(hour_work-8.0f) ;
+		
 		String status = "";
-		if(time_in.compareTo(Time.valueOf("07:30:00")) > 0 ) status +="Đi muộn";
-		if(time_out.compareTo(Time.valueOf("17:00:00")) < 0 ) status +="Về sớm";
-		if(time_in.compareTo(Time.valueOf("07:30:00")) <= 0 && time_out.compareTo(Time.valueOf("17:00:00")) >= 0) status = "Đạt";
+		if(time_in.compareTo(Time.valueOf("07:30:00")) > 0 ) status +="Đi muộn ";
+		if(time_out.compareTo(Time.valueOf("17:00:00")) < 0 ) {
+			status +="Về sớm";
+			if(time_out.compareTo(Time.valueOf("11:30:00")) < 0) {
+				if(time_in.compareTo(Time.valueOf("07:30:00")) > 0 ) {
+					hour_work = setFormatHour((time_out.getTime()-time_in.getTime())/3600000);
+				}else hour_work = setFormatHour((time_out.getTime()-Time.valueOf("07:30:00").getTime())/3600000);
+			}
+		}
+		if(time_in.compareTo(Time.valueOf("07:30:00")) <= 0 && time_out.compareTo(Time.valueOf("17:00:00")) >= 0) {
+			status ="Đạt";
+			hour_work = setFormatHour(((float)Time.valueOf("11:30:00").getTime() - (float)Time.valueOf("07:30:00").getTime())/(float)3600000 +  ((float)time_out.getTime()-(float)Time.valueOf("13:00:00").getTime())/(float)3600000);
+		}
+		float overtime = setFormatHour(hour_work-8.0f) < 0 ? 0.0f : setFormatHour(hour_work-8.0f) ;
 		return new TimekeepingEmployeeTableRow(date, time_in, time_out, hour_work, overtime, status, log.isMorning(), log.isAfternoon());
 	}
 	public static GenaralTableRow createGenaralTableRow(ObservableList<TimekeepingEmployeeTableRow> LogInMonth) {

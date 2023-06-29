@@ -1,9 +1,11 @@
 package createDB;
 
+import model.logtimekeeping.LogTimekeepingOfficer;
 import model.logtimekeeping.LogTimekeepingWorker;
 import java.sql.Date;
 import java.sql.Time;
 
+import dbtimekeeping.inserttimekeeping.InsertTimekeepingOfficer;
 import dbtimekeeping.inserttimekeeping.InsertTimekeepingWorker;
 public class test {
 	public static void main(String[] args) {
@@ -33,11 +35,15 @@ public class test {
 		
 		
 		
-		for(int i = 1; i<=20; i++) {
+//		for(int i = 1; i<=20; i++) {
+//			//System.out.println("2023-01-" + (i<10 ? "0"+i : i));
+//			LogTimekeepingWorker log = new LogTimekeepingWorker("LOG"+(i),"nv12",Date.valueOf("2023-05-" + (i<10 ? "0"+i : i)),Time.valueOf("07:25:00"),Time.valueOf("17:00:00"), 4, 4, 0);
+//			InsertTimekeepingWorker.getInstance().insert(log);
+//		}
+		for(int i = 1; i<=30; i++) {
 			//System.out.println("2023-01-" + (i<10 ? "0"+i : i));
-			LogTimekeepingWorker log = new LogTimekeepingWorker("LOG"+(i),"nv12",Date.valueOf("2023-05-" + (i<10 ? "0"+i : i)),Time.valueOf("07:25:00"),Time.valueOf("17:00:00"), 4, 4, 0);
-			InsertTimekeepingWorker.getInstance().insert(log);
+			LogTimekeepingOfficer log = new LogTimekeepingOfficer("LOG"+(i+20),"nv13",Date.valueOf("2023-06-" + (i<10 ? "0"+i : i)),Time.valueOf("07:25:00"),Time.valueOf("17:00:00"), true, true, 0f,0f);
+			InsertTimekeepingOfficer.getInstance().insert(log);
 		}
-		
 	}
 }
