@@ -29,10 +29,7 @@ public class HomeController implements Initializable {
     private final LayoutController layout = new LayoutController();
     
     @FXML
-    private Label tieude;
-    
-    @FXML
-    private ImageView dropdown;
+    private Label title;
 
     @FXML
     private Pane dashboardBtn;
@@ -166,8 +163,8 @@ public class HomeController implements Initializable {
         btn.setStyle("-fx-background-color: #054df6");
     }
     
-    public void setTextTitle(String title) {
-    	tieude.setText(title);
+    public void setTextTitle(String t) {
+    	title.setText(t);
     }
     
     

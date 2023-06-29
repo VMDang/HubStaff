@@ -49,7 +49,7 @@
                         </Label>
                      </children>
                   </Pane>
-                  <Label fx:id="tieude" layoutX="271.0" layoutY="17.0" text="Tiêu đề Trang" AnchorPane.leftAnchor="271.0">
+                  <Label fx:id="title" layoutX="271.0" layoutY="17.0" text="Tiêu đề Trang" AnchorPane.leftAnchor="271.0">
                      <font>
                         <Font size="16.0" />
                      </font></Label>
