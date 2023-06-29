@@ -30,9 +30,9 @@
                   <TableView fx:id="tableGenaral" layoutX="26.0" layoutY="606.0" prefHeight="83.0" prefWidth="1061.0" stylesheets="@../../../../assets/style/table.css">
                      <columns>
                         <TableColumn fx:id="total_day_workCol" prefWidth="180.79998779296875" text="Tổng số ngày đi làm " />
+                        <TableColumn fx:id="total_hour_workCol" prefWidth="295.20001220703125" text="Tổng số giờ làm " />
                         <TableColumn fx:id="total_overtimeCol" prefWidth="220.00006103515625" text="Tổng số giờ tăng ca " />
                         <TableColumn fx:id="salaryCol" prefWidth="366.40008544921875" text="Lương tạm tính " />
-                        <TableColumn fx:id="total_hour_workCol" prefWidth="295.20001220703125" text="Tổng số giờ làm " />
                      </columns>
                   </TableView>
                   <Label layoutX="28.0" layoutY="76.0" text="Mã nhân viên:" />

@@ -41,6 +41,7 @@ import model.employee.officer.Officer;
 import model.employee.officer.OfficerUnitManager;
 import model.employee.worker.Worker;
 import model.employee.worker.WorkerUnitManager;
+import model.logtimekeeping.LogTimekeeping;
 import model.logtimekeeping.LogTimekeepingOfficer;
 import model.logtimekeeping.LogTimekeepingWorker;
 
@@ -65,9 +66,9 @@ public class MonthlyTimekeepingController implements Initializable {
     @FXML
     private Text role;
     
-    String[] listMonth = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
-    static Integer[] listDayMonth = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
-    String[] listYear = {"2023", "2022", "2021", "2020"};
+    private String[] listMonth = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
+    private static Integer[] listDayMonth = {31, 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31};
+    private String[] listYear = {"2023", "2022", "2021", "2020"};
     @FXML
     private ChoiceBox<String> chooseMonth;
     
@@ -118,6 +119,8 @@ public class MonthlyTimekeepingController implements Initializable {
     
     private static ObservableList<TimekeepingEmployeeTableRow> LogTimekeepingMonthList = FXCollections.observableArrayList();
     private static ObservableList<GenaralTableRow> genaralRows = FXCollections.observableArrayList();
+    private static ArrayList<LogTimekeepingWorker> arrLTW = new ArrayList<LogTimekeepingWorker>();
+    private static ArrayList<LogTimekeepingOfficer> arrLTO = new ArrayList<LogTimekeepingOfficer>();
     
     @Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -146,6 +149,11 @@ public class MonthlyTimekeepingController implements Initializable {
 		chooseYear.setValue(year);
 		monthBtn.setText("Tháng "+month);
 		LogTimekeepingMonthList = FXCollections.observableArrayList();
+		arrLTW = new ArrayList<LogTimekeepingWorker>();
+	    arrLTO = new ArrayList<LogTimekeepingOfficer>();
+		
+		
+		getLogTimkeeping();
 		getDataMonth(month, year);
     	calculateGenaralData(LogTimekeepingMonthList);
     	dateCol.setCellValueFactory(new PropertyValueFactory<TimekeepingEmployeeTableRow,Date>("date"));
@@ -181,7 +189,7 @@ public class MonthlyTimekeepingController implements Initializable {
         });
 	}
     
-    private void showDetailPopupWorker(TimekeepingEmployeeTableRow selectedItem) {
+    public void showDetailPopupWorker(TimekeepingEmployeeTableRow selectedItem) {
         try {
             // Tạo một FXMLLoader để tải màn hình chi tiết từ file FXML
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(TIMEKEEPING_DAY_WORKER_DETAIL_VIEW));
@@ -213,7 +221,7 @@ public class MonthlyTimekeepingController implements Initializable {
         }
     }
     
-    private void showDetailPopupOfficer(TimekeepingEmployeeTableRow selectedItem) {
+    public void showDetailPopupOfficer(TimekeepingEmployeeTableRow selectedItem) {
         try {
             // Tạo một FXMLLoader để tải màn hình chi tiết từ file FXML
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(TIMEKEEPING_DAY_OFFICER_DETAIL_VIEW));
@@ -246,7 +254,7 @@ public class MonthlyTimekeepingController implements Initializable {
     }
     
     @FXML
-    void resetTable(ActionEvent event) {
+    public void resetTable(ActionEvent event) {
     	String month = chooseMonth.getValue();
     	String year = chooseYear.getValue();
     	monthBtn.setText("Tháng " + month);
@@ -267,13 +275,17 @@ public class MonthlyTimekeepingController implements Initializable {
     public static float setFormatHour(float f) {
     	return (float) Math.round(f * 10) / 10;
     }
-       
+    public static void getLogTimkeeping() {
+    	if (Authentication.getInstance().getAuthentication() instanceof Worker || Authentication.getInstance().getAuthentication() instanceof WorkerUnitManager) {
+    		arrLTW = GetTimekeepingWorker.getInstance().getTimekeepingsByEmployeeID(Authentication.getInstance().getAuthentication().getId());
+    	}else {
+    		arrLTO = GetTimekeepingOfficer.getInstance().getTimekeepingsByEmployeeID(Authentication.getInstance().getAuthentication().getId());
+    	}
+    }   
 	public static void getDataMonth(String month, String year) {
 		if(Integer.parseInt(year) % 4 ==0 ) listDayMonth[1] = 29;
 		if (Authentication.getInstance().getAuthentication() instanceof Worker || Authentication.getInstance().getAuthentication() instanceof WorkerUnitManager) {
 			System.out.println("worker : " + Authentication.getInstance().getAuthentication().getId());
-			ArrayList<LogTimekeepingWorker> arrLTW = GetTimekeepingWorker.getInstance()
-					.getTimekeepingsByEmployeeID(Authentication.getInstance().getAuthentication().getId());
 			for (int i = 1; i <= listDayMonth[Integer.parseInt(month)-1]; i++) {
 				boolean check = false; 
 				for (LogTimekeepingWorker log : arrLTW) {
@@ -291,11 +303,9 @@ public class MonthlyTimekeepingController implements Initializable {
 			}
 		} else {
 			System.out.println("officer : " + Authentication.getInstance().getAuthentication().getId());
-			ArrayList<LogTimekeepingOfficer> arrLTW = GetTimekeepingOfficer.getInstance()
-					.getTimekeepingsByEmployeeID(Authentication.getInstance().getAuthentication().getId());
 			for (int i = 1; i <= listDayMonth[Integer.parseInt(month)-1]; i++) {
 				boolean check = false; 
-				for (LogTimekeepingOfficer log : arrLTW) {
+				for (LogTimekeepingOfficer log : arrLTO) {
 					TimekeepingEmployeeTableRow ltwt = createTimekeepingDayOfficerTable(log);
 					if (ltwt.getDate().toString().split("-")[1].equals(month) && ltwt.getDate().toString().split("-")[2].equals(i < 10 ? "0"+i : ""+i )) {
 						LogTimekeepingMonthList.add(ltwt);
