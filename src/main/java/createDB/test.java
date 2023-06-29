@@ -33,8 +33,9 @@ public class test {
 		
 		
 		
-		for(int i = 1; i<=10; i++) {
-			LogTimekeepingWorker log = new LogTimekeepingWorker("LOG"+i+99,"nv10",Date.valueOf("2023-01-03"),Time.valueOf("08:00:00"),Time.valueOf("18:12:00"), 4, 4, 4);
+		for(int i = 1; i<=20; i++) {
+			//System.out.println("2023-01-" + (i<10 ? "0"+i : i));
+			LogTimekeepingWorker log = new LogTimekeepingWorker("LOG"+(i),"nv12",Date.valueOf("2023-05-" + (i<10 ? "0"+i : i)),Time.valueOf("07:25:00"),Time.valueOf("17:00:00"), 4, 4, 0);
 			InsertTimekeepingWorker.getInstance().insert(log);
 		}
 		
