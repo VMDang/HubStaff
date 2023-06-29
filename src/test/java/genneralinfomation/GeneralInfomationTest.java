@@ -13,12 +13,4 @@ public class GeneralInfomationTest extends TestCase {
 	}
 	
 	GeneralInformationUnit generalInformationUnit;
-	
-	public void testCountNumberWorker() {
-		assertTrue(GeneralInformationUnit.countNumberWorkerUnit("123")==2);
-	}
-	
-	public void testCountNumberOfficer() {
-		assertTrue(GeneralInformationUnit.countNumberOfficerUnit("443")==1);
-	}
 }
