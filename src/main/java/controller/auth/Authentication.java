@@ -50,7 +50,7 @@ public class Authentication {
 		authentication = null;
 	}
 
-	public static void main(String[] args) {
+//	public static void main(String[] args) {
 //		Employee employee = new Employee("a", "b", "c", "d", "1", 5);	// LoginController
 //		Authentication.setAuthentication(employee);																// LoginController
 //
@@ -58,5 +58,5 @@ public class Authentication {
 //			System.out.println("done");
 //			System.out.println(authentication.getDepartment());
 //		}
-	}
+//	}
 }
