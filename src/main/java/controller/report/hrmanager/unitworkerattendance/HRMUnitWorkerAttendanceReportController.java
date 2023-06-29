@@ -6,6 +6,7 @@ import java.time.LocalDate;
 
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -24,6 +25,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
@@ -45,6 +47,7 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
 	public static LocalDate today;
 
 	private  static ObservableList<HRMUnitWorkerAttendanceReportRow> listRecord = FXCollections.observableArrayList();
+	private HashMap<String, Worker> currentWorkers = new HashMap<>();
 
 	@FXML
     private AnchorPane basePane;
@@ -63,6 +66,12 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
 
 	@FXML
 	private Label unit_manager;
+	
+	@FXML
+	private Label department;
+	
+	@FXML
+	private Label num_worker;
 
 	@FXML
     private ChoiceBox<String> unitNameBox;
@@ -110,6 +119,9 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
         	unit_idText.setText(""+unit_id_text);
             listRecord = FXCollections.observableArrayList();
             setListRecord();
+            
+            num_worker.setText(String.valueOf(listRecord.size()));
+            
             unit_manager.setText(name_unit_manager);
 
             tableReport.setItems(listRecord);
@@ -184,12 +196,48 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
         alert.setContentText(message);
         alert.showAndWait();
 	}
+	
+	private void highlightRow() {
+		tableReport.setRowFactory(tv -> new TableRow<HRMUnitWorkerAttendanceReportRow>() {
+			@Override
+            protected void updateItem(HRMUnitWorkerAttendanceReportRow item, boolean empty) {
+				super.updateItem(item, empty);
+				if (!empty && item != null) {
+					if(!empty && item != null) {
+						if(!currentWorkers.containsKey(item.getWorker_id())) {
+							setStyle("-fx-background-color: #eaa6ab;");
+						}
+						else {
+							setStyle("");
+						}
+					}
+				}
+				else {
+					setStyle("");
+				}
+			}
+		});
+	}
 
 	public void setListRecord() {
 		String unit_text_id = unitNameBox.getValue().toString();
-		ArrayList<Worker> workers = getAllWorkerUnit(unit_text_id);
         String month = chooseMonth.getValue();
         String year = chooseYear.getValue();
+        String monthFilter = month + "/" + year;
+        
+        ArrayList<Worker> workers = new ArrayList<Worker>();
+        workers.addAll(getAllWorkerUnit(unit_text_id));
+        
+        int indexWU = 0;
+        for(int i = 0; i < workers.size(); i++) {
+        	if(workers.get(i).getId().equals(unit_text_id)) {
+        		indexWU = i;
+        	}
+        }
+        
+        Worker workerTmp = workers.get(indexWU);
+        workers.remove(indexWU);
+        workers.add(0, workerTmp);
 
         for (Worker w : workers) {
 
@@ -199,7 +247,7 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
             ArrayList<LogTimekeepingWorker> logTimekeepingByMonth = new ArrayList<LogTimekeepingWorker>();
             logTimekeepingByMonth.addAll(getTimekeepingByMonth(logTimekeepingWorkers, month,year ));
 
-            if (!logTimekeepingByMonth.isEmpty()){
+            
                 float totalHoursWork = 0, totalHoursOT = 0;
                 String hoursWork = "", hoursOT = "";
 
@@ -210,11 +258,15 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
                     hoursWork = String.valueOf(totalHoursWork) + " / " + String.valueOf(logTimekeepingByMonth.size()*2*4);
                     hoursOT = String.valueOf(totalHoursOT) + " / " + String.valueOf(logTimekeepingByMonth.size()*4);
                 }
-                HRMUnitWorkerAttendanceReportRow row = new HRMUnitWorkerAttendanceReportRow(w.getName(), w.getId(), w.getUnit_id(),unitNameBox.getValue().toString(), hoursWork, hoursOT);
-
-                listRecord.add(row);
+                
+                if(monthFilter.equals(today.format(DateTimeFormatter.ofPattern("MM/yyyy"))) && !(w.getStatus() == 0 && logTimekeepingByMonth.isEmpty())) {
+                	listRecord.add(new HRMUnitWorkerAttendanceReportRow(w.getName(), w.getId(), w.getUnit_id(),unitNameBox.getValue().toString(), hoursWork, hoursOT));
+                }else if(!logTimekeepingByMonth.isEmpty()) {
+                	listRecord.add(new HRMUnitWorkerAttendanceReportRow(w.getName(), w.getId(), w.getUnit_id(),unitNameBox.getValue().toString(), hoursWork, hoursOT));
+                }
             }
-        }
+        
+        highlightRow();
 	}
 
 	public Set<String> getListUnit(){
@@ -231,7 +283,8 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
 	}
 
 	public ArrayList<Worker> getAllWorkerUnit(String unit_id){
-        ArrayList<Employee> allEmployees = GetAllEmployees.getInstance().getAllEmployees();
+		GetAllEmployees getAllEmployees = GetAllEmployees.getInstance();
+        ArrayList<Employee> allEmployees = getAllEmployees.getAllEmployees();
         ArrayList<Worker> allWorker = new ArrayList<Worker>();
 
         for (Employee e: allEmployees) {
@@ -239,7 +292,12 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
             	if(e.getRole_id() == 3) {
             		name_unit_manager = e.getName();
             	}
+            	
                 allWorker.add(new Worker(e.getId(), e.getName(), e.getUnit_id(), e.getPassword(),e.getStatus()));
+                
+                if(e.getStatus() == 1) {
+            		currentWorkers.put(e.getId(), new Worker(e.getId(), e.getName(), e.getUnit_id(), e.getPassword(),e.getStatus()));
+            	}
             }
         }
 
