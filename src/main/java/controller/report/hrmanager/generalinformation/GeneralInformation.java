@@ -1,46 +1,61 @@
 package controller.report.hrmanager.generalinformation;
 
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Set;
+
+import hrsystem.GetAllEmployees;
 import model.employee.Employee;
 
-public abstract class GeneralInformationUnit {
+public abstract class GeneralInformation {
+
+	protected static ArrayList<Employee> employees = GetAllEmployees.getInstance().getAllEmployees();
 	
-	protected static String unit_id;
-	
-	protected static ArrayList<Employee> employees;
-	
-	public static void setUnitId(String unit_id){
-		GeneralInformationUnit.unit_id = unit_id;
-		employees = GeneralInformation.getEmployeesByUnit(unit_id);
-	}
-	
-	public static String getDepartment() {
-		String departmentName = "";
+	public static ArrayList<Employee> getEmployeesByUnit(String unit_id) {
+		ArrayList<Employee> listEmployeesUnit = new ArrayList<>();
 		for (Employee employee : employees) {
 			if(employee.getUnit_id().equals(unit_id)) {
-				departmentName = employee.getDepartment();
+				listEmployeesUnit.add(employee);
 			}
 		}
-		return departmentName;
+		return listEmployeesUnit;
+	}
+
+	public static Set<String> getListUnit(){
+		Set<String> listUnit = new HashSet<>();
+		for (Employee employee : employees) {
+			listUnit.add(employee.getUnit_id());
+		}
+		return listUnit;
 	}
 	
-	public static int countNumberWorkerUnit() {
+	public static int countNumberDepartment() {
+		int count = 0;
+		Set<String> listDepartment = new HashSet<>();
+		for (Employee employee : employees) {
+			listDepartment.add(employee.getDepartment());
+		}
+		count = listDepartment.size();
+		return count;
+	}
+	
+	public static int countNumberWorker() {
 		int count = 0;
 		for (Employee employee : employees) {
-			if(employee.getUnit_id().equals(unit_id) && employee.getDepartment().equals("Factory")) {
+			if(employee.getDepartment().equals("Factory")) {
 				count = count + 1;
 			}
 		}
 		return count;
 	}
-	public static int countNumberOfficerUnit() {
-		int count = 0;
-		for (Employee employee : employees) {
-			if(employee.getUnit_id().equals(unit_id) && employee.getDepartment().equals("Factory") == false) {
-				count = count + 1;
-			}
-		}
+	
+	public static int countNumberOfficer() {
+		int count = employees.size() - countNumberWorker();
 		return count;
+	}
+	
+	public static void main(String[] args) {
+		System.out.println(employees);
 	}
 	
 	public abstract int countGoodMonth(int month, int year);
@@ -55,10 +70,4 @@ public abstract class GeneralInformationUnit {
 	public abstract double countHourEarlyByMonth(int month, int year);
 	public abstract double countHourEarlyByQuarter(int quarter, int year);
 	public abstract double countHourEarlyByYear(int year);
-	
-	public static void main(String[] args) {
-		GeneralInformationUnit.setUnitId("123");
-		System.out.println(employees);
-	}
 }
-   
