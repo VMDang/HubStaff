@@ -13,44 +13,40 @@ import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 
 public class HRMGeneralInformationReportController implements Initializable {
 
-    @FXML
-    private AnchorPane basePane;
 
     @FXML
     private RadioButton allBtn;
 
     @FXML
-    private Label officerAfternoonLabel;
+    private Label badOfficerLabel;
 
     @FXML
-    private Label officerEarlyLabel;
+    private Label badWorkerLabel;
 
     @FXML
-    private Label officerLateLabel;
+    private AnchorPane basePane;
 
     @FXML
-    private Label officerMorningLabel;
-    
-    @FXML
-    private Label workerEarlyLabel;
+    private Label countDepartmentLabel;
 
     @FXML
-    private Label workerLateLabel;
+    private Label countOfficerLabel;
 
     @FXML
-    private Label workerShift1Label;
+    private Label countWorkerLabel;
 
     @FXML
-    private Label workerShift2Label;
+    private Label departmentLabel;
 
     @FXML
-    private Label workerShift3Label;
-    
+    private Label goodOfficerLabel;
+
     @FXML
-    private Label viewLabel;
+    private Label goodWorkerLabel;
 
     @FXML
     private ChoiceBox<String> monthBox;
@@ -62,6 +58,24 @@ public class HRMGeneralInformationReportController implements Initializable {
     private ChoiceBox<String> monthYearBox;
 
     @FXML
+    private Label monthYearLabel;
+
+    @FXML
+    private Label nameLabel;
+
+    @FXML
+    private Label nameUnitLabel;
+
+    @FXML
+    private Label officerEarlyLabel;
+
+    @FXML
+    private Label officerLateLabel;
+
+    @FXML
+    private Pane officerPane;
+
+    @FXML
     private ChoiceBox<String> quarterBox;
 
     @FXML
@@ -71,7 +85,13 @@ public class HRMGeneralInformationReportController implements Initializable {
     private ChoiceBox<String> quarterYearBox;
 
     @FXML
+    private Label quarterYearLabel;
+
+    @FXML
     private Button submitBtn;
+
+    @FXML
+    private ToggleGroup timeBy;
 
     @FXML
     private RadioButton unitBtn;
@@ -83,30 +103,36 @@ public class HRMGeneralInformationReportController implements Initializable {
     private ToggleGroup viewBy;
 
     @FXML
+    private Label viewLabel;
+
+    @FXML
+    private Label workerEarlyLabel;
+
+    @FXML
+    private Label workerLateLabel;
+
+    @FXML
+    private Pane workerPane;
+
+    @FXML
     private ChoiceBox<String> yearBox;
 
     @FXML
     private RadioButton yearBtn;
     
-    @FXML
-    private Label monthYearLabel;
+    private GeneralInformation informationOfficer = new GeneralInformationOfficer();
     
-    @FXML
-    private Label quarterYearLabel;
+    private GeneralInformationUnit informationOfficerUnit = new GeneralInformationOfficerUnit();
     
-    private GeneralInformationOfficer informationOfficer = new GeneralInformationOfficer();
+    private GeneralInformation informationWorker = new GeneralInformationWorker();
     
-    private GeneralInformationOfficerUnit informationOfficerUnit = new GeneralInformationOfficerUnit();
-    
-    private GeneralInformationWorker informationWorker = new GeneralInformationWorker();
-    
-    private GeneralInformationWorkerUnit informationWorkerUnit = new GeneralInformationWorkerUnit();
+    private GeneralInformationUnit informationWorkerUnit = new GeneralInformationWorkerUnit();
 
     
     String[] listMonth = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
     String[] listQuarter = {"01", "02", "03", "04"};
     String[] listYear = {"2023", "2022", "2021", "2020"};
-    Set<String> listUnit = GeneralInformationUnit.getListUnit();
+    Set<String> listUnit = GeneralInformation.getListUnit();
     
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -178,140 +204,88 @@ public class HRMGeneralInformationReportController implements Initializable {
 	void getMonthInfo() {
 		int month = Integer.parseInt(monthBox.getValue().toString());
 		int year = Integer.parseInt(monthYearBox.getValue().toString());
-		double timeShift1W = informationWorker.countTimeShift1ByMonth(month, year);
-		workerShift1Label.setText(""+timeShift1W);
-		double timeShift2W = informationWorker.countTimeShift2ByMonth(month, year);
-		workerShift2Label.setText(""+timeShift2W);
-		double timeShift3W = informationWorker.countTimeShift3ByMonth(month, year);
-		workerShift3Label.setText(""+timeShift3W);
-		double hourLateO = informationOfficer.countHourLateByMonth(month, year);
-		officerLateLabel.setText(""+hourLateO);
-		double hourEarlyO = informationOfficer.countHourEarlyByMonth(month, year);
-		officerEarlyLabel.setText(""+hourEarlyO);
-		double hourLateW = informationWorker.countHourLateByMonth(month, year);
-		workerLateLabel.setText(""+hourLateW);
-		double hourEarlyW = informationWorker.countHourEarlyByMonth(month, year);
-		workerEarlyLabel.setText(""+hourEarlyW);
-		int morningO = informationOfficer.countMorningByMonth(month, year);
-		officerMorningLabel.setText(""+morningO);
-		int afternoonO = informationOfficer.countAfternoonByMonth(month, year);
-		officerAfternoonLabel.setText(""+afternoonO);
+		goodWorkerLabel.setText(""+informationWorker.countGoodMonth(month, year));
+		badWorkerLabel.setText(""+informationWorker.countBadMonth(month, year));
+		workerLateLabel.setText(""+informationWorker.countHourLateByMonth(month, year));
+		workerEarlyLabel.setText(""+informationWorker.countHourEarlyByMonth(month, year));
+		goodOfficerLabel.setText(""+informationOfficer.countGoodMonth(month, year));
+		badOfficerLabel.setText(""+informationOfficer.countBadMonth(month, year));
+		officerLateLabel.setText(""+informationOfficer.countHourLateByMonth(month, year));
+		officerEarlyLabel.setText(""+informationOfficer.countHourEarlyByMonth(month, year));
 	}
 	
 	void getMonthUnitInfo(String unit_id) {
 		int month = Integer.parseInt(monthBox.getValue().toString());
 		int year = Integer.parseInt(monthYearBox.getValue().toString());
-		double timeShift1W = informationWorkerUnit.countTimeShift1ByMonth(unit_id, month, year);
-		workerShift1Label.setText(""+timeShift1W);
-		double timeShift2W = informationWorkerUnit.countTimeShift2ByMonth(unit_id, month, year);
-		workerShift2Label.setText(""+timeShift2W);
-		double timeShift3W = informationWorkerUnit.countTimeShift3ByMonth(unit_id, month, year);
-		workerShift3Label.setText(""+timeShift3W);
-		double hourLateO = informationOfficerUnit.countHourLateByMonth(unit_id, month, year);
-		officerLateLabel.setText(""+hourLateO);
-		double hourEarlyO = informationOfficerUnit.countHourEarlyByMonth(unit_id, month, year);
-		officerEarlyLabel.setText(""+hourEarlyO);
-		double hourLateW = informationWorkerUnit.countHourLateByMonth(unit_id, month, year);
-		workerLateLabel.setText(""+hourLateW);
-		double hourEarlyW = informationWorkerUnit.countHourEarlyByMonth(unit_id, month, year);
-		workerEarlyLabel.setText(""+hourEarlyW);
-		int morningO = informationOfficerUnit.countMorningByMonth(unit_id, month, year);
-		officerMorningLabel.setText(""+morningO);
-		int afternoonO = informationOfficerUnit.countAfternoonByMonth(unit_id, month, year);
-		officerAfternoonLabel.setText(""+afternoonO);
+		goodWorkerLabel.setText(""+informationWorkerUnit.countGoodMonth(month, year));
+		badWorkerLabel.setText(""+informationWorkerUnit.countBadMonth(month, year));
+		workerLateLabel.setText(""+informationWorkerUnit.countHourLateByMonth(month, year));
+		workerEarlyLabel.setText(""+informationWorkerUnit.countHourEarlyByMonth(month, year));
+		goodOfficerLabel.setText(""+informationOfficerUnit.countGoodMonth(month, year));
+		badOfficerLabel.setText(""+informationOfficerUnit.countBadMonth(month, year));
+		officerLateLabel.setText(""+informationOfficerUnit.countHourLateByMonth(month, year));
+		officerEarlyLabel.setText(""+informationOfficerUnit.countHourEarlyByMonth(month, year));
 	}
 	
 	void getQuarterInfo() {
 		int quarter = Integer.parseInt(quarterBox.getValue().toString());
 		int year = Integer.parseInt(quarterYearBox.getValue().toString());
-		double timeShift1W = informationWorker.countTimeShift1ByQuarter(quarter, year);
-		workerShift1Label.setText(""+timeShift1W);
-		double timeShift2W = informationWorker.countTimeShift2ByQuarter(quarter, year);
-		workerShift2Label.setText(""+timeShift2W);
-		double timeShift3W = informationWorker.countTimeShift3ByQuarter(quarter, year);
-		workerShift3Label.setText(""+timeShift3W);
-		double hourLateO = informationOfficer.countHourLateByQuarter(quarter, year);
-		officerLateLabel.setText(""+hourLateO);
-		double hourEarlyO = informationOfficer.countHourEarlyByQuarter(quarter, year);
-		officerEarlyLabel.setText(""+hourEarlyO);
-		double hourLateW = informationWorker.countHourLateByQuarter(quarter, year);
-		workerLateLabel.setText(""+hourLateW);
-		double hourEarlyW = informationWorker.countHourEarlyByMonth(quarter, year);
-		workerEarlyLabel.setText(""+hourEarlyW);
-		int morningO = informationOfficer.countMorningByQuarter(quarter, year);
-		officerMorningLabel.setText(""+morningO);
-		int afternoonO = informationOfficer.countAfternoonByQuarter(quarter, year);
-		officerAfternoonLabel.setText(""+afternoonO);
+		goodWorkerLabel.setText(""+informationWorker.countGoodQuarter(quarter, year));
+		badWorkerLabel.setText(""+informationWorker.countBadQuarter(quarter, year));
+		workerLateLabel.setText(""+informationWorker.countHourLateByQuarter(quarter, year));
+		workerEarlyLabel.setText(""+informationWorker.countHourEarlyByQuarter(quarter, year));
+		goodOfficerLabel.setText(""+informationOfficer.countGoodQuarter(quarter, year));
+		badOfficerLabel.setText(""+informationOfficer.countBadQuarter(quarter, year));
+		officerLateLabel.setText(""+informationOfficer.countHourLateByQuarter(quarter, year));
+		officerEarlyLabel.setText(""+informationOfficer.countHourEarlyByQuarter(quarter, year));
 	}
 	
 	void getQuarterUnitInfo(String unit_id) {
 		int quarter = Integer.parseInt(quarterBox.getValue().toString());
 		int year = Integer.parseInt(quarterYearBox.getValue().toString());
-		double timeShift1W = informationWorkerUnit.countTimeShift1ByQuarter(unit_id, quarter, year);
-		workerShift1Label.setText(""+timeShift1W);
-		double timeShift2W = informationWorkerUnit.countTimeShift2ByQuarter(unit_id, quarter, year);
-		workerShift2Label.setText(""+timeShift2W);
-		double timeShift3W = informationWorkerUnit.countTimeShift3ByQuarter(unit_id, quarter, year);
-		workerShift3Label.setText(""+timeShift3W);
-		double hourLateO = informationOfficerUnit.countHourLateByQuarter(unit_id, quarter, year);
-		officerLateLabel.setText(""+hourLateO);
-		double hourEarlyO = informationOfficerUnit.countHourEarlyByQuarter(unit_id, quarter, year);
-		officerEarlyLabel.setText(""+hourEarlyO);
-		double hourLateW = informationWorkerUnit.countHourLateByQuarter(unit_id, quarter, year);
-		workerLateLabel.setText(""+hourLateW);
-		double hourEarlyW = informationWorkerUnit.countHourEarlyByMonth(unit_id, quarter, year);
-		workerEarlyLabel.setText(""+hourEarlyW);
-		int morningO = informationOfficerUnit.countMorningByQuarter(unit_id, quarter, year);
-		officerMorningLabel.setText(""+morningO);
-		int afternoonO = informationOfficerUnit.countAfternoonByQuarter(unit_id, quarter, year);
-		officerAfternoonLabel.setText(""+afternoonO);
+		goodWorkerLabel.setText(""+informationWorkerUnit.countGoodQuarter(quarter, year));
+		badWorkerLabel.setText(""+informationWorkerUnit.countBadQuarter(quarter, year));
+		workerLateLabel.setText(""+informationWorkerUnit.countHourLateByQuarter(quarter, year));
+		workerEarlyLabel.setText(""+informationWorkerUnit.countHourEarlyByQuarter(quarter, year));
+		goodOfficerLabel.setText(""+informationOfficerUnit.countGoodQuarter(quarter, year));
+		badOfficerLabel.setText(""+informationOfficerUnit.countBadQuarter(quarter, year));
+		officerLateLabel.setText(""+informationOfficerUnit.countHourLateByQuarter(quarter, year));
+		officerEarlyLabel.setText(""+informationOfficerUnit.countHourEarlyByQuarter(quarter, year));
 	}
 	
 	void getYearInfo() {
 		int year = Integer.parseInt(yearBox.getValue().toString());
-		double timeShift1W = informationWorker.countTimeShift1ByYear(year);
-		workerShift1Label.setText(""+timeShift1W);
-		double timeShift2W = informationWorker.countTimeShift2ByYear(year);
-		workerShift2Label.setText(""+timeShift2W);
-		double timeShift3W = informationWorker.countTimeShift3ByYear(year);
-		workerShift3Label.setText(""+timeShift3W);
-		double hourLateO = informationOfficer.countHourLateByYear(year);
-		officerLateLabel.setText(""+hourLateO);
-		double hourEarlyO = informationOfficer.countHourEarlyByYear(year);
-		officerEarlyLabel.setText(""+hourEarlyO);
-		double hourLateW = informationWorker.countHourLateByYear(year);
-		workerLateLabel.setText(""+hourLateW);
-		double hourEarlyW = informationWorker.countHourLateByYear(year);
-		workerEarlyLabel.setText(""+hourEarlyW);
-		int morningO = informationOfficer.countMorningByYear(year);
-		officerMorningLabel.setText(""+morningO);
-		int afternoonO = informationOfficer.countAfternoonByYear(year);
-		officerAfternoonLabel.setText(""+afternoonO);
+		goodWorkerLabel.setText(""+informationWorker.countGoodYear(year));
+		badWorkerLabel.setText(""+informationWorker.countBadYear(year));
+		workerLateLabel.setText(""+informationWorker.countHourLateByYear(year));
+		workerEarlyLabel.setText(""+informationWorker.countHourEarlyByYear(year));
+		goodOfficerLabel.setText(""+informationOfficer.countGoodYear(year));
+		badOfficerLabel.setText(""+informationOfficer.countBadYear(year));
+		officerLateLabel.setText(""+informationOfficer.countHourLateByYear(year));
+		officerEarlyLabel.setText(""+informationOfficer.countHourEarlyByYear(year));
 	}
 	
 	void getYearUnitInfo(String unit_id) {
 		int year = Integer.parseInt(yearBox.getValue().toString());
-		double timeShift1W = informationWorkerUnit.countTimeShift1ByYear(unit_id, year);
-		workerShift1Label.setText(""+timeShift1W);
-		double timeShift2W = informationWorkerUnit.countTimeShift2ByYear(unit_id, year);
-		workerShift2Label.setText(""+timeShift2W);
-		double timeShift3W = informationWorkerUnit.countTimeShift3ByYear(unit_id, year);
-		workerShift3Label.setText(""+timeShift3W);
-		double hourLateO = informationOfficerUnit.countHourLateByYear(unit_id, year);
-		officerLateLabel.setText(""+hourLateO);
-		double hourEarlyO = informationOfficerUnit.countHourEarlyByYear(unit_id, year);
-		officerEarlyLabel.setText(""+hourEarlyO);
-		double hourLateW = informationWorkerUnit.countHourLateByYear(unit_id, year);
-		workerLateLabel.setText(""+hourLateW);
-		double hourEarlyW = informationWorkerUnit.countHourLateByYear(unit_id, year);
-		workerEarlyLabel.setText(""+hourEarlyW);
-		int morningO = informationOfficerUnit.countMorningByYear(unit_id, year);
-		officerMorningLabel.setText(""+morningO);
-		int afternoonO = informationOfficerUnit.countAfternoonByYear(unit_id, year);
-		officerAfternoonLabel.setText(""+afternoonO);
+		goodWorkerLabel.setText(""+informationWorkerUnit.countGoodYear(year));
+		badWorkerLabel.setText(""+informationWorkerUnit.countBadYear(year));
+		workerLateLabel.setText(""+informationWorkerUnit.countHourLateByYear(year));
+		workerEarlyLabel.setText(""+informationWorkerUnit.countHourEarlyByYear(year));
+		goodOfficerLabel.setText(""+informationOfficerUnit.countGoodYear(year));
+		badOfficerLabel.setText(""+informationOfficerUnit.countBadYear(year));
+		officerLateLabel.setText(""+informationOfficerUnit.countHourLateByYear(year));
+		officerEarlyLabel.setText(""+informationOfficerUnit.countHourEarlyByYear(year));		
 	}
 	
 	void getAllInfo() {
+		nameLabel.setText("Tên đơn vị:");
+		nameUnitLabel.setText("Doanh nghiệp");
+		departmentLabel.setText("Tổng số phòng ban:");
+		countDepartmentLabel.setText(""+GeneralInformation.countNumberDepartment());
+		countWorkerLabel.setText(""+GeneralInformation.countNumberWorker());
+		countOfficerLabel.setText(""+GeneralInformation.countNumberOfficer());
+		workerPane.setDisable(false);
+		officerPane.setDisable(false);
 		if(monthBtn.isSelected()) {
 			getMonthInfo();
 		}
@@ -325,6 +299,21 @@ public class HRMGeneralInformationReportController implements Initializable {
 	
 	void getUnitInfo() {
 		String unit_id = unitNameBox.getValue().toString();
+		nameLabel.setText("Mã đơn vị:");
+		nameUnitLabel.setText(unit_id);
+		departmentLabel.setText("Thuộc bộ phận:");
+		GeneralInformationUnit.setUnitId(unit_id);
+		countDepartmentLabel.setText(GeneralInformationUnit.getDepartment());
+		countWorkerLabel.setText(""+GeneralInformationUnit.countNumberWorkerUnit());
+		countOfficerLabel.setText(""+GeneralInformationUnit.countNumberOfficerUnit());
+		if(GeneralInformationUnit.countNumberWorkerUnit() == 0) {
+			workerPane.setDisable(true);
+			officerPane.setDisable(false);
+		}
+		else {
+			officerPane.setDisable(true);
+			workerPane.setDisable(false);
+		}
 		if(monthBtn.isSelected()) {
 			getMonthUnitInfo(unit_id);
 		}

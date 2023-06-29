@@ -15,78 +15,68 @@
          <children>
             <Pane layoutX="41.0" layoutY="364.0" prefHeight="298.0" prefWidth="1044.0" style="-fx-background-color: #99ceff; -fx-background-radius: 10px;">
                <children>
-                  <Pane layoutX="38.0" layoutY="20.0" prefHeight="260.0" prefWidth="464.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10;">
+                  <Pane fx:id="workerPane" layoutX="38.0" layoutY="20.0" prefHeight="260.0" prefWidth="464.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10;">
                      <children>
                         <Label layoutX="184.0" layoutY="14.0" text="Công nhân" textFill="#515151">
                            <font>
                               <Font size="21.0" />
                            </font>
                         </Label>
-                        <Label layoutX="48.0" layoutY="60.0" text="Số giờ làm việc ca 1" textFill="#515151">
+                        <Label layoutX="48.0" layoutY="140.0" text="Số giờ đi muộn" textFill="#515151">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label layoutX="48.0" layoutY="100.0" text="Số giờ làm việc ca 2" textFill="#515151">
+                        <Label layoutX="48.0" layoutY="180.0" text="Số giờ về sớm" textFill="#515151">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label layoutX="48.0" layoutY="140.0" text="Số giờ làm việc ca 3" textFill="#515151">
+                        <Label fx:id="workerLateLabel" layoutX="346.0" layoutY="140.0" text="11" textFill="#515151">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label layoutX="48.0" layoutY="180.0" text="Số giờ đi muộn" textFill="#515151">
+                        <Label fx:id="workerEarlyLabel" layoutX="346.0" layoutY="180.0" text="11" textFill="#515151">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label layoutX="48.0" layoutY="220.0" text="Số giờ về sớm" textFill="#515151">
+                        <Label layoutX="48.0" layoutY="60.0" text="Số nhân viên gương mẫu" textFill="#515151">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="workerShift1Label" layoutX="346.0" layoutY="60.0" text="11" textFill="#515151">
+                        <Label layoutX="48.0" layoutY="100.0" text="Số nhân viên bị phạt" textFill="#515151">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="workerShift2Label" layoutX="346.0" layoutY="100.0" text="11" textFill="#515151">
+                        <Label fx:id="goodWorkerLabel" layoutX="346.0" layoutY="60.0" text="11" textFill="#515151">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="workerShift3Label" layoutX="346.0" layoutY="140.0" text="11" textFill="#515151">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="workerLateLabel" layoutX="346.0" layoutY="180.0" text="11" textFill="#515151">
-                           <font>
-                              <Font size="16.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="workerEarlyLabel" layoutX="346.0" layoutY="220.0" text="11" textFill="#515151">
+                        <Label fx:id="badWorkerLabel" layoutX="346.0" layoutY="100.0" text="11" textFill="#515151">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
                      </children>
                   </Pane>
-                  <Pane layoutX="532.0" layoutY="20.0" prefHeight="260.0" prefWidth="485.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10;">
+                  <Pane fx:id="officerPane" layoutX="532.0" layoutY="20.0" prefHeight="260.0" prefWidth="485.0" style="-fx-background-color: #ffffff; -fx-background-radius: 10;">
                      <children>
                         <Label layoutX="129.0" layoutY="14.0" text="Nhân viên văn phòng" textFill="#515151">
                            <font>
                               <Font size="21.0" />
                            </font>
                         </Label>
-                        <Label layoutX="48.0" layoutY="60.0" text="Số buổi làm việc ca sáng" textFill="#515151">
+                        <Label layoutX="48.0" layoutY="60.0" text="Số nhân viên gương mẫu" textFill="#515151">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label layoutX="48.0" layoutY="100.0" text="Số buổi làm việc ca chiều" textFill="#515151">
+                        <Label layoutX="48.0" layoutY="100.0" text="Số nhân viên bị phạt" textFill="#515151">
                            <font>
                               <Font size="16.0" />
                            </font>
@@ -101,12 +91,12 @@
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="officerMorningLabel" layoutX="346.0" layoutY="62.0" text="11" textFill="#515151">
+                        <Label fx:id="goodOfficerLabel" layoutX="346.0" layoutY="62.0" text="11" textFill="#515151">
                            <font>
                               <Font size="16.0" />
                            </font>
                         </Label>
-                        <Label fx:id="officerAfternoonLabel" layoutX="346.0" layoutY="100.0" text="11" textFill="#515151">
+                        <Label fx:id="badOfficerLabel" layoutX="346.0" layoutY="100.0" text="11" textFill="#515151">
                            <font>
                               <Font size="16.0" />
                            </font>
@@ -153,8 +143,8 @@
                         <RadioButton fx:id="quarterBtn" layoutX="19.0" layoutY="44.0" mnemonicParsing="false" text="Quý" toggleGroup="$timeBy" />
                         <RadioButton fx:id="yearBtn" layoutX="19.0" layoutY="77.0" mnemonicParsing="false" text="Năm" toggleGroup="$timeBy" />
                         <ChoiceBox fx:id="monthBox" layoutX="113.0" layoutY="9.0" prefHeight="25.0" prefWidth="55.0" />
-                        <ChoiceBox fx:id="quarterBox" layoutX="113.0" layoutY="33.0" prefHeight="25.0" prefWidth="55.0" visible="false" />
-                        <ChoiceBox fx:id="yearBox" layoutX="113.0" layoutY="64.0" prefHeight="25.0" prefWidth="55.0" visible="false" />
+                        <ChoiceBox fx:id="quarterBox" layoutX="113.0" layoutY="40.0" prefHeight="25.0" prefWidth="55.0" visible="false" />
+                        <ChoiceBox fx:id="yearBox" layoutX="113.0" layoutY="73.0" prefHeight="25.0" prefWidth="55.0" visible="false" />
                         <Label fx:id="monthYearLabel" layoutX="188.0" layoutY="12.0" text="Năm" />
                         <ChoiceBox fx:id="monthYearBox" layoutX="236.0" layoutY="10.0" prefHeight="25.0" prefWidth="64.0" />
                         <Label layoutX="188.0" layoutY="35.0" text="Năm" visible="false">
@@ -162,8 +152,8 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <ChoiceBox fx:id="quarterYearBox" layoutX="236.0" layoutY="33.0" prefHeight="25.0" prefWidth="55.0" visible="false" />
-                        <Label fx:id="quarterYearLabel" layoutX="188.0" layoutY="37.0" text="Năm" visible="false">
+                        <ChoiceBox fx:id="quarterYearBox" layoutX="236.0" layoutY="40.0" prefHeight="25.0" prefWidth="64.0" visible="false" />
+                        <Label fx:id="quarterYearLabel" layoutX="188.0" layoutY="43.0" text="Năm" visible="false">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -179,12 +169,12 @@
                   <Label alignment="CENTER" layoutX="15.0" layoutY="16.0" prefHeight="19.0" prefWidth="64.0" style="-fx-background-color: #66A9E3; -fx-background-radius: 15;" text="Phạm vi" textFill="WHITE" />
                </children>
             </Pane>
-            <Label layoutX="112.0" layoutY="60.0" text="Thông tin chung doanh nghiệp ">
+            <Label layoutX="170.0" layoutY="59.0" text="Thông tin chung ">
                <font>
                   <Font size="18.0" />
                </font>
             </Label>
-            <Label layoutX="65.0" layoutY="110.0" text="Tổng số nhân viên :">
+            <Label fx:id="nameLabel" layoutX="65.0" layoutY="110.0" text="Mã đơn vị:">
                <font>
                   <Font size="14.0" />
                </font>
@@ -194,22 +184,32 @@
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="66.0" layoutY="167.0" text="Tổng số nhân viên : ">
+            <Label layoutX="278.0" layoutY="138.0" text="Tổng số nhân viên : ">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="278.0" layoutY="110.0" text="Tổng số phòng ban : ">
+            <Label fx:id="departmentLabel" layoutX="278.0" layoutY="110.0" text="Tổng số phòng ban : ">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="278.0" layoutY="138.0" text="Tổng số đơn vị công nhân : ">
+            <Label fx:id="nameUnitLabel" layoutX="136.0" layoutY="110.0" text="Doanh nghiệp">
                <font>
                   <Font size="14.0" />
                </font>
             </Label>
-            <Label layoutX="278.0" layoutY="167.0" text="Tổng số đơn vị nhân viên : ">
+            <Label fx:id="countDepartmentLabel" layoutX="418.0" layoutY="110.0" text="10">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="countWorkerLabel" layoutX="200.0" layoutY="138.0" text="10">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="countOfficerLabel" layoutX="418.0" layoutY="138.0" text="10">
                <font>
                   <Font size="14.0" />
                </font>

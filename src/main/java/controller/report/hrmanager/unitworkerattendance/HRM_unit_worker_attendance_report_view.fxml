@@ -19,16 +19,16 @@
                         <Font name="System Bold" size="16.0" />
                     </font>
                 </Label>
-                <Label layoutX="28.0" layoutY="50.0" text="Mã đơn vị:" AnchorPane.leftAnchor="16.0" />
+                <Label layoutX="28.0" layoutY="50.0" text="Mã đơn vị:" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="50.0" />
                 <Label layoutX="28.0" layoutY="76.0" text="Trưởng đơn vị:" AnchorPane.leftAnchor="16.0" />
-                <Label layoutX="318.0" layoutY="50.0" text="Bộ phận:" />
-                <Label fx:id="monthBtn" alignment="CENTER" layoutX="456.0" layoutY="93.0" prefHeight="44.0" prefWidth="207.0" style="-fx-background-color: #66A9E3; -fx-background-radius: 10;" text="Báo cáo tháng" textFill="WHITE">
+                <Label layoutX="245.0" layoutY="50.0" text="Bộ phận:" AnchorPane.topAnchor="50.0" />
+                <Label fx:id="monthBtn" alignment="CENTER" layoutX="461.0" layoutY="74.0" prefHeight="44.0" prefWidth="207.0" style="-fx-background-color: #66A9E3; -fx-background-radius: 10;" text="Báo cáo tháng" textFill="WHITE">
                     <font>
                         <Font size="21.0" />
                     </font>
                 </Label>
                 <Label layoutX="893.0" layoutY="13.0" text="Mã đơn vị : " AnchorPane.topAnchor="16.0" />
-                <Text layoutX="384.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nhà máy sản xuất" />
+                <Text layoutX="304.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nhà máy sản xuất" />
                 <Label layoutX="893.0" layoutY="53.0" text="Tháng :  " />
                 <ChoiceBox fx:id="chooseMonth" layoutX="944.0" layoutY="48.0" prefHeight="25.0" prefWidth="56.0" />
                 <TableView fx:id="tableReport" layoutX="31.0" layoutY="192.0" prefHeight="450.0" prefWidth="1044.0" stylesheets="@../../../../assets/style/table.css" AnchorPane.bottomAnchor="48.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="160.0">
@@ -47,6 +47,8 @@
                 <Label fx:id="unit_manager" layoutX="103.0" layoutY="76.0" text="UnitManager" />
                 <Button fx:id="export_excel" layoutX="1035.0" layoutY="655.0" mnemonicParsing="false" onAction="#export_excel" text="Xuất báo cáo" AnchorPane.bottomAnchor="16.0" AnchorPane.rightAnchor="16.0" />
                 <ChoiceBox fx:id="unitNameBox" layoutX="992.0" layoutY="14.0" prefHeight="25.0" prefWidth="118.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0" />
+            <Label layoutX="245.0" layoutY="76.0" text="Số lượng công nhân:" />
+            <Label fx:id="num_worker" layoutX="366.0" layoutY="76.0" text="0" />
             </children>
         </AnchorPane>
     </children>
