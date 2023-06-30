@@ -38,7 +38,7 @@ public class WUMWorkerUnitReportTest extends TestCase {
     public void testGetTimekeepingsAWorker_NotExistTimekeeping_BlackBox(){
         WUMWorkerUnitReportController controller  = new WUMWorkerUnitReportController();
 
-        String employee_id = "nv10";
+        String employee_id = "nv7";
 
         ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = controller.getTimekeepingsAWorker(employee_id);
 
@@ -56,7 +56,6 @@ public class WUMWorkerUnitReportTest extends TestCase {
 
         // Kiểm tra xem danh sách kết quả trả về có là mảng rỗng không
         Assert.assertTrue(logTimekeepingWorkers.isEmpty());
-
     }
 
     @Test
@@ -78,7 +77,7 @@ public class WUMWorkerUnitReportTest extends TestCase {
     public void testGetTimekeepingAWorker_NotExistTimekeeping_WhiteBox(){
         WUMWorkerUnitReportController controller  = new WUMWorkerUnitReportController();
 
-        String employee_id = "nv10";
+        String employee_id = "nv7";
 
         ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = controller.getTimekeepingsAWorker(employee_id);
 

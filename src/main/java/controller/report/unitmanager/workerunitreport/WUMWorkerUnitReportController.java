@@ -108,6 +108,7 @@ public class WUMWorkerUnitReportController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         unit_id.setText(Authentication.getInstance().getAuthentication().getUnit_id());
         wum_name.setText(Authentication.getInstance().getAuthentication().getName());
+        department.setText(Authentication.getInstance().getAuthentication().getDepartment());
 
         chooseMonth.getItems().addAll(listMonth);
         chooseMonth.setValue(LocalDate.now().format(DateTimeFormatter.ofPattern("MM")));
