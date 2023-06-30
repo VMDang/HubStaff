@@ -26,7 +26,7 @@ public class WUMWorkerUnitReportTest extends TestCase {
     public void testGetTimekeepingsAWorker_ExistTimekeeping_BlackBox(){
         WUMWorkerUnitReportController controller  = new WUMWorkerUnitReportController();
 
-        String employee_id = "nv1";
+        String employee_id = "nv54";
 
         ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = controller.getTimekeepingsAWorker(employee_id);
 
@@ -38,7 +38,7 @@ public class WUMWorkerUnitReportTest extends TestCase {
     public void testGetTimekeepingsAWorker_NotExistTimekeeping_BlackBox(){
         WUMWorkerUnitReportController controller  = new WUMWorkerUnitReportController();
 
-        String employee_id = "nv7";
+        String employee_id = "nv53";
 
         ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = controller.getTimekeepingsAWorker(employee_id);
 
@@ -62,7 +62,7 @@ public class WUMWorkerUnitReportTest extends TestCase {
     public void testGetTimekeepingsAWorker_ExistTimekeeping_WhiteBox() {
         WUMWorkerUnitReportController controller  = new WUMWorkerUnitReportController();
 
-        String employee_id = "nv1";
+        String employee_id = "nv54";
 
         ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = controller.getTimekeepingsAWorker(employee_id);
 
@@ -77,7 +77,7 @@ public class WUMWorkerUnitReportTest extends TestCase {
     public void testGetTimekeepingAWorker_NotExistTimekeeping_WhiteBox(){
         WUMWorkerUnitReportController controller  = new WUMWorkerUnitReportController();
 
-        String employee_id = "nv7";
+        String employee_id = "nv53";
 
         ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = controller.getTimekeepingsAWorker(employee_id);
 
