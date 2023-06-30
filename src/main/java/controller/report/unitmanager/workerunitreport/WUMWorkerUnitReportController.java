@@ -149,7 +149,7 @@ public class WUMWorkerUnitReportController implements Initializable {
 
         for (Worker w : workers) {
             ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = new ArrayList<LogTimekeepingWorker>();
-            logTimekeepingWorkers.addAll(getTimeKeepingAWorker(w.getId()));
+            logTimekeepingWorkers.addAll(getTimekeepingsAWorker(w.getId()));
 
             ArrayList<LogTimekeepingWorker> logTimekeepingByMonth = new ArrayList<LogTimekeepingWorker>();
             logTimekeepingByMonth.addAll(getTimekeepingByMonth(logTimekeepingWorkers, monthFilter));
@@ -192,7 +192,7 @@ public class WUMWorkerUnitReportController implements Initializable {
         return allWorker;
     }
 
-    private ArrayList<LogTimekeepingWorker> getTimeKeepingAWorker(String employee_id){
+    public ArrayList<LogTimekeepingWorker> getTimekeepingsAWorker(String employee_id){
         GetTimekeepingWorker getTimekeepingWorker = GetTimekeepingWorker.getInstance();
         ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = getTimekeepingWorker.getTimekeepingsByEmployeeID(employee_id);
 
