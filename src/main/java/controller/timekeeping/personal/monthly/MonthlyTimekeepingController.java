@@ -154,7 +154,7 @@ public class MonthlyTimekeepingController implements Initializable {
 		LogTimekeepingMonthList = FXCollections.observableArrayList();
 		arrLTW = new ArrayList<LogTimekeepingWorker>();
 	    arrLTO = new ArrayList<LogTimekeepingOfficer>();
-		
+		genaralRows = FXCollections.observableArrayList();
 		
 		getLogTimkeeping();
 		getDataMonth(month, year);
@@ -371,7 +371,9 @@ public class MonthlyTimekeepingController implements Initializable {
 			total_hour_work += r.getHour_work();
 			total_overtime += r.getOvertime();
 		}
-		salary = (int) Math.round(30000*(total_hour_work - total_overtime) + 60000*total_overtime);
+		total_hour_work = setFormatHour(total_hour_work);
+		total_overtime = setFormatHour(total_overtime);
+		salary = (int) Math.round((30000*(total_hour_work - total_overtime) + 60000*total_overtime)*10/10);
 		return new GenaralTableRow(total_day_work, total_hour_work, total_overtime, salary);
 	}
 	private void highlightRow(){
