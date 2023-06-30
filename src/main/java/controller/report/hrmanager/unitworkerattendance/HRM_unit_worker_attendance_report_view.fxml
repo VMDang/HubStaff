@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="basePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="709.0" prefWidth="1126.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.report.hrmanager.unitworkerattendance.HRMUnitWorkerAttendanceReportController">
+<AnchorPane fx:id="basePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="709.0" prefWidth="1126.0" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.report.hrmanager.unitworkerattendance.HRMUnitWorkerAttendanceReportController">
     <children>
         <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
@@ -22,23 +22,10 @@
                 <Label layoutX="28.0" layoutY="50.0" text="Mã đơn vị:" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="50.0" />
                 <Label layoutX="28.0" layoutY="76.0" text="Trưởng đơn vị:" AnchorPane.leftAnchor="16.0" />
                 <Label layoutX="245.0" layoutY="50.0" text="Bộ phận:" AnchorPane.topAnchor="50.0" />
-<<<<<<< HEAD
-                <Label fx:id="monthBtn" alignment="CENTER" layoutX="461.0" layoutY="74.0" prefHeight="44.0" prefWidth="207.0" style="-fx-background-color: #66A9E3; -fx-background-radius: 10;" text="Báo cáo tháng" textFill="WHITE">
-                    <font>
-                        <Font size="21.0" />
-                    </font>
-                </Label>
-                <Label layoutX="893.0" layoutY="13.0" text="Mã đơn vị : " AnchorPane.topAnchor="16.0" />
-                <Label layoutX="893.0" layoutY="53.0" text="Tháng :  " />
-                <ChoiceBox fx:id="chooseMonth" layoutX="944.0" layoutY="48.0" prefHeight="25.0" prefWidth="56.0" />
-                <TableView fx:id="tableReport" layoutX="31.0" layoutY="192.0" prefHeight="450.0" prefWidth="1044.0" stylesheets="@../../../../assets/style/table.css" AnchorPane.bottomAnchor="48.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="160.0">
-=======
                 <Label layoutX="775.0" layoutY="37.0" text="Mã đơn vị : " AnchorPane.topAnchor="37.0" />
-                <Text layoutX="304.0" layoutY="63.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nhà máy sản xuất" />
                 <Label layoutX="777.0" layoutY="77.0" text="Tháng :  " />
                 <ChoiceBox fx:id="chooseMonth" layoutX="828.0" layoutY="72.0" prefHeight="25.0" prefWidth="56.0" />
                 <TableView fx:id="tableReport" layoutX="31.0" layoutY="192.0" prefHeight="518.0" prefWidth="1094.0" stylesheets="@../../../../assets/style/table.css" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="128.0">
->>>>>>> 52e13276548d9bdce4aa492b0fcc3fc13faf3cdf
                     <columns>
                         <TableColumn fx:id="index" editable="false" prefWidth="48.0" text="STT" />
                         <TableColumn fx:id="worker_idCol" prefWidth="152.79998779296875" text="Mã NV" />
@@ -53,12 +40,6 @@
                 <Label fx:id="unit_idText" layoutX="87.0" layoutY="51.0" text="ID Unit" />
                 <Label fx:id="unit_manager" layoutX="103.0" layoutY="76.0" text="UnitManager" />
                 <Button fx:id="export_excel" layoutX="1035.0" layoutY="655.0" mnemonicParsing="false" onAction="#export_excel" text="Xuất báo cáo" AnchorPane.bottomAnchor="16.0" AnchorPane.rightAnchor="16.0" />
-<<<<<<< HEAD
-                <ChoiceBox fx:id="unitNameBox" layoutX="992.0" layoutY="14.0" prefHeight="25.0" prefWidth="118.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="16.0" />
-            <Label layoutX="245.0" layoutY="76.0" text="Số lượng công nhân:" />
-            <Label fx:id="num_worker" layoutX="366.0" layoutY="76.0" text="0" />
-            <Label fx:id="department" layoutX="304.0" layoutY="50.0" text="Department" />
-=======
                 <ChoiceBox fx:id="unitNameBox" layoutX="874.0" layoutY="37.0" prefHeight="25.0" prefWidth="118.0" AnchorPane.rightAnchor="133.60000000000002" AnchorPane.topAnchor="37.0" />
                 <Label layoutX="245.0" layoutY="76.0" text="Số lượng công nhân:" />
                 <Label fx:id="num_worker" layoutX="366.0" layoutY="76.0" text="0" />
@@ -74,7 +55,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
->>>>>>> 52e13276548d9bdce4aa492b0fcc3fc13faf3cdf
+            <Label fx:id="department" layoutX="306.0" layoutY="51.0" text="department" />
             </children>
         </AnchorPane>
     </children>
