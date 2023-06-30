@@ -7,6 +7,17 @@
     -fx-font-weight: bold;
     -fx-alignment: BASELINE-CENTER;
 }
+.cell-dilam {
+    -fx-text-fill: blue;
+}
+
+.cell-nghi {
+    -fx-text-fill: red;
+}
+
+.cell-chualam {
+    -fx-text-fill: yellow;
+}
 .table-view .cell{
     -fx-cell-size: 35;
     -fx-background-color: transparent;
