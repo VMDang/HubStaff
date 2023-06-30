@@ -61,12 +61,12 @@ public class HRMUnitWorkerAttendanceReportTest extends TestCase{
         // Kiểm tra kết quả trả về đầu tiên có đúng như trên database hay không
         	
         Assert.assertEquals("nv1", result.get(0).getId());
-        Assert.assertEquals("Doan Manh Nguyen", result.get(0).getName());
+        Assert.assertEquals("Le Thi Kinh", result.get(0).getName());
         Assert.assertEquals("un1", result.get(0).getUnit_id());
         Assert.assertEquals("1", result.get(0).getPassword());
         Assert.assertEquals(1, result.get(0).getStatus());
         Assert.assertEquals("nv12", result.get(1).getId());
-        Assert.assertEquals("Pham Van Tuan", result.get(1).getName());
+        Assert.assertEquals("Do Van Nong", result.get(1).getName());
         Assert.assertEquals("un1", result.get(1).getUnit_id());
         Assert.assertEquals("1", result.get(1).getPassword());
         Assert.assertEquals(1, result.get(1).getStatus());
