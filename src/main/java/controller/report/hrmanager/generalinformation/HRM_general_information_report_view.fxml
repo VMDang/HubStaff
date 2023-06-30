@@ -5,11 +5,13 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.RadioButton?>
 <?import javafx.scene.control.ToggleGroup?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="basePane" prefHeight="709.0" prefWidth="1126.0" style="-fx-background-color: e4e4e4;" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.report.hrmanager.generalinformation.HRMGeneralInformationReportController">
+<AnchorPane fx:id="basePane" prefHeight="709.0" prefWidth="1126.0" style="-fx-background-color: e4e4e4;" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.report.hrmanager.generalinformation.HRMGeneralInformationReportController">
    <children>
       <Pane layoutY="2.0" prefHeight="709.0" prefWidth="1126.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5px;" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="2.0">
          <children>
@@ -160,13 +162,20 @@
                         </Label>
                      </children>
                   </Pane>
-                  <Button fx:id="submitBtn" layoutX="404.0" layoutY="200.0" mnemonicParsing="false" onAction="#handleSubmit" style="-fx-background-color: #66A9E3; -fx-background-radius: 10;" text="Kiểm tra" textFill="WHITE">
-                     <font>
-                        <Font size="16.0" />
-                     </font>
-                  </Button>
                   <Label alignment="CENTER" layoutX="15.0" layoutY="104.0" prefHeight="19.0" prefWidth="64.0" style="-fx-background-color: #66A9E3; -fx-background-radius: 15;" text="Thời gian " textFill="WHITE" />
                   <Label alignment="CENTER" layoutX="15.0" layoutY="16.0" prefHeight="19.0" prefWidth="64.0" style="-fx-background-color: #66A9E3; -fx-background-radius: 15;" text="Phạm vi" textFill="WHITE" />
+                  <Button fx:id="submitBtn" contentDisplay="RIGHT" defaultButton="true" layoutX="398.0" layoutY="208.0" mnemonicParsing="false" onAction="#handleSubmit" prefHeight="30.0" prefWidth="102.0" text="Tìm kiếm" textFill="#0400ff">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../assets/img/search.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                </children>
             </Pane>
             <Label layoutX="170.0" layoutY="59.0" text="Thông tin chung ">

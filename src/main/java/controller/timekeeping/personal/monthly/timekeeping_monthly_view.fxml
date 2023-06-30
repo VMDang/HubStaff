@@ -5,18 +5,19 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="basePane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.timekeeping.personal.monthly.MonthlyTimekeepingController">
+<AnchorPane fx:id="basePane" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.timekeeping.personal.monthly.MonthlyTimekeepingController">
    <children>
       <AnchorPane layoutX="46.0" layoutY="-8.0" prefHeight="709.0" prefWidth="1126.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="-46.0" AnchorPane.topAnchor="-8.0">
          <children>
             <Pane layoutX="-39.0" layoutY="9.0" prefHeight="703.0" prefWidth="1117.0" style="-fx-background-color: #ffffff; -fx-background-radius: 5px;" AnchorPane.bottomAnchor="-2.0" AnchorPane.leftAnchor="-39.0" AnchorPane.rightAnchor="48.0" AnchorPane.topAnchor="9.0">
                <children>
-                  <Button fx:id="refresh" layoutX="980.0" layoutY="71.0" mnemonicParsing="false" onAction="#resetTable" prefHeight="31.0" prefWidth="109.0" text="Làm mới" textFill="#d31111" />
                   <TableView fx:id="tableTimekeepingMonth" focusTraversable="false" layoutX="28.0" layoutY="205.0" prefHeight="386.0" prefWidth="1061.0" stylesheets="@../../../../assets/style/table.css">
                      <columns>
                         <TableColumn fx:id="dateCol" editable="false" prefWidth="156.0" text="Ngày" />
@@ -51,14 +52,26 @@
                         <Font size="21.0" />
                      </font>
                   </Label>
-                  <ChoiceBox fx:id="chooseMonth" layoutX="880.0" layoutY="34.0" prefHeight="25.0" prefWidth="60.0" />
-                  <Label layoutX="831.0" layoutY="38.0" text="Tháng :  " />
+                  <ChoiceBox fx:id="chooseMonth" layoutX="738.0" layoutY="54.0" prefHeight="25.0" prefWidth="60.0" />
+                  <Label layoutX="689.0" layoutY="58.0" text="Tháng :  " />
                   <Label layoutX="28.0" layoutY="132.0" text="Phòng ban :" />
                   <Text fx:id="department" layoutX="117.0" layoutY="145.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Nhà máy sản xuất" />
-                  <ChoiceBox fx:id="chooseYear" layoutX="1011.0" layoutY="34.0" prefHeight="25.0" prefWidth="74.0" />
-                  <Label layoutX="966.0" layoutY="38.0" text="Năm :" />
+                  <ChoiceBox fx:id="chooseYear" layoutX="877.0" layoutY="54.0" prefHeight="25.0" prefWidth="74.0" />
+                  <Label layoutX="832.0" layoutY="58.0" text="Năm :" />
                   <Label layoutX="302.0" layoutY="104.0" text="Chức vụ :" />
                   <Text fx:id="role" layoutX="366.0" layoutY="117.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Công nhân " />
+                  <Button fx:id="refresh" contentDisplay="RIGHT" defaultButton="true" layoutX="987.0" layoutY="51.0" mnemonicParsing="false" onAction="#resetTable" prefHeight="30.0" prefWidth="102.0" text="Tìm kiếm" textFill="#0400ff">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <graphic>
+                        <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../../assets/img/search.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
                </children>
             </Pane>
          </children>

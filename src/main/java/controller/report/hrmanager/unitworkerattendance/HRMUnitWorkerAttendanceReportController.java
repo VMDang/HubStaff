@@ -59,9 +59,6 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
     private ChoiceBox<String> chooseYear;
 
 	@FXML
-    private Label monthBtn;
-
-	@FXML
 	private Label unit_idText;
 
 	@FXML
@@ -111,7 +108,6 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
 	@FXML
 	void viewreport(ActionEvent event) {
         String month = chooseMonth.getValue();
-        monthBtn.setText("Báo cáo tháng "+month);
         String unit_id_text = unitNameBox.getValue().toString();
         if(unit_id_text.equals("ID Unit")) {
         	showUnitNotFound("Bạn chưa chọn mã đơn vị");
@@ -334,8 +330,6 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
         chooseMonth.setValue(LocalDate.now().format(DateTimeFormatter.ofPattern("MM")));
         chooseYear.getItems().addAll(listYear);
         chooseYear.setValue(LocalDate.now().format(DateTimeFormatter.ofPattern("yyyy")));
-
-        monthBtn.setText("Báo cáo tháng "+month);
 
         listRecord = FXCollections.observableArrayList();
 
