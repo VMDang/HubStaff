@@ -35,7 +35,7 @@ import org.apache.poi.ss.usermodel.*;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 import java.io.File;
-import java.io.FileOutputStream;
+import java.io.FileOutputStream;	
 import java.io.IOException;
 
 import model.employee.Employee;
@@ -307,7 +307,7 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
 
         return allWorker;
     }
-
+	
     public ArrayList<LogTimekeepingWorker> getTimeKeepingAWorker(String employee_id){
         GetTimekeepingWorker getTimekeepingWorker = GetTimekeepingWorker.getInstance();
         ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = getTimekeepingWorker.getTimekeepingsByEmployeeID(employee_id);
