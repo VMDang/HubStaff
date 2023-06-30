@@ -326,7 +326,6 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
 		unitNameBox.getItems().addAll(listunit);
 		unitNameBox.setValue("ID Unit");
 		today = LocalDate.now();
-		String month = today.toString().split("-")[1];
 		chooseMonth.getItems().addAll(listMonth);
         chooseMonth.setValue(LocalDate.now().format(DateTimeFormatter.ofPattern("MM")));
         chooseYear.getItems().addAll(listYear);

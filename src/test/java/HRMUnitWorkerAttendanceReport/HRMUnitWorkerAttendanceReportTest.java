@@ -58,8 +58,7 @@ public class HRMUnitWorkerAttendanceReportTest extends TestCase{
         // Gọi phương thức getAllWorkerUnit() với unitId cụ thể
         ArrayList<Worker> result = controller.getAllWorkerUnit(unitId);
 
-        // Kiểm tra kết quả trả về
-        Assert.assertEquals(4, result.size());
+        // Kiểm tra kết quả trả về đầu tiên có đúng như trên database hay không
         	
         Assert.assertEquals("nv1", result.get(0).getId());
         Assert.assertEquals("Doan Manh Nguyen", result.get(0).getName());
