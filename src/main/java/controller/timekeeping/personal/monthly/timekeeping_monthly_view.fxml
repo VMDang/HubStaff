@@ -12,7 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane fx:id="basePane" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.timekeeping.personal.monthly.MonthlyTimekeepingController">
+<AnchorPane fx:id="basePane" xmlns="http://javafx.com/javafx/19" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.timekeeping.personal.monthly.MonthlyTimekeepingController">
    <children>
       <AnchorPane layoutX="46.0" layoutY="-8.0" prefHeight="709.0" prefWidth="1126.0" AnchorPane.bottomAnchor="8.0" AnchorPane.leftAnchor="46.0" AnchorPane.rightAnchor="-46.0" AnchorPane.topAnchor="-8.0">
          <children>
@@ -38,7 +38,7 @@
                   </TableView>
                   <Label layoutX="28.0" layoutY="76.0" text="Mã nhân viên:" />
                   <Label layoutX="28.0" layoutY="104.0" text="Họ và tên : " />
-                  <Label layoutX="24.0" layoutY="26.0" text="Thông tin công nhân">
+                  <Label layoutX="24.0" layoutY="26.0" text="Thông tin nhân viên">
                      <font>
                         <Font name="System Bold" size="16.0" />
                      </font>

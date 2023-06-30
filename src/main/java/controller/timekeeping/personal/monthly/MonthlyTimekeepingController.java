@@ -15,33 +15,34 @@ import controller.timekeeping.personal.monthly.day.officer.TimekeepingDayOfficer
 import controller.timekeeping.personal.monthly.day.worker.TimekeepingDayWorkerDetailController;
 import dbtimekeeping.gettimekeeping.GetTimekeepingOfficer;
 import dbtimekeeping.gettimekeeping.GetTimekeepingWorker;
+
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
 import javafx.scene.control.ChoiceBox;
-
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.stage.StageStyle;
+
 import model.employee.HRManager;
 import model.employee.officer.Officer;
 import model.employee.officer.OfficerUnitManager;
 import model.employee.worker.Worker;
 import model.employee.worker.WorkerUnitManager;
-import model.logtimekeeping.LogTimekeeping;
+
 import model.logtimekeeping.LogTimekeepingOfficer;
 import model.logtimekeeping.LogTimekeepingWorker;
 
@@ -161,8 +162,7 @@ public class MonthlyTimekeepingController implements Initializable {
     	time_outCol.setCellValueFactory(new PropertyValueFactory<TimekeepingEmployeeTableRow,Time>("time_out"));
     	hour_workCol.setCellValueFactory(new PropertyValueFactory<TimekeepingEmployeeTableRow,Float>("hour_work"));
     	overtimeCol.setCellValueFactory(new PropertyValueFactory<TimekeepingEmployeeTableRow,Float>("overtime"));
-    	statusCol.setCellValueFactory(new PropertyValueFactory<TimekeepingEmployeeTableRow,String>("status"));
-    	
+    	statusCol.setCellValueFactory(new PropertyValueFactory<TimekeepingEmployeeTableRow, String>("status"));
     	tableTimekeepingMonth.setItems(LogTimekeepingMonthList);
     	
     	total_day_workCol.setCellValueFactory(new PropertyValueFactory<GenaralTableRow,Integer>("total_day_work"));
@@ -328,11 +328,11 @@ public class MonthlyTimekeepingController implements Initializable {
 		Time time_in = log.getTime_in();
 		Time time_out = log.getTime_out();
 		float hour_work = setFormatHour(log.getShift1() + log.getShift2() + log.getShift3());
-		float overtime = setFormatHour(hour_work-8.0f) < 0 ? 0.0f : setFormatHour(hour_work-8.0f) ;
+		float overtime = log.getShift3() ;
 		String status = "";
 		if(time_in.compareTo(Time.valueOf("07:30:00")) > 0 ) status +="Đi muộn ";
 		if(time_out.compareTo(Time.valueOf("17:00:00")) < 0 ) status +="Về sớm";
-		if(time_in.compareTo(Time.valueOf("07:30:00")) <= 0 && time_out.compareTo(Time.valueOf("17:00:00")) >= 0) status = "OKE";
+		if(time_in.compareTo(Time.valueOf("07:30:00")) <= 0 && time_out.compareTo(Time.valueOf("17:00:00")) >= 0) status = "Đạt";
 		return new TimekeepingEmployeeTableRow(date, time_in, time_out, hour_work, overtime, status, log.getShift1(), log.getShift2(), log.getShift3());
 	}
 	public static TimekeepingEmployeeTableRow createTimekeepingDayOfficerTable(LogTimekeepingOfficer log) {
@@ -340,11 +340,22 @@ public class MonthlyTimekeepingController implements Initializable {
 		Time time_in = log.getTime_in();
 		Time time_out = log.getTime_out();
 		float hour_work = setFormatHour(((float)Time.valueOf("11:30:00").getTime() - (float)time_in.getTime())/(float)3600000 +  ((float)time_out.getTime()-(float)Time.valueOf("13:00:00").getTime())/(float)3600000);
-		float overtime = setFormatHour(hour_work-8.0f) < 0 ? 0.0f : setFormatHour(hour_work-8.0f) ;
+		
 		String status = "";
 		if(time_in.compareTo(Time.valueOf("07:30:00")) > 0 ) status +="Đi muộn ";
-		if(time_out.compareTo(Time.valueOf("17:00:00")) < 0 ) status +="Về sớm";
-		if(time_in.compareTo(Time.valueOf("07:30:00")) <= 0 && time_out.compareTo(Time.valueOf("17:00:00")) >= 0) status = "OKE";
+		if(time_out.compareTo(Time.valueOf("17:00:00")) < 0 ) {
+			status +="Về sớm";
+			if(time_out.compareTo(Time.valueOf("11:30:00")) < 0) {
+				if(time_in.compareTo(Time.valueOf("07:30:00")) > 0 ) {
+					hour_work = setFormatHour((time_out.getTime()-time_in.getTime())/3600000);
+				}else hour_work = setFormatHour((time_out.getTime()-Time.valueOf("07:30:00").getTime())/3600000);
+			}
+		}
+		if(time_in.compareTo(Time.valueOf("07:30:00")) <= 0 && time_out.compareTo(Time.valueOf("17:00:00")) >= 0) {
+			status ="Đạt";
+			hour_work = setFormatHour(((float)Time.valueOf("11:30:00").getTime() - (float)Time.valueOf("07:30:00").getTime())/(float)3600000 +  ((float)time_out.getTime()-(float)Time.valueOf("13:00:00").getTime())/(float)3600000);
+		}
+		float overtime = setFormatHour(hour_work-8.0f) < 0 ? 0.0f : setFormatHour(hour_work-8.0f) ;
 		return new TimekeepingEmployeeTableRow(date, time_in, time_out, hour_work, overtime, status, log.isMorning(), log.isAfternoon());
 	}
 	public static GenaralTableRow createGenaralTableRow(ObservableList<TimekeepingEmployeeTableRow> LogInMonth) {
