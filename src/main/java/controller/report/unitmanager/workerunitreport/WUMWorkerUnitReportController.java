@@ -108,6 +108,7 @@ public class WUMWorkerUnitReportController implements Initializable {
     public void initialize(URL url, ResourceBundle resourceBundle) {
         unit_id.setText(Authentication.getInstance().getAuthentication().getUnit_id());
         wum_name.setText(Authentication.getInstance().getAuthentication().getName());
+        department.setText(Authentication.getInstance().getAuthentication().getDepartment());
 
         chooseMonth.getItems().addAll(listMonth);
         chooseMonth.setValue(LocalDate.now().format(DateTimeFormatter.ofPattern("MM")));
@@ -149,7 +150,7 @@ public class WUMWorkerUnitReportController implements Initializable {
 
         for (Worker w : workers) {
             ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = new ArrayList<LogTimekeepingWorker>();
-            logTimekeepingWorkers.addAll(getTimeKeepingAWorker(w.getId()));
+            logTimekeepingWorkers.addAll(getTimekeepingsAWorker(w.getId()));
 
             ArrayList<LogTimekeepingWorker> logTimekeepingByMonth = new ArrayList<LogTimekeepingWorker>();
             logTimekeepingByMonth.addAll(getTimekeepingByMonth(logTimekeepingWorkers, monthFilter));
@@ -192,7 +193,7 @@ public class WUMWorkerUnitReportController implements Initializable {
         return allWorker;
     }
 
-    private ArrayList<LogTimekeepingWorker> getTimeKeepingAWorker(String employee_id){
+    public ArrayList<LogTimekeepingWorker> getTimekeepingsAWorker(String employee_id){
         GetTimekeepingWorker getTimekeepingWorker = GetTimekeepingWorker.getInstance();
         ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = getTimekeepingWorker.getTimekeepingsByEmployeeID(employee_id);
 
