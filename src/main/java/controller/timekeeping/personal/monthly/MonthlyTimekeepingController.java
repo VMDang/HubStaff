@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import controller.auth.Authentication;
+import controller.report.unitmanager.workerunitreport.WUMWorkerUnitReportRow;
 import controller.timekeeping.personal.monthly.day.officer.TimekeepingDayOfficerDetailController;
 import controller.timekeeping.personal.monthly.day.worker.TimekeepingDayWorkerDetailController;
 import dbtimekeeping.gettimekeeping.GetTimekeepingOfficer;
@@ -22,6 +23,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
@@ -169,7 +171,7 @@ public class MonthlyTimekeepingController implements Initializable {
     	total_hour_workCol.setCellValueFactory(new PropertyValueFactory<GenaralTableRow,Float>("total_hour_work"));
     	total_overtimeCol.setCellValueFactory(new PropertyValueFactory<GenaralTableRow,Float>("total_overtime"));
     	salaryCol.setCellValueFactory(new PropertyValueFactory<GenaralTableRow,Integer>("salary"));
-    	
+    	highlightRow();
     	tableGenaral.setItems(genaralRows);
     	
     	tableTimekeepingMonth.setOnMouseClicked(event -> {
@@ -372,4 +374,19 @@ public class MonthlyTimekeepingController implements Initializable {
 		salary = (int) Math.round(30000*(total_hour_work - total_overtime) + 60000*total_overtime);
 		return new GenaralTableRow(total_day_work, total_hour_work, total_overtime, salary);
 	}
+	private void highlightRow(){
+		tableTimekeepingMonth.setRowFactory(tv -> new TableRow<TimekeepingEmployeeTableRow>() {
+            @Override
+            protected void updateItem(TimekeepingEmployeeTableRow item, boolean empty) {
+                super.updateItem(item, empty);
+                if (!empty && item != null) {
+                    if (item.getStatus().equals("Nghỉ")) {
+                        setStyle("-fx-background-color: #FAAFAF;");
+                    } else if (item.getStatus().equals("Đi muộn ") || item.getStatus().equals("Về sớm") || item.getStatus().equals("Đi muộn Về sớm")){
+                        setStyle("-fx-background-color: #FFECB8;");
+                    } else setStyle("");
+                }else setStyle("");
+            }
+        });
+    }
 }
