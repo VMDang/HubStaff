@@ -20,7 +20,7 @@ public class GeneralInfomationTest extends TestCase {
 	}
 	
 	public void testGetEmployeeByUnitId_ExsistUnitId_Blackbox() {
-		String unit_id = "123";
+		String unit_id = "un1";
 		
 		ArrayList<Employee> listEmployee = GeneralInformation.getEmployeesByUnit(unit_id);
 		
@@ -28,7 +28,7 @@ public class GeneralInfomationTest extends TestCase {
 	}
 	
 	public void testGetEmployeeByUnitId_NotExistEmployee_Blackbox() {
-		String unit_id = "111";
+		String unit_id = "un100";
 		
 		ArrayList<Employee> listEmployee = GeneralInformation.getEmployeesByUnit(unit_id);
 		
@@ -44,7 +44,7 @@ public class GeneralInfomationTest extends TestCase {
 	}
 	
 	public void testGetEmployeeByUnitId_ExsistUnitId_Whitebox() {
-		String unit_id = "123";
+		String unit_id = "un1";
 		
 		ArrayList<Employee> listEmployee = GeneralInformation.getEmployeesByUnit(unit_id);
 		
@@ -58,7 +58,7 @@ public class GeneralInfomationTest extends TestCase {
 	}
 	
 	public void testGetEmployeeByUnitId_NotExistEmployee_Whitebox() {
-		String unit_id = "111";
+		String unit_id = "un100";
 		
 		ArrayList<Employee> listEmployee = GeneralInformation.getEmployeesByUnit(unit_id);
 		

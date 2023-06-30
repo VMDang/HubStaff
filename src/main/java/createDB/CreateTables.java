@@ -97,8 +97,8 @@ public class CreateTables {
 	}
 	public static void main(String[] args) {
 		CreateTables.createTableEmployees();
-//		CreateTables.createTableLogTimekeepingOfficer();
-//		CreateTables.createTableLogTimekeepingWorker();
+		CreateTables.createTableLogTimekeepingOfficer();
+		CreateTables.createTableLogTimekeepingWorker();
 	}
 	
 }
