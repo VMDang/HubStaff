@@ -103,6 +103,19 @@ public class TimekeepingDayOfficerDetailController {
     
     private int calculateSalary(LogTimekeepingOfficer log) {
     	float hour_work = setFormatHour(((float)Time.valueOf("11:30:00").getTime() - (float)log.getTime_in().getTime())/(float)3600000 +  ((float)log.getTime_out().getTime()-(float)Time.valueOf("13:00:00").getTime())/(float)3600000);
+		
+		if(log.getTime_out().compareTo(Time.valueOf("17:00:00")) < 0 ) {
+			
+			if(log.getTime_out().compareTo(Time.valueOf("11:30:00")) < 0) {
+				if(log.getTime_in().compareTo(Time.valueOf("07:30:00")) > 0 ) {
+					hour_work = setFormatHour((log.getTime_out().getTime()-log.getTime_in().getTime())/3600000);
+				}else hour_work = setFormatHour((log.getTime_out().getTime()-Time.valueOf("07:30:00").getTime())/3600000);
+			}
+		}
+		if(log.getTime_in().compareTo(Time.valueOf("07:30:00")) <= 0 && log.getTime_out().compareTo(Time.valueOf("17:00:00")) >= 0) {
+			
+			hour_work = setFormatHour(((float)Time.valueOf("11:30:00").getTime() - (float)Time.valueOf("07:30:00").getTime())/(float)3600000 +  ((float)log.getTime_out().getTime()-(float)Time.valueOf("13:00:00").getTime())/(float)3600000);
+		}
 		float overtime = setFormatHour(hour_work-8.0f) < 0 ? 0.0f : setFormatHour(hour_work-8.0f) ;
     	return (int) Math.round(30000*(hour_work-overtime) + 60000*overtime);
     }
