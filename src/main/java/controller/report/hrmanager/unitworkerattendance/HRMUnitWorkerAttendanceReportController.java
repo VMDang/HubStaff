@@ -108,7 +108,6 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
 
 	@FXML
 	void viewreport(ActionEvent event) {
-        String month = chooseMonth.getValue();
         String unit_id_text = unitNameBox.getValue().toString();
         if(unit_id_text.equals("ID Unit")) {
         	showUnitNotFound("Bạn chưa chọn mã đơn vị");
@@ -147,9 +146,8 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
 	        headerRow.createCell(0).setCellValue("STT");
 	        headerRow.createCell(1).setCellValue("Worker ID");
 	        headerRow.createCell(2).setCellValue("Name");
-	        headerRow.createCell(3).setCellValue("Month");
-	        headerRow.createCell(4).setCellValue("Total Hours Work");
-	        headerRow.createCell(5).setCellValue("Total Overtime Work");
+	        headerRow.createCell(3).setCellValue("Total Hours Work");
+	        headerRow.createCell(4).setCellValue("Total Overtime Work");
 
 	        // Data
 	        int rowIndex = 1;
@@ -158,9 +156,8 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
 	            dataRow.createCell(0).setCellValue(rowIndex);
 	            dataRow.createCell(1).setCellValue(row.getWorker_id());
 	            dataRow.createCell(2).setCellValue(row.getName());
-	            dataRow.createCell(3).setCellValue(row.getMonth());
-	            dataRow.createCell(4).setCellValue(row.getTotal_hour_work());
-	            dataRow.createCell(5).setCellValue(row.getTotal_overtime());
+	            dataRow.createCell(3).setCellValue(row.getTotal_hour_work());
+	            dataRow.createCell(4).setCellValue(row.getTotal_overtime());
 	            rowIndex++;
 	        }
 

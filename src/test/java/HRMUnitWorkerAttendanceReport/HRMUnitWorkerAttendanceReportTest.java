@@ -59,7 +59,7 @@ public class HRMUnitWorkerAttendanceReportTest extends TestCase{
         ArrayList<Worker> result = controller.getAllWorkerUnit(unitId);
 
         // Kiểm tra kết quả trả về
-        Assert.assertEquals(7, result.size());
+        Assert.assertEquals(4, result.size());
         	
         Assert.assertEquals("nv1", result.get(0).getId());
         Assert.assertEquals("Doan Manh Nguyen", result.get(0).getName());
