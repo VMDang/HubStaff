@@ -18,7 +18,6 @@ public class TimekeepingDayOfficerDetailControllerTest extends TestCase{
 		return new TimekeepingDayOfficerDetailController();
 	}
 
-
 	@Test
 	public void testCalculateSalary_LogNull_BlackBox() throws Exception {
 		TimekeepingDayOfficerDetailController testSubject;
