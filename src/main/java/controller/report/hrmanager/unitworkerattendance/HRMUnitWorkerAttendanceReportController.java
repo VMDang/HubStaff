@@ -107,6 +107,7 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
 	String[] listYear = {"2023", "2022", "2021", "2020"};
 
 	String name_unit_manager;
+	String name_department;
 
 	@FXML
 	void viewreport(ActionEvent event) {
@@ -123,6 +124,8 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
             num_worker.setText(String.valueOf(listRecord.size()));
             
             unit_manager.setText(name_unit_manager);
+            
+            department.setText(name_department);
 
             tableReport.setItems(listRecord);
         }
@@ -291,6 +294,7 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
             if ((e.getRole_id() == 1 || e.getRole_id() == 3) && (e.getUnit_id().equals(unit_id))) {
             	if(e.getRole_id() == 3) {
             		name_unit_manager = e.getName();
+            		name_department = e.getDepartment();
             	}
             	
                 allWorker.add(new Worker(e.getId(), e.getName(), e.getUnit_id(), e.getPassword(),e.getStatus()));
