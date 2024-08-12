@@ -38,7 +38,7 @@ public class LogTimekeepingWorker extends LogTimekeeping{
 	@Override
 	public String toString() {
 		return "LogTimekeepingWorker [shift1=" + shift1 + ", shift2=" + shift2 + ", shift3=" + shift3 + ", logID="
-				+ logID + ", employee_id=" + employee_id + ", date=" + date + ", time_in=" + time_in + ", time_out="
+				+ id + ", employee_id=" + employee_id + ", date=" + date + ", time_in=" + time_in + ", time_out="
 				+ time_out + "]";
 	}
 	

@@ -4,12 +4,12 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
-import hrsystem.GetAllEmployees;
+import database.EmployeeDAO;
 import model.employee.Employee;
 
 public abstract class GeneralInformation {
 
-	protected static ArrayList<Employee> employees = GetAllEmployees.getInstance().getAllEmployees();
+	protected static ArrayList<Employee> employees = EmployeeDAO.getInstance().getAll();
 	
 	public static ArrayList<Employee> getEmployeesByUnit(String unit_id) {
 		ArrayList<Employee> listEmployeesUnit = new ArrayList<>();

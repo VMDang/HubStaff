@@ -7,10 +7,8 @@ import java.sql.SQLException;
 public class JDBCUtil {
 	public static Connection getConnection() {
 		Connection c = null;
-		
-		
 		try {
-			DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+			DriverManager.registerDriver(new com.mysql.cj.jdbc.Driver());
 			
 			String url = "jdbc:mySQL://localhost:3306/hubstaff";
 			String username = "root";
@@ -18,14 +16,11 @@ public class JDBCUtil {
 			
 			c = DriverManager.getConnection(url, username, password);
 			
-			
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return c;
-				
 	}
 	public static void  closeConnection(Connection c) {
 		try {
@@ -33,7 +28,7 @@ public class JDBCUtil {
 				c.close();
 			}
 		} catch (Exception e) {
-			// TODO: handle exception
+			e.printStackTrace();
 		}
 	}
 }

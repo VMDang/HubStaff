@@ -5,10 +5,9 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-import dbtimekeeping.gettimekeeping.GetTimekeepingOfficer;
-import dbtimekeeping.gettimekeeping.GetTimekeepingOfficer;
+
+import database.TimekeepingOfficerDAO;
 import model.employee.Employee;
-import model.logtimekeeping.LogTimekeepingOfficer;
 import model.logtimekeeping.LogTimekeepingOfficer;
 
 public class GeneralInformationOfficerUnit extends GeneralInformationUnit {
@@ -53,7 +52,7 @@ public class GeneralInformationOfficerUnit extends GeneralInformationUnit {
 	
     public double countHourLateByMonthAEmployee(Employee employee, int month, int year) {
     	double count = 0;
-		ArrayList<LogTimekeepingOfficer> LogTimekeepingOfficers = GetTimekeepingOfficer.getInstance().getTimekeepingsByEmployeeID(employee.getId());
+		ArrayList<LogTimekeepingOfficer> LogTimekeepingOfficers = TimekeepingOfficerDAO.getInstance().getByEmployeeID(employee.getId());
 		for (LogTimekeepingOfficer LogTimekeepingOfficer : LogTimekeepingOfficers) {
 			if(getMonthFromDate(LogTimekeepingOfficer.getDate()) == month && getYearFromDate(LogTimekeepingOfficer.getDate()) == year) {
 				count = count + ((convertToDouble(LogTimekeepingOfficer.getTime_in().toString()) - 7.5) > 0 ? (convertToDouble(LogTimekeepingOfficer.getTime_in().toString()) - 7.5) : 0);
@@ -64,7 +63,7 @@ public class GeneralInformationOfficerUnit extends GeneralInformationUnit {
     
     public double countHourLateByQuarterAEmployee(Employee employee, int quarter, int year) {
     	double count = 0;
-		ArrayList<LogTimekeepingOfficer> LogTimekeepingOfficers = GetTimekeepingOfficer.getInstance().getTimekeepingsByEmployeeID(employee.getId());
+		ArrayList<LogTimekeepingOfficer> LogTimekeepingOfficers = TimekeepingOfficerDAO.getInstance().getByEmployeeID(employee.getId());
 		for (LogTimekeepingOfficer LogTimekeepingOfficer : LogTimekeepingOfficers) {
 			if(getQuarterFromDate(LogTimekeepingOfficer.getDate()) == quarter && getYearFromDate(LogTimekeepingOfficer.getDate()) == year) {
 				count = count + ((convertToDouble(LogTimekeepingOfficer.getTime_in().toString()) - 7.5) > 0 ? (convertToDouble(LogTimekeepingOfficer.getTime_in().toString()) - 7.5) : 0);
@@ -75,7 +74,7 @@ public class GeneralInformationOfficerUnit extends GeneralInformationUnit {
     
     public double countHourLateByYearAEmployee(Employee employee, int year) {
     	double count = 0;
-		ArrayList<LogTimekeepingOfficer> LogTimekeepingOfficers = GetTimekeepingOfficer.getInstance().getTimekeepingsByEmployeeID(employee.getId());
+		ArrayList<LogTimekeepingOfficer> LogTimekeepingOfficers = TimekeepingOfficerDAO.getInstance().getByEmployeeID(employee.getId());
 		for (LogTimekeepingOfficer LogTimekeepingOfficer : LogTimekeepingOfficers) {
 			if(getYearFromDate(LogTimekeepingOfficer.getDate()) == year) {
 				count = count + ((convertToDouble(LogTimekeepingOfficer.getTime_in().toString()) - 7.5) > 0 ? (convertToDouble(LogTimekeepingOfficer.getTime_in().toString()) - 7.5) : 0);
@@ -86,7 +85,7 @@ public class GeneralInformationOfficerUnit extends GeneralInformationUnit {
     
     public double countHourEarlyByMonthAEmployee(Employee employee, int month, int year) {
     	double count = 0;
-		ArrayList<LogTimekeepingOfficer> LogTimekeepingOfficers = GetTimekeepingOfficer.getInstance().getTimekeepingsByEmployeeID(employee.getId());
+		ArrayList<LogTimekeepingOfficer> LogTimekeepingOfficers = TimekeepingOfficerDAO.getInstance().getByEmployeeID(employee.getId());
 		for (LogTimekeepingOfficer LogTimekeepingOfficer : LogTimekeepingOfficers) {
 			if(getMonthFromDate(LogTimekeepingOfficer.getDate()) == month && getYearFromDate(LogTimekeepingOfficer.getDate()) == year) {
 				count = count + ((17.5 - convertToDouble(LogTimekeepingOfficer.getTime_out().toString())) > 0 ? (17.5 - convertToDouble(LogTimekeepingOfficer.getTime_out().toString())) : 0);
@@ -97,7 +96,7 @@ public class GeneralInformationOfficerUnit extends GeneralInformationUnit {
     
     public double countHourEarlyByQuarterAEmployee(Employee employee, int quarter, int year) {
     	double count = 0;
-		ArrayList<LogTimekeepingOfficer> LogTimekeepingOfficers = GetTimekeepingOfficer.getInstance().getTimekeepingsByEmployeeID(employee.getId());
+		ArrayList<LogTimekeepingOfficer> LogTimekeepingOfficers = TimekeepingOfficerDAO.getInstance().getByEmployeeID(employee.getId());
 		for (LogTimekeepingOfficer LogTimekeepingOfficer : LogTimekeepingOfficers) {
 			if(getQuarterFromDate(LogTimekeepingOfficer.getDate()) == quarter && getYearFromDate(LogTimekeepingOfficer.getDate()) == year) {
 				count = count + ((17.5 - convertToDouble(LogTimekeepingOfficer.getTime_out().toString())) > 0 ? (17.5 - convertToDouble(LogTimekeepingOfficer.getTime_out().toString())) : 0);
@@ -108,7 +107,7 @@ public class GeneralInformationOfficerUnit extends GeneralInformationUnit {
     
     public double countHourEarlyByYearAEmployee(Employee employee, int year) {
     	double count = 0;
-		ArrayList<LogTimekeepingOfficer> LogTimekeepingOfficers = GetTimekeepingOfficer.getInstance().getTimekeepingsByEmployeeID(employee.getId());
+		ArrayList<LogTimekeepingOfficer> LogTimekeepingOfficers = TimekeepingOfficerDAO.getInstance().getByEmployeeID(employee.getId());
 		for (LogTimekeepingOfficer LogTimekeepingOfficer : LogTimekeepingOfficers) {
 			if(getYearFromDate(LogTimekeepingOfficer.getDate()) == year) {
 				count = count + ((17.5 - convertToDouble(LogTimekeepingOfficer.getTime_out().toString())) > 0 ? (17.5 - convertToDouble(LogTimekeepingOfficer.getTime_out().toString())) : 0);

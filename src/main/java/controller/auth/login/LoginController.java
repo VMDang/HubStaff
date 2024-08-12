@@ -2,7 +2,7 @@ package controller.auth.login;
 
 import java.io.IOException;
 
-import hrsystem.GetAEmployee;
+import database.EmployeeDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +15,6 @@ import javafx.stage.Screen;
 import javafx.stage.Stage;
 import model.employee.Employee;
 import controller.auth.Authentication;
-import controller.layouts.LayoutController;
 
 import static assets.navigation.FXMLNavigation.*;
 
@@ -33,8 +32,7 @@ public class LoginController {
             validate.setText("Vui lòng nhập đủ mã nhân viên và mật khẩu");
             validate.setVisible(true);
         }   else {
-
-            Employee employee = GetAEmployee.getInstance().getAEmployee(Id);
+            Employee employee = EmployeeDAO.getInstance().getById(Id);
             if(employee.getId() != null ) {
             	if (employee.getPassword().equals(Password) && employee.getStatus()==1){
                     Authentication.getInstance().setAuthentication(employee);

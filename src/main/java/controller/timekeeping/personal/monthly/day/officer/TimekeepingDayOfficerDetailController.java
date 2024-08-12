@@ -155,10 +155,4 @@ public class TimekeepingDayOfficerDetailController {
     public static float setFormatHour(float f) {
     	return (float) Math.round(f * 10) / 10;
     }
-    public static void main(String[] args) {
-    	TimekeepingDayOfficerDetailController controller = new TimekeepingDayOfficerDetailController();
-		LogTimekeepingOfficer log = new LogTimekeepingOfficer("LOG01","nv01",Date.valueOf("2023-06-01"), Time.valueOf("13:00:00"),Time.valueOf("21:30:00"), false, true);
-		int result = controller.calculateSalary(log);
-		System.out.println(result);
-	}
 }

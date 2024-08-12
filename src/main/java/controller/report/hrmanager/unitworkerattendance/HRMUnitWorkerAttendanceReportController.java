@@ -11,8 +11,8 @@ import java.util.HashSet;
 import java.util.ResourceBundle;
 import java.util.Set;
 
-import dbtimekeeping.gettimekeeping.GetTimekeepingWorker;
-import hrsystem.GetAllEmployees;
+import database.EmployeeDAO;
+import database.TimekeepingWorkerDAO;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -266,7 +266,7 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
 	}
 
 	public Set<String> getListUnit(){
-		ArrayList<Employee> allEmployees = GetAllEmployees.getInstance().getAllEmployees();
+		ArrayList<Employee> allEmployees = EmployeeDAO.getInstance().getAll();
 		Set<String> set = new HashSet<>();
 
         for (Employee e: allEmployees) {
@@ -279,8 +279,7 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
 	}
 
 	public ArrayList<Worker> getAllWorkerUnit(String unit_id){
-		GetAllEmployees getAllEmployees = GetAllEmployees.getInstance();
-        ArrayList<Employee> allEmployees = getAllEmployees.getAllEmployees();
+        ArrayList<Employee> allEmployees = EmployeeDAO.getInstance().getAll();
         ArrayList<Worker> allWorker = new ArrayList<Worker>();
 
         for (Employee e: allEmployees) {
@@ -302,8 +301,7 @@ public class HRMUnitWorkerAttendanceReportController implements Initializable{
     }
 	
     public ArrayList<LogTimekeepingWorker> getTimeKeepingAWorker(String employee_id){
-        GetTimekeepingWorker getTimekeepingWorker = GetTimekeepingWorker.getInstance();
-        ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = getTimekeepingWorker.getTimekeepingsByEmployeeID(employee_id);
+        ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = TimekeepingWorkerDAO.getInstance().getByEmployeeID(employee_id);
 
         return logTimekeepingWorkers;
     }

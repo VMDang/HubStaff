@@ -4,18 +4,18 @@ import java.sql.Time;
 import java.sql.Date;
 
 public class LogTimekeeping {
-	protected String logID ;
+	protected String id;
     protected String employee_id;
     protected Date date;
     protected Time time_in;
     protected Time time_out;
     
 	public LogTimekeeping() {
-		
+
 	}
 	public LogTimekeeping(String logID, String employee_id, Date date, Time time_in, Time time_out) {
 		super();
-		this.logID = logID;
+		this.id = logID;
 		this.employee_id = employee_id;
 		this.date = date;
 		this.time_in = time_in;
@@ -46,12 +46,9 @@ public class LogTimekeeping {
 		this.time_out = time_out;
 	}
 	public String getLogID() {
-		return logID;
+		return id;
 	}
 	public void setLogID(String logID) {
-		this.logID = logID;
+		this.id = logID;
 	}
-	
-    
-    
 }
