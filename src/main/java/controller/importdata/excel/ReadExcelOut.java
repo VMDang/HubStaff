@@ -30,7 +30,6 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 	 
 	        // Get file
 	        InputStream inputStream = new FileInputStream(new File(excelFilePath));
-	        
 	 
 	        // Get workbook
 	        Workbook workbook = getWorkbook(inputStream, excelFilePath);

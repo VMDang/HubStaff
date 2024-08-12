@@ -2,8 +2,8 @@ package controller.report.unitmanager.workerunitreport;
 
 import controller.auth.Authentication;
 import controller.layouts.LayoutController;
-import dbtimekeeping.gettimekeeping.GetTimekeepingWorker;
-import hrsystem.GetAllEmployees;
+import database.EmployeeDAO;
+import database.TimekeepingWorkerDAO;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -176,8 +176,7 @@ public class WUMWorkerUnitReportController implements Initializable {
     }
 
     private ArrayList<Worker> getAllWorkerUnit(String unit_id){
-        GetAllEmployees getAllEmployees = GetAllEmployees.getInstance();
-        ArrayList<Employee> allEmployees = getAllEmployees.getAllEmployees();
+        ArrayList<Employee> allEmployees = EmployeeDAO.getInstance().getAll();
         ArrayList<Worker> allWorker = new ArrayList<Worker>();
 
         for (Employee e: allEmployees) {
@@ -194,8 +193,7 @@ public class WUMWorkerUnitReportController implements Initializable {
     }
 
     public ArrayList<LogTimekeepingWorker> getTimekeepingsAWorker(String employee_id){
-        GetTimekeepingWorker getTimekeepingWorker = GetTimekeepingWorker.getInstance();
-        ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = getTimekeepingWorker.getTimekeepingsByEmployeeID(employee_id);
+        ArrayList<LogTimekeepingWorker> logTimekeepingWorkers = TimekeepingWorkerDAO.getInstance().getByEmployeeID(employee_id);
 
         return logTimekeepingWorkers;
     }

@@ -3,6 +3,7 @@ package controller.auth;
 
 import model.employee.Employee;
 import model.employee.HRManager;
+import model.employee.Role;
 import model.employee.officer.Officer;
 import model.employee.officer.OfficerUnitManager;
 import model.employee.worker.Worker;
@@ -29,15 +30,15 @@ public class Authentication {
 			authentication = auth;
 		}else return;
 
-		if (authentication.getRole_id() == 1){
+		if (authentication.getRole_id() == Role.Worker.getId()){
 			authentication = new Worker(authentication.getId(), authentication.getName(), authentication.getUnit_id(), authentication.getPassword(),authentication.getStatus());
-		}else if(authentication.getRole_id() == 2){
+		}else if(authentication.getRole_id() == Role.Officer.getId()){
 			authentication = new Officer(authentication.getId(), authentication.getName(), authentication.getDepartment(), authentication.getUnit_id(), authentication.getPassword(),authentication.getStatus());
-		}else if(authentication.getRole_id() == 3){
+		}else if(authentication.getRole_id() == Role.WorkerUnitManager.getId()){
 			authentication = new WorkerUnitManager(authentication.getId(), authentication.getName(), authentication.getUnit_id(), authentication.getPassword(),authentication.getStatus());
-		}else if (authentication.getRole_id() == 4){
+		}else if (authentication.getRole_id() == Role.OfficerUnitManager.getId()){
 			authentication = new OfficerUnitManager(authentication.getId(), authentication.getName(), authentication.getDepartment(), authentication.getUnit_id(), authentication.getPassword(),authentication.getStatus());
-		}else if (authentication.getRole_id() == 5){
+		}else if (authentication.getRole_id() == Role.HRManager.getId()){
 			authentication = new HRManager(authentication.getId(), authentication.getName(), authentication.getDepartment(), authentication.getUnit_id(), authentication.getPassword(),authentication.getStatus());
 		}
 	}
@@ -49,14 +50,4 @@ public class Authentication {
 	public void destroyAuthencation(){
 		authentication = null;
 	}
-
-//	public static void main(String[] args) {
-//		Employee employee = new Employee("a", "b", "c", "d", "1", 5);	// LoginController
-//		Authentication.setAuthentication(employee);																// LoginController
-//
-//		if (getAuth() instanceof HRManager){
-//			System.out.println("done");
-//			System.out.println(authentication.getDepartment());
-//		}
-//	}
 }

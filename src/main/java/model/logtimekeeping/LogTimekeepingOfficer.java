@@ -51,8 +51,5 @@ public class LogTimekeepingOfficer extends LogTimekeeping{
 	public void setHour_early(float hour_early) {
 		this.hour_early = hour_early;
 	}
-    
-    
-    
-    
+
 }

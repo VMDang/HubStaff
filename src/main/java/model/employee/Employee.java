@@ -13,8 +13,7 @@ public class Employee {
     public Employee() {
     	
     }
-    public Employee(String id, String name, String department, String unit_id, String password, int role_id,
-			int status) {
+    public Employee(String id, String name, String department, String unit_id, String password, int role_id, int status) {
 		super();
 		this.id = id;
 		this.name = name;

@@ -11,12 +11,11 @@ import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 import controller.auth.Authentication;
-import controller.report.unitmanager.workerunitreport.WUMWorkerUnitReportRow;
 import controller.timekeeping.personal.monthly.day.officer.TimekeepingDayOfficerDetailController;
 import controller.timekeeping.personal.monthly.day.worker.TimekeepingDayWorkerDetailController;
-import dbtimekeeping.gettimekeeping.GetTimekeepingOfficer;
-import dbtimekeeping.gettimekeeping.GetTimekeepingWorker;
 
+import database.TimekeepingOfficerDAO;
+import database.TimekeepingWorkerDAO;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -279,9 +278,9 @@ public class MonthlyTimekeepingController implements Initializable {
     }
     public static void getLogTimkeeping() {
     	if (Authentication.getInstance().getAuthentication() instanceof Worker || Authentication.getInstance().getAuthentication() instanceof WorkerUnitManager) {
-    		arrLTW = GetTimekeepingWorker.getInstance().getTimekeepingsByEmployeeID(Authentication.getInstance().getAuthentication().getId());
+    		arrLTW = TimekeepingWorkerDAO.getInstance().getByEmployeeID(Authentication.getInstance().getAuthentication().getId());
     	}else {
-    		arrLTO = GetTimekeepingOfficer.getInstance().getTimekeepingsByEmployeeID(Authentication.getInstance().getAuthentication().getId());
+    		arrLTO = TimekeepingOfficerDAO.getInstance().getByEmployeeID(Authentication.getInstance().getAuthentication().getId());
     	}
     }   
 	public static void getDataMonth(String month, String year) {
