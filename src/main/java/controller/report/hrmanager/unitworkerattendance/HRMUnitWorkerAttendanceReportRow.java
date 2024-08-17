@@ -4,15 +4,17 @@ public class HRMUnitWorkerAttendanceReportRow {
 	private String name;
 	private String worker_id;
 	private String unit_id;
-    private String month;
     private String total_hour_work;
     private String total_overtime;
+	private int countLateEarly;
+	private int status;
     
-    public HRMUnitWorkerAttendanceReportRow(String name, String worker_id, String unit_id, String month, String total_hour_work, String total_overtime) {
+    public HRMUnitWorkerAttendanceReportRow(String name, String worker_id, String unit_id, int status, String total_hour_work, String total_overtime, int countLateEarly) {
     	this.name = name;
     	this.worker_id = worker_id;
     	this.unit_id = unit_id;
-    	this.month = month;
+		this.status = status;
+    	this.countLateEarly = countLateEarly;
     	this.total_hour_work = total_hour_work;
     	this.total_overtime = total_overtime;
     }
@@ -41,14 +43,6 @@ public class HRMUnitWorkerAttendanceReportRow {
 		this.unit_id = unit_id;
 	}
 
-	public String getMonth() {
-		return month;
-	}
-
-	public void setMonth(String month) {
-		this.month = month;
-	}
-
 	public String getTotal_hour_work() {
 		return total_hour_work;
 	}
@@ -64,17 +58,20 @@ public class HRMUnitWorkerAttendanceReportRow {
 	public void setTotal_overtime(String total_overtime) {
 		this.total_overtime = total_overtime;
 	}
-    
-	@Override
-	public String toString() {
-		return "HRMUnitWorkerAttendanceReportRow{" +
-				"name='" + name + '\'' +
-				", worker_id='" + worker_id + '\'' +
-				", unit_id='" + unit_id + '\'' +
-				", month='" + month + '\'' +
-				", total_hour_work='" + total_hour_work + '\'' +
-				", total_overtime='" + total_overtime + '\'' +
-				'}';
+
+	public int getCountLateEarly() {
+		return countLateEarly;
 	}
 
+	public void setCountLateEarly(int countLateEarly) {
+		this.countLateEarly = countLateEarly;
+	}
+
+	public int getStatus() {
+		return status;
+	}
+
+	public void setStatus(int status) {
+		this.status = status;
+	}
 }

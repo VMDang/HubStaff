@@ -31,15 +31,20 @@ public class Authentication {
 		}else return;
 
 		if (authentication.getRole_id() == Role.Worker.getId()){
-			authentication = new Worker(authentication.getId(), authentication.getName(), authentication.getUnit_id(), authentication.getPassword(),authentication.getStatus());
+			authentication = new Worker(authentication.getId(), authentication.getName(), authentication.getIdentifier(), authentication.getBirthday(), authentication.getAddress(),
+					authentication.getGender(), authentication.getPhone(), authentication.getDepartment(), authentication.getUnit_id(), authentication.getPassword(),authentication.getStatus());
 		}else if(authentication.getRole_id() == Role.Officer.getId()){
-			authentication = new Officer(authentication.getId(), authentication.getName(), authentication.getDepartment(), authentication.getUnit_id(), authentication.getPassword(),authentication.getStatus());
+			authentication = new Officer(authentication.getId(), authentication.getName(), authentication.getIdentifier(), authentication.getBirthday(), authentication.getAddress(),
+					authentication.getGender(), authentication.getPhone(), authentication.getDepartment(), authentication.getUnit_id(), authentication.getPassword(), authentication.getStatus());
 		}else if(authentication.getRole_id() == Role.WorkerUnitManager.getId()){
-			authentication = new WorkerUnitManager(authentication.getId(), authentication.getName(), authentication.getUnit_id(), authentication.getPassword(),authentication.getStatus());
+			authentication = new WorkerUnitManager(authentication.getId(), authentication.getName(), authentication.getIdentifier(), authentication.getBirthday(), authentication.getAddress(),
+					authentication.getGender(), authentication.getPhone(), authentication.getDepartment(), authentication.getUnit_id(), authentication.getPassword(), authentication.getStatus());
 		}else if (authentication.getRole_id() == Role.OfficerUnitManager.getId()){
-			authentication = new OfficerUnitManager(authentication.getId(), authentication.getName(), authentication.getDepartment(), authentication.getUnit_id(), authentication.getPassword(),authentication.getStatus());
+			authentication = new OfficerUnitManager(authentication.getId(), authentication.getName(), authentication.getIdentifier(), authentication.getBirthday(), authentication.getAddress(),
+					authentication.getGender(), authentication.getPhone(), authentication.getDepartment(), authentication.getUnit_id(), authentication.getPassword(),authentication.getStatus());
 		}else if (authentication.getRole_id() == Role.HRManager.getId()){
-			authentication = new HRManager(authentication.getId(), authentication.getName(), authentication.getDepartment(), authentication.getUnit_id(), authentication.getPassword(),authentication.getStatus());
+			authentication = new HRManager(authentication.getId(), authentication.getName(), authentication.getIdentifier(), authentication.getBirthday(), authentication.getAddress(),
+					authentication.getGender(), authentication.getPhone(), authentication.getDepartment(), authentication.getUnit_id(), authentication.getPassword(),authentication.getStatus());
 		}
 	}
 

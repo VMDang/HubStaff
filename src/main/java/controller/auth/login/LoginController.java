@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import model.employee.Employee;
 import controller.auth.Authentication;
 
-import static assets.navigation.FXMLNavigation.*;
+import static config.FXMLNavigation.*;
 
 public class LoginController {
     @FXML
@@ -54,21 +54,18 @@ public class LoginController {
     }
     private void showNewScreen() throws IOException {
         Stage newStage = new Stage();
+        newStage.setTitle("HubStaff");
         
-        // Tải file FXML của màn hình mới
         Parent root = FXMLLoader.load(getClass().getResource(HOME_VIEW));
         
-        // Tạo một Scene với nội dung của màn hình mới
         Scene scene = new Scene(root);
         
-        // Đặt vị trí của màn hình mới là chính giữa màn hình máy tính
         Rectangle2D screenBounds = Screen.getPrimary().getVisualBounds();
         double newX = (screenBounds.getWidth() - newStage.getWidth()) / 2;
         double newY = 50;
         newStage.setX(newX);
         newStage.setY(newY);
         
-        // Đặt Scene cho màn hình mới và hiển thị nó
         newStage.setScene(scene);
         newStage.show();
     }

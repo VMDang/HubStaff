@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane fx:id="basePane" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.timekeeping.officer.monthly.TimekeepingMonthlyOfficerController">
+   <children>
+      <AnchorPane layoutX="46.0" layoutY="-8.0" prefHeight="709.0" prefWidth="1126.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <TableView fx:id="tableTimekeepingMonth" focusTraversable="false" layoutX="16.0" layoutY="148.0" prefHeight="450.0" prefWidth="1094.0" stylesheets="@../../../../assets/style/table.css" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="148.0">
+               <columns>
+                  <TableColumn fx:id="dateCol" editable="false" prefWidth="156.0" text="Ngày" />
+                  <TableColumn fx:id="time_inCol" prefWidth="200.0" text="Bắt đầu" />
+                  <TableColumn fx:id="time_outCol" minWidth="0.0" prefWidth="200.0" text="Kết Thúc " />
+                  <TableColumn fx:id="amount_workCol" editable="false" prefWidth="200.0" text="Ngày công" />
+                  <TableColumn fx:id="overtimeCol" editable="false" prefWidth="200.0" text="Số giờ tăng ca" />
+                  <TableColumn fx:id="statusCol" prefWidth="137.0" text="Trạng thái " />
+               </columns>
+            </TableView>
+            <TableView fx:id="tableSummary" layoutX="33.0" layoutY="576.0" prefHeight="60.0" prefWidth="1094.0" stylesheets="@../../../../assets/style/table.css" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0">
+               <columns>
+                  <TableColumn fx:id="total_day_workCol" prefWidth="273.5" text="Tổng số ngày đi làm " />
+                  <TableColumn fx:id="total_amount_workCol" prefWidth="275.0" text="Tổng số công được tính" />
+                  <TableColumn fx:id="total_overtimeCol" prefWidth="273.0" text="Tổng số giờ tăng ca " />
+                  <TableColumn fx:id="lateEarlyCol" prefWidth="267.800048828125" text="Tổng số giờ đi muộn / về sớm" />
+               </columns>
+            </TableView>
+            <Label layoutX="240.0" layoutY="44.0" text="Mã nhân viên :" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="42.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="user_name" layoutX="88.0" layoutY="42.0" text="user_name" AnchorPane.topAnchor="42.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label text="Thông tin công nhân" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="16.0">
+               <font>
+                  <Font name="System Bold" size="16.0" />
+               </font>
+            </Label>
+            <Label layoutX="16.0" layoutY="110.0" text="Mã đơn vị :" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="90.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="monthLabel" alignment="CENTER" layoutX="497.0" layoutY="110.0" prefHeight="30.0" prefWidth="132.0" style="-fx-background-color: #045FFF; -fx-background-radius: 5;" text="Tháng 5/2024" textFill="WHITE" AnchorPane.leftAnchor="497.0" AnchorPane.rightAnchor="497.0" AnchorPane.topAnchor="110.0">
+               <font>
+                  <Font size="18.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="chooseMonth" layoutX="761.0" layoutY="38.0" prefHeight="30.0" prefWidth="60.0" AnchorPane.topAnchor="32.0" />
+            <Label layoutX="707.0" layoutY="37.0" text="Tháng :  " AnchorPane.topAnchor="37.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="16.0" layoutY="72.0" text="Bộ phận :" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="66.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <ChoiceBox fx:id="chooseYear" layoutX="900.0" layoutY="32.0" prefHeight="30.0" prefWidth="74.0" />
+            <Label layoutX="852.0" layoutY="37.0" text="Năm :">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="185.0" layoutY="76.0" text="Chức vụ :" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="66.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="searchBtn" contentDisplay="RIGHT" defaultButton="true" mnemonicParsing="false" onAction="#searchTable" prefHeight="30.0" prefWidth="102.0" text="Tìm kiếm" textFill="#0400ff" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="32.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../assets/img/search.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+            <Label layoutX="19.0" layoutY="42.0" text="Họ và tên :" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="42.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="26.0" layoutY="120.0" text="Đơn vị :" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="90.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="department" layoutX="88.0" layoutY="66.0" text="department" AnchorPane.topAnchor="66.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="unit_id" layoutX="95.0" layoutY="90.0" text="unit_id">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="employeeID" layoutX="348.0" layoutY="42.0" text="employeeID" AnchorPane.topAnchor="42.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="role" layoutX="314.0" layoutY="66.0" text="role" AnchorPane.topAnchor="66.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label fx:id="unit_name" layoutX="305.0" layoutY="90.0" text="unit_name">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Label>
+            <Label layoutX="497.0" layoutY="601.0" prefHeight="27.0" prefWidth="132.0" text="Tổng kết tháng" AnchorPane.bottomAnchor="80.0" AnchorPane.leftAnchor="497.0" AnchorPane.rightAnchor="497.0">
+               <font>
+                  <Font name="System Bold" size="18.0" />
+               </font>
+            </Label>
+            <Button fx:id="reloadPageBtn" contentDisplay="RIGHT" layoutX="1008.0" layoutY="72.0" mnemonicParsing="false" onAction="#reloadPage" prefHeight="30.0" prefWidth="102.0" text="Làm mới" textFill="RED" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="72.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+               <graphic>
+                  <ImageView fitHeight="16.0" fitWidth="16.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../../assets/img/reset.png" />
+                     </image>
+                  </ImageView>
+               </graphic>
+            </Button>
+         </children>
+      </AnchorPane>
+   </children>
+</AnchorPane>

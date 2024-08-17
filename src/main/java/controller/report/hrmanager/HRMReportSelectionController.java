@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import static assets.navigation.FXMLNavigation.*;
+import static config.FXMLNavigation.*;
 
 import java.io.IOException;
 

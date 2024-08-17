@@ -1,5 +1,6 @@
 package controller.report.unitmanager.workerunitreport;
 
+import config.FXMLNavigation;
 import controller.auth.Authentication;
 import controller.layouts.LayoutController;
 import database.EmployeeDAO;
@@ -26,8 +27,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.ResourceBundle;
-
-import static assets.navigation.FXMLNavigation.TIMEKEEPING_MONTHLY_VIEW;
 
 public class WUMWorkerUnitReportController implements Initializable {
     private ObservableList<WUMWorkerUnitReportRow> listRecord = FXCollections.observableArrayList();
@@ -181,10 +180,12 @@ public class WUMWorkerUnitReportController implements Initializable {
 
         for (Employee e: allEmployees) {
             if ((e.getRole_id() == 3 ||e.getRole_id() == 1) && (e.getUnit_id().equals(unit_id))) {
-                allWorker.add(new Worker(e.getId(), e.getName(), e.getUnit_id(), e.getPassword(),e.getStatus()));
+                allWorker.add(new Worker(e.getId(), e.getName(), e.getIdentifier(), e.getBirthday(), e.getAddress(), e.getGender(), e.getPhone(),
+                        e.getDepartment(), e.getUnit_id(), e.getPassword(), e.getStatus()));
 
                 if (e.getStatus() == 1){
-                    currentWorkers.put( e.getId(), new Worker(e.getId(), e.getName(), e.getUnit_id(), e.getPassword(),e.getStatus()));
+                    currentWorkers.put( e.getId(), new Worker(e.getId(), e.getName(), e.getIdentifier(), e.getBirthday(), e.getAddress(), e.getGender(), e.getPhone(),
+                            e.getDepartment(), e.getUnit_id(), e.getPassword(),e.getStatus()));
                 }
             }
 
@@ -220,7 +221,7 @@ public class WUMWorkerUnitReportController implements Initializable {
                 if(selectedItem != null && selectedItem.getWorkerID().equals(Authentication.getInstance().getAuthentication().getId())){
                     LayoutController layout = new LayoutController();
                     try {
-                        layout.changeAnchorPane(basePane, TIMEKEEPING_MONTHLY_VIEW);
+                        layout.changeAnchorPane(basePane, FXMLNavigation.TIMEKEEPING_MONTHLY_WORKER_VIEW);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }

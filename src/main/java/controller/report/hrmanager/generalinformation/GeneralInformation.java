@@ -20,14 +20,6 @@ public abstract class GeneralInformation {
 		}
 		return listEmployeesUnit;
 	}
-
-	public static Set<String> getListUnit(){
-		Set<String> listUnit = new HashSet<>();
-		for (Employee employee : employees) {
-			listUnit.add(employee.getUnit_id());
-		}
-		return listUnit;
-	}
 	
 	public static int countNumberDepartment() {
 		int count = 0;

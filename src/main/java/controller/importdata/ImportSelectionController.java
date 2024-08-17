@@ -1,6 +1,6 @@
 package controller.importdata;
 
-import static assets.navigation.FXMLNavigation.*;
+import static config.FXMLNavigation.*;
 
 import java.io.IOException;
 
