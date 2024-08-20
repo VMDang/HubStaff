@@ -10,24 +10,24 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="basePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="709.0" prefWidth="1126.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.report.hrmanager.unitworkerattendance.HRMUnitWorkerAttendanceReportController">
+<AnchorPane fx:id="basePane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="709.0" prefWidth="1126.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.report.hrmanager.officerunit.HRMUnitOfficerReportController">
     <children>
         <AnchorPane prefHeight="200.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
-                <Label layoutX="28.0" layoutY="21.0" text="Thông tin đơn vị công nhân" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="16.0">
+                <Label layoutX="28.0" layoutY="21.0" text="Thông tin đơn vị văn phòng" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="16.0">
                     <font>
                         <Font name="System Bold" size="16.0" />
                     </font>
                 </Label>
-                <Label layoutX="28.0" layoutY="50.0" text="Mã đơn vị:" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="42.0">
+                <Label layoutX="28.0" layoutY="50.0" text="Mã đơn vị :" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="42.0">
                <font>
                   <Font size="14.0" />
                </font></Label>
-                <Label layoutX="28.0" layoutY="76.0" text="Trưởng đơn vị:" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="66.0">
+                <Label layoutX="28.0" layoutY="76.0" text="Trưởng phòng :" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="66.0">
                <font>
                   <Font size="14.0" />
                </font></Label>
-                <Label layoutX="245.0" layoutY="50.0" text="Bộ phận:" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="42.0">
+                <Label layoutX="245.0" layoutY="50.0" text="Bộ phận :" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="42.0">
                <font>
                   <Font size="14.0" />
                </font></Label>
@@ -43,11 +43,11 @@
                 <TableView fx:id="tableReport" layoutX="31.0" layoutY="136.0" prefHeight="549.0" prefWidth="1094.0" stylesheets="@../../../../assets/style/table.css" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="136.0">
                     <columns>
                         <TableColumn fx:id="index" editable="false" prefWidth="61.0" text="STT" />
-                        <TableColumn fx:id="worker_idCol" prefWidth="141.0" text="Mã NV" />
+                        <TableColumn fx:id="officer_idCol" prefWidth="141.0" text="Mã NV" />
                         <TableColumn fx:id="nameCol" prefWidth="228.0" text="Họ và tên" />
-                        <TableColumn fx:id="total_hour_workCol" prefWidth="217.0" text="Tổng số giờ làm việc" />
+                        <TableColumn fx:id="total_day_workCol" prefWidth="217.0" text="Tổng số công trong tháng" />
                         <TableColumn fx:id="total_overtime_workCol" prefWidth="217.0" text="Tổng số giờ tăng ca" />
-                        <TableColumn fx:id="lateEarlyCol" prefWidth="223.4000244140625" text="Tổng số lần đi muộn / Về sớm" />
+                        <TableColumn fx:id="lateEarlyCol" prefWidth="223.4000244140625" text="Tổng số giờ đi muộn / Về sớm" />
                     </columns>
                 </TableView>
                 <Label layoutX="878.0" layoutY="77.0" text="Năm :" AnchorPane.topAnchor="77.0">
@@ -55,20 +55,20 @@
                   <Font size="14.0" />
                </font></Label>
                 <ChoiceBox fx:id="chooseYear" layoutX="923.0" layoutY="76.0" prefHeight="30.0" prefWidth="74.0" AnchorPane.rightAnchor="134.0" AnchorPane.topAnchor="72.0" />
-                <Label fx:id="unit_idText" layoutX="89.0" layoutY="43.0" text="ID Unit" AnchorPane.topAnchor="42.0">
+                <Label fx:id="unit_idText" layoutX="92.0" layoutY="42.0" text="ID Unit" AnchorPane.topAnchor="42.0">
                <font>
                   <Font size="14.0" />
                </font></Label>
-                <Label fx:id="unit_manager" layoutX="114.0" layoutY="67.0" text="UnitManager" AnchorPane.topAnchor="67.0">
+                <Label fx:id="unit_manager" layoutX="119.0" layoutY="67.0" text="UnitManager" AnchorPane.topAnchor="67.0">
                <font>
                   <Font size="14.0" />
                </font></Label>
-                <Button fx:id="export_excel" layoutX="16.0" layoutY="102.0" mnemonicParsing="false" onAction="#export_excel" text="Xuất báo cáo" textFill="#0400ff" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="94.0">
+                <Button layoutX="16.0" layoutY="102.0" mnemonicParsing="false" onAction="#exportExcel" text="Xuất báo cáo" textFill="#0400ff" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="94.0">
                <font>
                   <Font size="14.0" />
                </font></Button>
                 <ChoiceBox fx:id="unitNameBox" layoutX="842.0" layoutY="32.0" prefHeight="30.0" prefWidth="163.0" AnchorPane.rightAnchor="134.0" AnchorPane.topAnchor="32.0" />
-                <Label layoutX="245.0" layoutY="76.0" text="Số lượng công nhân:" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="66.0">
+                <Label layoutX="245.0" layoutY="76.0" text="Số lượng nhân viên :" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="66.0">
                <font>
                   <Font size="14.0" />
                </font></Label>
@@ -76,7 +76,7 @@
                <font>
                   <Font size="14.0" />
                </font></Label>
-                <Button fx:id="searchBtn" contentDisplay="RIGHT" defaultButton="true" layoutX="1007.0" layoutY="69.0" mnemonicParsing="false" onAction="#search" prefHeight="30.0" prefWidth="102.0" text="Tìm kiếm" textFill="#0400ff" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="32.0">
+                <Button contentDisplay="RIGHT" defaultButton="true" layoutX="1007.0" layoutY="69.0" mnemonicParsing="false" onAction="#search" prefHeight="30.0" prefWidth="102.0" text="Tìm kiếm" textFill="#0400ff" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="32.0">
                     <font>
                         <Font size="14.0" />
                     </font>
@@ -88,7 +88,7 @@
                         </ImageView>
                     </graphic>
                 </Button>
-                <Label fx:id="department" layoutX="312.0" layoutY="42.0" text="department" AnchorPane.topAnchor="42.0">
+                <Label fx:id="department" layoutX="316.0" layoutY="42.0" text="department" AnchorPane.topAnchor="42.0">
                <font>
                   <Font size="14.0" />
                </font></Label>
@@ -99,7 +99,7 @@
             </Label>
             </children>
         </AnchorPane>
-      <Button fx:id="reloadPageBtn" contentDisplay="RIGHT" layoutX="1018.0" layoutY="82.0" mnemonicParsing="false" onAction="#reloadPage" prefHeight="30.0" prefWidth="102.0" text="Làm mới" textFill="RED" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="72.0">
+      <Button contentDisplay="RIGHT" layoutX="1018.0" layoutY="82.0" mnemonicParsing="false" onAction="#reloadPage" prefHeight="30.0" prefWidth="102.0" text="Làm mới" textFill="RED" AnchorPane.rightAnchor="16.0" AnchorPane.topAnchor="72.0">
          <font>
             <Font size="14.0" />
          </font>

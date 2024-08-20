@@ -1,6 +1,6 @@
-package controller.report.hrmanager.unitworkerattendance;
+package controller.report.hrmanager.workerunit;
 
-public class HRMUnitWorkerAttendanceReportRow {
+public class HRMUnitWorkerReportRow {
 	private String name;
 	private String worker_id;
 	private String unit_id;
@@ -9,7 +9,7 @@ public class HRMUnitWorkerAttendanceReportRow {
 	private int countLateEarly;
 	private int status;
     
-    public HRMUnitWorkerAttendanceReportRow(String name, String worker_id, String unit_id, int status, String total_hour_work, String total_overtime, int countLateEarly) {
+    public HRMUnitWorkerReportRow(String name, String worker_id, String unit_id, int status, String total_hour_work, String total_overtime, int countLateEarly) {
     	this.name = name;
     	this.worker_id = worker_id;
     	this.unit_id = unit_id;

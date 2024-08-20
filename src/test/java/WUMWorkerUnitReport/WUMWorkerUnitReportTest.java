@@ -1,6 +1,6 @@
 package WUMWorkerUnitReport;
 
-import controller.report.unitmanager.workerunitreport.WUMWorkerUnitReportController;
+import controller.report.workerunitmanager.WUMWorkerUnitReportController;
 import junit.framework.TestCase;
 import model.logtimekeeping.LogTimekeepingWorker;
 import org.junit.Assert;
