@@ -5,7 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import static assets.navigation.FXMLNavigation.*;
+import static config.FXMLNavigation.*;
 
 import java.io.IOException;
 
@@ -26,12 +26,12 @@ public class HRMReportSelectionController {
 
     @FXML
     void switchToReportUnitWorker(MouseEvent event) throws IOException {
-    	layout.changeAnchorPane(basePane, HRM_UNIT_WORKER_ATTENDANCE_VIEW);
+    	layout.changeAnchorPane(basePane, HRM_UNIT_WORKER_VIEW);
     }
 
     @FXML
-    void switchToReportUnitOfficer(MouseEvent event) {
-
+    void switchToReportUnitOfficer(MouseEvent event) throws IOException {
+        layout.changeAnchorPane(basePane, HRM_UNIT_OFFICER_VIEW);
     }
 
     @FXML

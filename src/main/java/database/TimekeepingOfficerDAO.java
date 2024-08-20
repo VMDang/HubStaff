@@ -31,8 +31,9 @@ public class TimekeepingOfficerDAO implements DAOPattern<LogTimekeepingOfficer>{
                 boolean afternoon = rs.getBoolean("afternoon");
                 Float hour_late = (float) rs.getDouble("hour_late");
                 Float hour_early = (float) rs.getDouble("hour_early");
+                Float overtime = (float) rs.getDouble("overtime");
 
-                log = new LogTimekeepingOfficer(logID, employee_id, date, time_in, time_out, morning, afternoon, hour_late, hour_early);
+                log = new LogTimekeepingOfficer(logID, employee_id, date, time_in, time_out, morning, afternoon, hour_late, hour_early, overtime);
             }
 
             JDBCUtil.closeConnection(con);
@@ -56,17 +57,18 @@ public class TimekeepingOfficerDAO implements DAOPattern<LogTimekeepingOfficer>{
 
             while(rs.next()) {
 
-                String logID = rs.getString("ID");
-                String employee_id=rs.getString("EmployeeID");
-                Date date = rs.getDate("Date");
-                Time time_in = rs.getTime("TimeIn");
-                Time time_out =rs.getTime("TimeOut");
-                boolean morning = rs.getBoolean("Morning");
-                boolean afternoon = rs.getBoolean("Afternoon");
-                Float hour_late = (float) rs.getDouble("HourLate");
-                Float hour_early = (float) rs.getDouble("HourEarly");
+                String logID = rs.getString("id");
+                String employee_id=rs.getString("employee_id");
+                Date date = rs.getDate("date");
+                Time time_in = rs.getTime("time_in");
+                Time time_out =rs.getTime("time_out");
+                boolean morning = rs.getBoolean("morning");
+                boolean afternoon = rs.getBoolean("afternoon");
+                Float hour_late = (float) rs.getDouble("hour_late");
+                Float hour_early = (float) rs.getDouble("hour_early");
+                Float overtime = (float) rs.getDouble("overtime");
 
-                LogTimekeepingOfficer log = new LogTimekeepingOfficer(logID, employee_id, date, time_in, time_out, morning, afternoon, hour_late, hour_early);
+                LogTimekeepingOfficer log = new LogTimekeepingOfficer(logID, employee_id, date, time_in, time_out, morning, afternoon, hour_late, hour_early, overtime);
                 logTimekeepingOfficers.add(log);
             }
 
@@ -101,8 +103,9 @@ public class TimekeepingOfficerDAO implements DAOPattern<LogTimekeepingOfficer>{
                 boolean afternoon = rs.getBoolean("afternoon");
                 Float hour_late = (float) rs.getDouble("hour_late");
                 Float hour_early = (float) rs.getDouble("hour_early");
+                Float overtime = (float) rs.getDouble("overtime");
 
-                LogTimekeepingOfficer log = new LogTimekeepingOfficer(logID, employee_id, date, time_in, time_out, morning, afternoon, hour_late, hour_early);
+                LogTimekeepingOfficer log = new LogTimekeepingOfficer(logID, employee_id, date, time_in, time_out, morning, afternoon, hour_late, hour_early, overtime);
                 allLogTimekeepingOfficers.add(log);
             }
 
@@ -118,7 +121,7 @@ public class TimekeepingOfficerDAO implements DAOPattern<LogTimekeepingOfficer>{
         try {
             Connection con = JDBCUtil.getConnection();
             String sql = "INSERT INTO logtimekeepingofficer\r\n"
-                    + "VALUES ( ?, ?, ?, ?, ?, ?, ? , ? ,?)";
+                    + "VALUES ( ?, ?, ?, ?, ?, ?, ? , ?, ? ,?)";
 
             PreparedStatement st = con.prepareStatement(sql);
 
@@ -129,8 +132,9 @@ public class TimekeepingOfficerDAO implements DAOPattern<LogTimekeepingOfficer>{
             st.setTime(5,t.getTime_out());
             st.setBoolean(6, t.isMorning());
             st.setBoolean(7, t.isAfternoon());
-            st.setDouble(8, t.getHour_late());
-            st.setDouble(9, t.getHour_early());
+            st.setDouble(8, t.getOvertime());
+            st.setDouble(9, t.getHour_late());
+            st.setDouble(10, t.getHour_early());
 
             st.executeUpdate();
             JDBCUtil.closeConnection(con);

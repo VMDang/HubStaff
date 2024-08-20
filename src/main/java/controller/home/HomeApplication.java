@@ -7,7 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import static assets.navigation.FXMLNavigation.*;
+import static config.FXMLNavigation.*;
 
 public class HomeApplication extends Application {
 

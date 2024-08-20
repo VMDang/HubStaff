@@ -5,6 +5,9 @@ public class Unit {
     private String name;
     private String location;
 
+    public Unit() {
+    }
+
     public Unit(String id, String name, String location) {
         this.id = id;
         this.name = name;

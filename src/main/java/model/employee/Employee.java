@@ -1,8 +1,15 @@
 package model.employee;
 
+import java.sql.Date;
+
 public class Employee {
     protected String id;
     protected String name;
+	protected String identifier;
+	protected Date birthday;
+	protected String address;
+	protected String gender;
+	protected String phone;
     protected String department;
     protected String unit_id;
     protected String password;
@@ -13,10 +20,17 @@ public class Employee {
     public Employee() {
     	
     }
-    public Employee(String id, String name, String department, String unit_id, String password, int role_id, int status) {
+
+    public Employee(String id, String name, String identifier, Date birthday, String address, String gender, String phone,
+					String department, String unit_id, String password, int role_id, int status) {
 		super();
 		this.id = id;
 		this.name = name;
+		this.identifier = identifier;
+		this.birthday = birthday;
+		this.address = address;
+		this.gender = gender;
+		this.phone = phone;
 		this.department = department;
 		this.unit_id = unit_id;
 		this.password = password;
@@ -24,16 +38,15 @@ public class Employee {
 		this.status = status;
 	}
 
-	public Employee(String id, String name, String unit_id, String password, int status) {
+	public Employee(String id, String name, String identifier, Date birthday, String address, String gender, String phone,
+					String department, String unit_id, String password, int status) {
 		this.id = id;
 		this.name = name;
-		this.unit_id = unit_id;
-		this.password = password;
-		this.status = status;
-	}
-	public Employee(String id, String name, String department, String unit_id, String password, int status) {
-		this.id = id;
-		this.name = name;
+		this.identifier = identifier;
+		this.birthday = birthday;
+		this.address = address;
+		this.gender = gender;
+		this.phone = phone;
 		this.department = department;
 		this.unit_id = unit_id;
 		this.password = password;
@@ -85,11 +98,56 @@ public class Employee {
 		this.status = status;
 	}
 
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
+
+	public Date getBirthday() {
+		return birthday;
+	}
+
+	public void setBirthday(Date birthday) {
+		this.birthday = birthday;
+	}
+
+	public String getAddress() {
+		return address;
+	}
+
+	public void setAddress(String address) {
+		this.address = address;
+	}
+
+	public String getGender() {
+		return gender;
+	}
+
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
 	@Override
 	public String toString() {
 		return "Employee{" +
 				"id='" + id + '\'' +
 				", name='" + name + '\'' +
+				", identifier='" + identifier + '\'' +
+				", birthday=" + birthday +
+				", address='" + address + '\'' +
+				", gender='" + gender + '\'' +
+				", phone='" + phone + '\'' +
 				", department='" + department + '\'' +
 				", unit_id='" + unit_id + '\'' +
 				", password='" + password + '\'' +

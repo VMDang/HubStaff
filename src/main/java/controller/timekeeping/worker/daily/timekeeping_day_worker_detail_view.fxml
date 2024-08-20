@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="223.0" prefWidth="512.0" xmlns="http://javafx.com/javafx/20.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.timekeeping.worker.daily.TimekeepingDayWorkerDetailController">
+    <children>
+        <Label layoutX="18.0" layoutY="29.0" text="Thông tin công nhân" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="16.0">
+            <font>
+                <Font name="System Bold" size="16.0" />
+            </font>
+        </Label>
+        <Label layoutX="16.0" layoutY="108.0" text="Chi tiết chấm công " AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="108.0">
+            <font>
+                <Font name="System Bold" size="16.0" />
+            </font>
+        </Label>
+        <Label fx:id="dateLabel" alignment="CENTER" layoutX="204.0" layoutY="109.0" prefHeight="26.0" prefWidth="94.0" style="-fx-background-color: #045FFF; -fx-background-radius: 5;" text="12-06-2023" textFill="WHITE" AnchorPane.topAnchor="109.0">
+            <font>
+                <Font size="16.0" />
+            </font>
+        </Label>
+        <TableView fx:id="tableDetail" layoutX="16.0" layoutY="146.0" prefHeight="56.0" prefWidth="478.0" stylesheets="@../../../../assets/style/table.css" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0">
+            <columns>
+                <TableColumn fx:id="time_inCol" prefWidth="120.0" text="Giờ vào " />
+                <TableColumn fx:id="time_outCol" prefWidth="120.0" text="Giờ ra " />
+                <TableColumn fx:id="shift1Col" prefWidth="79.0" text="Shift 1" />
+                <TableColumn fx:id="shift2Col" prefWidth="79.0" text="Shift 2" />
+                <TableColumn fx:id="shift3Col" prefWidth="79.0" text="Shift 3" />
+            </columns>
+        </TableView>
+      <Label layoutX="250.0" layoutY="45.0" text="Mã nhân viên :" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="45.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="user_name" layoutX="92.0" layoutY="45.0" text="user_name" AnchorPane.topAnchor="45.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="250.0" layoutY="69.0" text="Mã đơn vị :" AnchorPane.leftAnchor="250.0" AnchorPane.topAnchor="69.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="16.0" layoutY="69.0" text="Bộ phận :" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="69.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="16.0" layoutY="45.0" text="Họ và tên :" AnchorPane.leftAnchor="16.0" AnchorPane.topAnchor="45.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="department" layoutX="83.0" layoutY="69.0" text="department" AnchorPane.topAnchor="69.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="unit_id" layoutX="327.0" layoutY="69.0" text="unit_id" AnchorPane.topAnchor="69.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+      <Label fx:id="employeeID" layoutX="348.0" layoutY="45.0" text="employeeID" AnchorPane.topAnchor="45.0">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </Label>
+    </children>
+</AnchorPane>

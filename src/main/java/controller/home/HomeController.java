@@ -6,11 +6,10 @@ import java.util.ResourceBundle;
 
 import controller.auth.Authentication;
 import controller.layouts.LayoutController;
-import static assets.navigation.FXMLNavigation.*;
+import static config.FXMLNavigation.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.geometry.Rectangle2D;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
@@ -19,14 +18,16 @@ import javafx.scene.image.ImageView;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
-import javafx.stage.Screen;
 import javafx.stage.Stage;
+import model.employee.Employee;
 import model.employee.HRManager;
 import model.employee.officer.OfficerUnitManager;
+import model.employee.worker.Worker;
 import model.employee.worker.WorkerUnitManager;
 
 public class HomeController implements Initializable {
     private final LayoutController layout = new LayoutController();
+    private final Employee authentication = Authentication.getInstance().getAuthentication();
     
     @FXML
     private Label title;
@@ -45,6 +46,9 @@ public class HomeController implements Initializable {
 
     @FXML
     private Pane reportBtn;
+
+    @FXML
+    private Pane employeeManageBtn;
     
     @FXML
     private Pane generalInfoBtn;
@@ -63,37 +67,45 @@ public class HomeController implements Initializable {
     
     @FXML
     private AnchorPane drawerPane;
-    
 
     @FXML
     void switchToDashboard(MouseEvent event) throws IOException {
-        highlightSidebar(dashboardBtn);
-        setTextTitle("Home page");
-        layout.changeAnchorPane(basePane, DASHBOARD_VIEW);
+//        highlightSidebar(dashboardBtn);
+//        setTextTitle("Home page");
+//        layout.changeAnchorPane(basePane, DASHBOARD_VIEW);
     }
 
     @FXML
     void switchToProfile(MouseEvent event) throws IOException {
         highlightSidebar(profileBtn);
         setTextTitle("Thông tin cá nhân");
-//        layout.changeAnchorPane(basePane, TIMEKEEPING_SELECTION_VIEW);
+        layout.changeAnchorPane(basePane, SHOW_EMPLOYEE_VIEW);
     }
     @FXML
     void switchToTimekeeping(MouseEvent event) throws IOException {
         highlightSidebar(timekeepingBtn);
-        setTextTitle("Chấm công");
-    	layout.changeAnchorPane(basePane, TIMEKEEPING_SELECTION_VIEW);
+        setTextTitle("Chấm công cá nhân");
+        if (authentication instanceof Worker || authentication instanceof WorkerUnitManager) {
+            layout.changeAnchorPane(basePane, TIMEKEEPING_MONTHLY_WORKER_VIEW);
+        } else {
+            layout.changeAnchorPane(basePane, TIMEKEEPING_MONTHLY_OFFICER_VIEW);
+        }
     }
 
     @FXML
     void switchToReport(MouseEvent event) throws IOException {
         highlightSidebar(reportBtn);
-        setTextTitle("Báo cáo");
-        if (Authentication.getInstance().getAuthentication() instanceof HRManager){
+        setTextTitle("Báo cáo chấm công");
+        if (authentication instanceof HRManager){
             layout.changeAnchorPane(basePane, HRM_REPORT_SELECTION_VIEW);
         }
-        if (Authentication.getInstance().getAuthentication() instanceof WorkerUnitManager){
-            layout.changeAnchorPane(basePane, WUM_REPORT_SELECTION_VIEW);
+
+        if (authentication instanceof WorkerUnitManager){
+            layout.changeAnchorPane(basePane, WUM_WORKER_UNIT_REPORT_VIEW);
+        }
+
+        if (authentication instanceof OfficerUnitManager){
+            layout.changeAnchorPane(basePane, OUM_OFFICER_UNIT_REPORT_VIEW);
         }
 
     }
@@ -101,9 +113,18 @@ public class HomeController implements Initializable {
     @FXML
     void switchToImport(MouseEvent event) throws IOException {
         highlightSidebar(importBtn);
-        setTextTitle("Import");
-        if (Authentication.getInstance().getAuthentication() instanceof  HRManager){
+        setTextTitle("Nhập dữ liệu chấm công");
+        if (authentication instanceof  HRManager){
             layout.changeAnchorPane(basePane, IMPORT_SELECTION_VIEW);
+        }
+    }
+
+    @FXML
+    void switchToEmployeeManage(MouseEvent event) throws IOException {
+        highlightSidebar(employeeManageBtn);
+        setTextTitle("Quản lý nhân viên");
+        if (authentication instanceof HRManager){
+            layout.changeAnchorPane(basePane, LIST_EMPLOYEE_VIEW);
         }
     }
     
@@ -114,20 +135,17 @@ public class HomeController implements Initializable {
     	currentStage.close();
     	
     	Stage newStage = new Stage();
+        newStage.setTitle("HubStaff Login");
         
-        // Tải file FXML của màn hình mới
         Parent root = FXMLLoader.load(getClass().getResource(LOGIN_VIEW));
         
-        // Tạo một Scene với nội dung của màn hình mới
         Scene scene = new Scene(root);
         
-        // Đặt vị trí của màn hình mới là chính giữa màn hình máy tính
         double newX = 450 ;
         double newY = 200;
         newStage.setX(newX);
         newStage.setY(newY);
         
-        // Đặt Scene cho màn hình mới và hiển thị nó
         newStage.setScene(scene);
         newStage.show();
     }
@@ -135,22 +153,20 @@ public class HomeController implements Initializable {
     @Override
     public void initialize(URL location, ResourceBundle resources) {
     	try {
-			switchToDashboard(null);
+			switchToProfile(null);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
       
-        if(!(Authentication.getInstance().getAuthentication() instanceof  HRManager)) {
+        if(!(authentication instanceof  HRManager)) {
             importBtn.setVisible(false);
+            employeeManageBtn.setVisible(false);
         }
 
-        if (!(Authentication.getInstance().getAuthentication() instanceof HRManager ||
-                Authentication.getInstance().getAuthentication() instanceof WorkerUnitManager ||
-                Authentication.getInstance().getAuthentication() instanceof OfficerUnitManager)){
+        if (!(authentication instanceof HRManager || authentication instanceof WorkerUnitManager || authentication instanceof OfficerUnitManager)){
             reportBtn.setVisible(false);
         }
-        usernameLabel.setText(Authentication.getInstance().getAuthentication().getName());
+        usernameLabel.setText(authentication.getName());
         
     }
 
@@ -160,12 +176,11 @@ public class HomeController implements Initializable {
         timekeepingBtn.setStyle("-fx-background-color: #0A4969");
         reportBtn.setStyle("-fx-background-color: #0A4969");
         importBtn.setStyle("-fx-background-color: #0A4969");
+        employeeManageBtn.setStyle("-fx-background-color: #0A4969");
         btn.setStyle("-fx-background-color: #054df6");
     }
     
     public void setTextTitle(String t) {
     	title.setText(t);
     }
-    
-    
 }

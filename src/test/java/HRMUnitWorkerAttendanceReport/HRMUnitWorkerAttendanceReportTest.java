@@ -4,7 +4,7 @@ import junit.framework.TestCase;
 import org.junit.Test;
 import org.junit.Assert;
 
-import controller.report.hrmanager.unitworkerattendance.HRMUnitWorkerAttendanceReportController;
+import controller.report.hrmanager.workerunit.HRMUnitWorkerReportController;
 import model.employee.worker.Worker;
 
 import java.util.ArrayList;
@@ -13,7 +13,7 @@ public class HRMUnitWorkerAttendanceReportTest extends TestCase{
 	
 	@Test
 	public void testgetAllWorkerUnit_NotExistUnitID_BlackBox() {
-		HRMUnitWorkerAttendanceReportController controller = new HRMUnitWorkerAttendanceReportController();
+		HRMUnitWorkerReportController controller = new HRMUnitWorkerReportController();
 		
 		String unit_id = null;
 		
@@ -25,7 +25,7 @@ public class HRMUnitWorkerAttendanceReportTest extends TestCase{
 	
 	@Test
 	public void testgetAllWorkerUnit_ExistUnitID_BlackBox() {
-		HRMUnitWorkerAttendanceReportController controller = new HRMUnitWorkerAttendanceReportController();
+		HRMUnitWorkerReportController controller = new HRMUnitWorkerReportController();
 		
 		String unit_id = "un1";
 		
@@ -37,7 +37,7 @@ public class HRMUnitWorkerAttendanceReportTest extends TestCase{
 	
 	@Test
 	public void testgetAllWorkerUnit_NotExistUnitID_WhiteBox() {
-		HRMUnitWorkerAttendanceReportController controller = new HRMUnitWorkerAttendanceReportController();
+		HRMUnitWorkerReportController controller = new HRMUnitWorkerReportController();
 		
 		String unit_id = "unw01";
 		
@@ -53,7 +53,7 @@ public class HRMUnitWorkerAttendanceReportTest extends TestCase{
         String unitId = "un1";
 
         // Tạo đối tượng controller
-        HRMUnitWorkerAttendanceReportController controller = new HRMUnitWorkerAttendanceReportController();
+        HRMUnitWorkerReportController controller = new HRMUnitWorkerReportController();
 
         // Gọi phương thức getAllWorkerUnit() với unitId cụ thể
         ArrayList<Worker> result = controller.getAllWorkerUnit(unitId);

@@ -6,18 +6,20 @@ import java.sql.Date;
 public class LogTimekeepingOfficer extends LogTimekeeping{
     private boolean morning;
     private boolean afternoon;
+	private float overtime;
     private float hour_late;
     private float hour_early;
     
 	public LogTimekeepingOfficer() {}
 	
 	public LogTimekeepingOfficer(String logID, String employee_id, Date date, Time time_in, Time time_out,
-			boolean morning, boolean afternoon, float hour_late, float hour_early) {
+			boolean morning, boolean afternoon, float hour_late, float hour_early, float overtime) {
 		super(logID, employee_id, date, time_in, time_out);
 		this.morning = morning;
 		this.afternoon = afternoon;
 		this.hour_late = hour_late;
 		this.hour_early = hour_early;
+		this.overtime = overtime;
 	}
 	public LogTimekeepingOfficer(String logID, String employee_id, Date date, Time time_in, Time time_out,
 			boolean morning, boolean afternoon) {
@@ -52,4 +54,11 @@ public class LogTimekeepingOfficer extends LogTimekeeping{
 		this.hour_early = hour_early;
 	}
 
+	public float getOvertime() {
+		return overtime;
+	}
+
+	public void setOvertime(float overtime) {
+		this.overtime = overtime;
+	}
 }

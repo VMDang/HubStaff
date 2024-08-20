@@ -1,9 +1,11 @@
 package controller.report.hrmanager.generalinformation;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import database.UnitDAO;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -14,6 +16,7 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
+import model.employee.Unit;
 
 public class HRMGeneralInformationReportController implements Initializable {
 
@@ -132,8 +135,6 @@ public class HRMGeneralInformationReportController implements Initializable {
     String[] listMonth = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
     String[] listQuarter = {"01", "02", "03", "04"};
     String[] listYear = {"2023", "2022", "2021", "2020"};
-    Set<String> listUnit = GeneralInformation.getListUnit();
-    
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		monthBox.getItems().addAll(listMonth);
@@ -146,6 +147,12 @@ public class HRMGeneralInformationReportController implements Initializable {
 		monthYearBox.setValue("2023");
 		quarterYearBox.getItems().addAll(listYear);
 		quarterYearBox.setValue("2023");
+
+		ArrayList<String> listUnit = new ArrayList<>();
+		ArrayList<Unit> units = UnitDAO.getInstance().getAll();
+		for (Unit unit : units) {
+			listUnit.add(unit.getId());
+		}
 		unitNameBox.getItems().addAll(listUnit);
 		unitNameBox.setValue(listUnit.iterator().next());
 		
