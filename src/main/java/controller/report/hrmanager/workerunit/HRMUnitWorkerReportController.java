@@ -206,23 +206,25 @@ public class HRMUnitWorkerReportController implements Initializable{
 
 	@FXML
 	void exportExcel(ActionEvent event) throws IOException {
+		if (listRecord.isEmpty()) {
+			notifyExportReport("Không có dữ liệu để xuất file", Alert.AlertType.ERROR);
+			return;
+		}
+
 	    DirectoryChooser directoryChooser = new DirectoryChooser();
-	    directoryChooser.setTitle("Choose Directory to Save Attendance Report");
+	    directoryChooser.setTitle("Chọn thư mục lưu file");
 
 	    File selectedDirectory = directoryChooser.showDialog(basePane.getScene().getWindow());
 	    if (selectedDirectory != null) {
 	        String directoryPath = selectedDirectory.getAbsolutePath();
 
 	        Workbook workbook = new XSSFWorkbook();
-	        Sheet sheet = workbook.createSheet("Attendance Report");
+	        Sheet sheet = workbook.createSheet("Báo cáo chấm công");
 
 	        Row headerRow = sheet.createRow(0);
-	        headerRow.createCell(0).setCellValue("STT");
-	        headerRow.createCell(1).setCellValue("Worker ID");
-	        headerRow.createCell(2).setCellValue("Name");
-	        headerRow.createCell(3).setCellValue("Total Hours Work");
-	        headerRow.createCell(4).setCellValue("Total Overtime Work");
-			headerRow.createCell(5).setCellValue("Total Late/Early");
+			for (int col = 0; col < tableReport.getColumns().size(); col++) {
+				headerRow.createCell(col).setCellValue(tableReport.getColumns().get(col).getText());
+			}
 
 	        int rowIndex = 1;
 	        for (HRMUnitWorkerReportRow row : listRecord) {
@@ -236,21 +238,22 @@ public class HRMUnitWorkerReportController implements Initializable{
 	            rowIndex++;
 	        }
 
-	        String fileName = "Attendance_Report_" + chooseMonth.getValue() + "_" + chooseYear.getValue() + "_" + unitNameBox.getValue().toString() + ".xlsx";
+	        String fileName = "Attendance_Report_" + unitNameBox.getValue() + "_" + chooseMonth.getValue() + "_" + chooseYear.getValue() + ".xlsx";
 	        String filePath = directoryPath + File.separator + fileName;
 
 	        try (FileOutputStream fileOutputStream = new FileOutputStream(filePath)) {
 	            workbook.write(fileOutputStream);
-	            showSuccessExport("Xuất báo cáo thành công!");
+	            notifyExportReport("Xuất báo cáo thành công!", AlertType.INFORMATION);
 	        } catch (IOException e) {
+				notifyExportReport("Xuất báo cáo thất bại!", AlertType.ERROR);
 	            e.printStackTrace();
 	        }
 	        workbook.close();
 	    }
 	}
 
-	private void showSuccessExport(String message) {
-        Alert alert = new Alert(AlertType.INFORMATION);
+	private void notifyExportReport(String message, AlertType type) {
+        Alert alert = new Alert(type);
         alert.setTitle("Export report");
         alert.setHeaderText(null);
         alert.setContentText(message);

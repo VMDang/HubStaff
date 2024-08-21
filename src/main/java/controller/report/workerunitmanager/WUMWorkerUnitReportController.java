@@ -18,13 +18,20 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
 import model.employee.Employee;
 import model.employee.Role;
 import model.employee.worker.Worker;
 import model.employee.worker.WorkerUnitManager;
 import model.logtimekeeping.LogTimekeepingWorker;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import utility.TimeUtility;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Time;
@@ -175,8 +182,60 @@ public class WUMWorkerUnitReportController implements Initializable {
     }
 
     @FXML
-    void exportExcel(ActionEvent event) {
+    void exportExcel(ActionEvent event) throws IOException {
+        if (listRecord.isEmpty()) {
+            notifyExportReport("Không có dữ liệu để xuất file", Alert.AlertType.ERROR);
+            return;
+        }
 
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Chọn thư mục lưu file");
+
+        File selectedDirectory = directoryChooser.showDialog(basePane.getScene().getWindow());
+        if (selectedDirectory != null) {
+            String directoryPath = selectedDirectory.getAbsolutePath();
+
+            Workbook workbook = new XSSFWorkbook();
+            Sheet sheet = workbook.createSheet("Báo cáo chấm công");
+
+            Row header = sheet.createRow(0);
+            for (int col = 0; col < tableReport.getColumns().size(); col++) {
+                header.createCell(col).setCellValue(tableReport.getColumns().get(col).getText());
+            }
+
+            int rowIndex = 1;
+            for (WUMWorkerUnitReportRow row : listRecord) {
+                Row r = sheet.createRow(rowIndex);
+                r.createCell(0).setCellValue(rowIndex);
+                r.createCell(1).setCellValue(row.getWorker_id());
+                r.createCell(2).setCellValue(row.getName());
+                r.createCell(3).setCellValue(row.getTotal_hour_work());
+                r.createCell(4).setCellValue(row.getTotal_overtime());
+                r.createCell(5).setCellValue(row.getCountLateEarly());
+                rowIndex++;
+            }
+
+            String unit_id = Authentication.getInstance().getAuthentication().getUnit_id();
+            String fileName = "Attendance_Report_" + unit_id + "_" + chooseMonth.getValue() + "_" + chooseYear.getValue() + ".xlsx";
+            String filePath = directoryPath + File.separator + fileName;
+
+            try (FileOutputStream fileOutputStream = new FileOutputStream(filePath)) {
+                workbook.write(fileOutputStream);
+                notifyExportReport("Xuất báo cáo thành công!", Alert.AlertType.INFORMATION);
+            } catch (IOException e) {
+                notifyExportReport("Xuất báo cáo thất bại!", Alert.AlertType.ERROR);
+                e.printStackTrace();
+            }
+            workbook.close();
+        }
+    }
+
+    private void notifyExportReport(String message, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle("Export report");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     private void setListRecord() {

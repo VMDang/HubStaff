@@ -6,6 +6,7 @@ import controller.auth.Authentication;
 import controller.report.hrmanager.officerunit.HRMUnitOfficerReportController;
 import controller.report.officerunitmanager.OUMOfficerUnitReportController;
 import controller.timekeeping.officer.daily.TimekeepingDayOfficerDetailController;
+import controller.timekeeping.worker.monthly.TimekeepingWorkerTableRow;
 import database.RoleDAO;
 import database.TimekeepingOfficerDAO;
 import database.UnitDAO;
@@ -22,14 +23,21 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import model.employee.Employee;
 import model.employee.HRManager;
 import model.employee.Unit;
 import model.employee.officer.OfficerUnitManager;
 import model.logtimekeeping.LogTimekeepingOfficer;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import utility.TimeUtility;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -239,8 +247,59 @@ public class TimekeepingMonthlyOfficerController implements Initializable {
     }
 
     @FXML
-    public void exportExcel(ActionEvent event) {
+    public void exportExcel(ActionEvent event) throws IOException {
+        if (LogTimekeepingMonthList.isEmpty()) {
+            notifyExportReport("Không có dữ liệu để xuất file", Alert.AlertType.ERROR);
+            return;
+        }
 
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Chọn thư mục lưu file");
+
+        File selectedDirectory = directoryChooser.showDialog(basePane.getScene().getWindow());
+        if (selectedDirectory != null) {
+            String directoryPath = selectedDirectory.getAbsolutePath();
+
+            Workbook workbook = new XSSFWorkbook();
+            Sheet sheet = workbook.createSheet("Dữ liệu chấm công");
+
+            Row header = sheet.createRow(0);
+            for (int col = 0; col < tableTimekeepingMonth.getColumns().size(); col++) {
+                header.createCell(col).setCellValue(tableTimekeepingMonth.getColumns().get(col).getText());
+            }
+
+            int rowIndex = 1;
+            for (TimekeepingOfficerTableRow row : LogTimekeepingMonthList) {
+                Row r = sheet.createRow(rowIndex);
+                r.createCell(0).setCellValue(row.getDate().toString());
+                r.createCell(1).setCellValue(row.getTime_in().toString());
+                r.createCell(2).setCellValue(row.getTime_out().toString());
+                r.createCell(3).setCellValue(row.getAmount_work());
+                r.createCell(4).setCellValue(row.getOvertime());
+                r.createCell(5).setCellValue(row.getStatus());
+                rowIndex++;
+            }
+
+            String fileName = "Timekeeping_" + employeeID.getText() + "_" + chooseMonth.getValue() + "_" + chooseYear.getValue() + ".xlsx";
+            String filePath = directoryPath + File.separator + fileName;
+
+            try (FileOutputStream fileOutputStream = new FileOutputStream(filePath)) {
+                workbook.write(fileOutputStream);
+                notifyExportReport("Xuất dữ liệu chấm công thành công!", Alert.AlertType.INFORMATION);
+            } catch (IOException e) {
+                notifyExportReport("Xuất dữ liệu chấm công thất bại!", Alert.AlertType.ERROR);
+                e.printStackTrace();
+            }
+            workbook.close();
+        }
+    }
+
+    private void notifyExportReport(String message, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle("Export report");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     public void getLogByMonth(String month, String year) {
