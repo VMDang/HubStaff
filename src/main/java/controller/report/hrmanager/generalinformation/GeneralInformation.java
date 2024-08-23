@@ -1,11 +1,13 @@
 package controller.report.hrmanager.generalinformation;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Set;
 
 import database.EmployeeDAO;
 import model.employee.Employee;
+import model.employee.Role;
 
 public abstract class GeneralInformation {
 
@@ -14,7 +16,7 @@ public abstract class GeneralInformation {
 	public static ArrayList<Employee> getEmployeesByUnit(String unit_id) {
 		ArrayList<Employee> listEmployeesUnit = new ArrayList<>();
 		for (Employee employee : employees) {
-			if(employee.getUnit_id().equals(unit_id)) {
+			if(employee.getUnit_id().equals(unit_id) && employee.getStatus() == 1) {
 				listEmployeesUnit.add(employee);
 			}
 		}
@@ -34,20 +36,34 @@ public abstract class GeneralInformation {
 	public static int countNumberWorker() {
 		int count = 0;
 		for (Employee employee : employees) {
-			if(employee.getDepartment().equals("Factory")) {
-				count = count + 1;
+			if (employee.getStatus() == 1) {
+				if (employee.getRole_id() == Role.Worker.getId() || employee.getRole_id() == Role.WorkerUnitManager.getId()) {
+					count++;
+				}
 			}
 		}
 		return count;
 	}
 	
 	public static int countNumberOfficer() {
-		int count = employees.size() - countNumberWorker();
+		int count = 0;
+		for (Employee employee : employees) {
+			if (employee.getStatus() == 1) {
+				if (employee.getRole_id() == Role.Officer.getId() || employee.getRole_id() == Role.OfficerUnitManager.getId()
+						|| employee.getRole_id() == Role.HRManager.getId()) {
+					count++;
+				}
+			}
+		}
 		return count;
 	}
-	
-	public static void main(String[] args) {
-		System.out.println(employees);
+
+	public static double roundouble(double db) {
+		DecimalFormat df = new DecimalFormat("#.#");
+		if(db <= 0) {
+			return 0.0;
+		}
+		return Double.parseDouble(df.format(db));
 	}
 	
 	public abstract int countGoodMonth(int month, int year);

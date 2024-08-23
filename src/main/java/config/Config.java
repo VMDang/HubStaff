@@ -12,4 +12,5 @@ public class Config {
     public static String OFFICER_END_MORNING = "12:00:00";
     public static String OFFICER_START_AFTERNOON = "13:30:00";
     public static String OFFICER_END_AFTERNOON = "17:30:00";
+    public static String OFFICER_START_OVERTIME = "18:00:00";
 }

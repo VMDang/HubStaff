@@ -22,12 +22,13 @@ public class LogTimekeepingOfficer extends LogTimekeeping{
 		this.overtime = overtime;
 	}
 	public LogTimekeepingOfficer(String logID, String employee_id, Date date, Time time_in, Time time_out,
-			boolean morning, boolean afternoon) {
+			boolean morning, boolean afternoon, float overtime) {
 		super(logID, employee_id, date, time_in, time_out);
 		this.morning = morning;
 		this.afternoon = afternoon;
 		this.hour_late = 0f;
 		this.hour_early = 0f;
+		this.overtime = overtime;
 	}
 	public boolean isMorning() {
 		return morning;

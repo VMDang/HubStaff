@@ -2,6 +2,7 @@ package controller.report.officerunitmanager;
 
 import config.FXMLNavigation;
 import controller.auth.Authentication;
+import controller.report.hrmanager.officerunit.HRMUnitOfficerReportRow;
 import controller.timekeeping.officer.monthly.TimekeepingMonthlyOfficerController;
 import database.EmployeeDAO;
 import database.TimekeepingOfficerDAO;
@@ -17,13 +18,20 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.input.MouseButton;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
 import model.employee.Employee;
 import model.employee.Role;
 import model.employee.officer.Officer;
 import model.employee.officer.OfficerUnitManager;
 import model.logtimekeeping.LogTimekeepingOfficer;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import utility.TimeUtility;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -155,8 +163,52 @@ public class OUMOfficerUnitReportController implements Initializable {
     }
 
     @FXML
-    void exportExcel(ActionEvent event) {
+    void exportExcel(ActionEvent event) throws IOException {
+        if (listRecord.isEmpty()) {
+            notifyExportReport("Không có dữ liệu để xuất file", Alert.AlertType.ERROR);
+            return;
+        }
 
+        DirectoryChooser directoryChooser = new DirectoryChooser();
+        directoryChooser.setTitle("Chọn thư mục lưu file");
+
+        File selectedDirectory = directoryChooser.showDialog(basePane.getScene().getWindow());
+        if (selectedDirectory != null) {
+            String directoryPath = selectedDirectory.getAbsolutePath();
+
+            Workbook workbook = new XSSFWorkbook();
+            Sheet sheet = workbook.createSheet("Báo cáo chấm công");
+
+            Row header = sheet.createRow(0);
+            for (int col = 0; col < tableReport.getColumns().size(); col++) {
+                header.createCell(col).setCellValue(tableReport.getColumns().get(col).getText());
+            }
+
+            int rowIndex = 1;
+            for (OUMOfficerUnitReportRow row : listRecord) {
+                Row r = sheet.createRow(rowIndex);
+                r.createCell(0).setCellValue(rowIndex);
+                r.createCell(1).setCellValue(row.getName());
+                r.createCell(2).setCellValue(row.getOfficer_id());
+                r.createCell(3).setCellValue(row.getTotal_day_work());
+                r.createCell(4).setCellValue(row.getTotal_overtime());
+                r.createCell(5).setCellValue(row.getCountLateEarly());
+                rowIndex++;
+            }
+
+            String unit_id = Authentication.getInstance().getAuthentication().getUnit_id();
+            String fileName = "Attendance_Report_" + unit_id + "_" + chooseMonth.getValue() + "_" + chooseYear.getValue() + ".xlsx";
+            String filePath = directoryPath + File.separator + fileName;
+
+            try (FileOutputStream fileOutputStream = new FileOutputStream(filePath)) {
+                workbook.write(fileOutputStream);
+                notifyExportReport("Xuất báo cáo thành công!", Alert.AlertType.INFORMATION);
+            } catch (IOException e) {
+                notifyExportReport("Xuất báo cáo thất bại!", Alert.AlertType.ERROR);
+                e.printStackTrace();
+            }
+            workbook.close();
+        }
     }
 
     @FXML
@@ -174,6 +226,14 @@ public class OUMOfficerUnitReportController implements Initializable {
         monthLabel.setText("Tháng " + chooseMonth.getValue() + "/" + chooseYear.getValue());
         setListRecord();
         tableReport.setItems(listRecord);
+    }
+
+    private void notifyExportReport(String message, Alert.AlertType type) {
+        Alert alert = new Alert(type);
+        alert.setTitle("Export report");
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 
     private void setListRecord() {

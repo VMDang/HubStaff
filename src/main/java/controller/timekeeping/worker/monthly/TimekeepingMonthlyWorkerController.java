@@ -1,5 +1,7 @@
 package controller.timekeeping.worker.monthly;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.sql.Date;
@@ -23,19 +25,15 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableRow;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.control.ChoiceBox;
-import javafx.scene.control.Label;
 import javafx.scene.input.MouseButton;
 
 import model.employee.Employee;
@@ -44,6 +42,10 @@ import model.employee.Unit;
 
 import model.employee.worker.WorkerUnitManager;
 import model.logtimekeeping.LogTimekeepingWorker;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import utility.TimeUtility;
 
 public class TimekeepingMonthlyWorkerController implements Initializable {
@@ -187,7 +189,7 @@ public class TimekeepingMonthlyWorkerController implements Initializable {
     	tableSummary.setItems(summaryRows);
     	
     	tableTimekeepingMonth.setOnMouseClicked(event -> {
-            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
+            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
             	TimekeepingWorkerTableRow selectedItem = tableTimekeepingMonth.getSelectionModel().getSelectedItem();
             	if (selectedItem != null) {
             		showDetailPopupWorker(selectedItem);
@@ -248,8 +250,59 @@ public class TimekeepingMonthlyWorkerController implements Initializable {
 	}
 
 	@FXML
-	public void exportExcel(ActionEvent event) {
+	public void exportExcel(ActionEvent event) throws IOException {
+		if (LogTimekeepingMonthList.isEmpty()) {
+			notifyExportReport("Không có dữ liệu để xuất file", Alert.AlertType.ERROR);
+			return;
+		}
 
+		DirectoryChooser directoryChooser = new DirectoryChooser();
+		directoryChooser.setTitle("Chọn thư mục lưu file");
+
+		File selectedDirectory = directoryChooser.showDialog(basePane.getScene().getWindow());
+		if (selectedDirectory != null) {
+			String directoryPath = selectedDirectory.getAbsolutePath();
+
+			Workbook workbook = new XSSFWorkbook();
+			Sheet sheet = workbook.createSheet("Dữ liệu chấm công");
+
+			Row header = sheet.createRow(0);
+			for (int col = 0; col < tableTimekeepingMonth.getColumns().size(); col++) {
+				header.createCell(col).setCellValue(tableTimekeepingMonth.getColumns().get(col).getText());
+			}
+
+			int rowIndex = 1;
+			for (TimekeepingWorkerTableRow row : LogTimekeepingMonthList) {
+				Row r = sheet.createRow(rowIndex);
+				r.createCell(0).setCellValue(row.getDate().toString());
+				r.createCell(1).setCellValue(row.getTime_in() != null ? row.getTime_in().toString() : "");
+				r.createCell(2).setCellValue(row.getTime_out() != null ? row.getTime_out().toString() : "");
+				r.createCell(3).setCellValue(row.getHour_work());
+				r.createCell(4).setCellValue(row.getOvertime());
+				r.createCell(5).setCellValue(row.getStatus());
+				rowIndex++;
+			}
+
+			String fileName = "Timekeeping_" + employeeID.getText() + "_" + chooseMonth.getValue() + "_" + chooseYear.getValue() + ".xlsx";
+			String filePath = directoryPath + File.separator + fileName;
+
+			try (FileOutputStream fileOutputStream = new FileOutputStream(filePath)) {
+				workbook.write(fileOutputStream);
+				notifyExportReport("Xuất dữ liệu chấm công thành công!", Alert.AlertType.INFORMATION);
+			} catch (IOException e) {
+				notifyExportReport("Xuất dữ liệu chấm công thất bại!", Alert.AlertType.ERROR);
+				e.printStackTrace();
+			}
+			workbook.close();
+		}
+	}
+
+	private void notifyExportReport(String message, Alert.AlertType type) {
+		Alert alert = new Alert(type);
+		alert.setTitle("Export report");
+		alert.setHeaderText(null);
+		alert.setContentText(message);
+		alert.showAndWait();
 	}
 
 	public void showDetailPopupWorker(TimekeepingWorkerTableRow selectedItem) {
@@ -293,19 +346,23 @@ public class TimekeepingMonthlyWorkerController implements Initializable {
 					float overtime = log.getShift3() ;
 					String status = "";
 
-					if((time_in.compareTo(Time.valueOf(Config.WORKER_START_SHIFT1)) > 0 && time_in.compareTo(Time.valueOf(Config.WORKER_END_SHIFT1)) < 0)
-							|| (time_in.compareTo(Time.valueOf(Config.WORKER_START_SHIFT2)) > 0 && time_in.compareTo(Time.valueOf(Config.WORKER_END_SHIFT2)) < 0)) {
-						status += "Đi muộn ";
-						countLateEarly++;
-					}
+					if (time_in != null && time_out != null) {
+						if((time_in.compareTo(Time.valueOf(Config.WORKER_START_SHIFT1)) > 0 && time_in.compareTo(Time.valueOf(Config.WORKER_END_SHIFT1)) < 0)
+								|| (time_in.compareTo(Time.valueOf(Config.WORKER_START_SHIFT2)) > 0 && time_in.compareTo(Time.valueOf(Config.WORKER_END_SHIFT2)) < 0)) {
+							status += "Đi muộn ";
+							countLateEarly++;
+						}
 
-					if((time_out.compareTo(Time.valueOf(Config.WORKER_END_SHIFT1)) < 0 && time_out.compareTo(Time.valueOf(Config.WORKER_START_SHIFT1)) > 0)
-							|| (time_out.compareTo(Time.valueOf(Config.WORKER_END_SHIFT2)) < 0 && time_out.compareTo(Time.valueOf(Config.WORKER_START_SHIFT2)) > 0)) {
-						status +="Về sớm ";
-						countLateEarly++;
-					}
+						if((time_out.compareTo(Time.valueOf(Config.WORKER_END_SHIFT1)) < 0 && time_out.compareTo(Time.valueOf(Config.WORKER_START_SHIFT1)) > 0)
+								|| (time_out.compareTo(Time.valueOf(Config.WORKER_END_SHIFT2)) < 0 && time_out.compareTo(Time.valueOf(Config.WORKER_START_SHIFT2)) > 0)) {
+							status +="Về sớm ";
+							countLateEarly++;
+						}
 
-					if(time_in.compareTo(Time.valueOf(Config.WORKER_START_SHIFT1)) <= 0 && time_out.compareTo(Time.valueOf(Config.WORKER_END_SHIFT2)) >= 0) status = "Đạt";
+						if(time_in.compareTo(Time.valueOf(Config.WORKER_START_SHIFT1)) <= 0 && time_out.compareTo(Time.valueOf(Config.WORKER_END_SHIFT2)) >= 0) status = "Đạt";
+					} else {
+						status = "Chưa đủ dữ liệu";
+					}
 
 					LogTimekeepingMonthList.add(new TimekeepingWorkerTableRow(date, time_in, time_out, hour_work, overtime, status, log.getShift1(), log.getShift2(), log.getShift3()));
 					checkExistLog = true;
@@ -346,7 +403,7 @@ public class TimekeepingMonthlyWorkerController implements Initializable {
             protected void updateItem(TimekeepingWorkerTableRow item, boolean empty) {
 				super.updateItem(item, empty);
 				if (!empty && item != null) {
-					if (item.getStatus().equals("Nghỉ")) {
+					if (item.getStatus().equals("Nghỉ") || item.getStatus().equals("Chưa đủ dữ liệu")) {
 						setStyle("-fx-background-color: #f8bcbc;");
 					} else if (item.getStatus().contains("Đi muộn") || item.getStatus().contains("Về sớm")) {
 						setStyle("-fx-background-color: #ffecc9;");

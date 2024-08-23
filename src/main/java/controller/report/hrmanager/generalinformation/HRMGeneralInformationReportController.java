@@ -1,6 +1,8 @@
 package controller.report.hrmanager.generalinformation;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.ResourceBundle;
 import java.util.Set;
@@ -17,9 +19,10 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import model.employee.Unit;
+import utility.TimeUtility;
 
 public class HRMGeneralInformationReportController implements Initializable {
-
+	private LocalDate today = LocalDate.now();
 
     @FXML
     private RadioButton allBtn;
@@ -131,22 +134,20 @@ public class HRMGeneralInformationReportController implements Initializable {
     
     private GeneralInformationUnit informationWorkerUnit = new GeneralInformationWorkerUnit();
 
-    
-    String[] listMonth = {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"};
-    String[] listQuarter = {"01", "02", "03", "04"};
-    String[] listYear = {"2023", "2022", "2021", "2020"};
+
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		monthBox.getItems().addAll(listMonth);
-		monthBox.setValue("06");
-		quarterBox.getItems().addAll(listQuarter);
-		quarterBox.setValue("02");
-		yearBox.getItems().addAll(listYear);
-		yearBox.setValue("2023");
-		monthYearBox.getItems().addAll(listYear);
-		monthYearBox.setValue("2023");
-		quarterYearBox.getItems().addAll(listYear);
-		quarterYearBox.setValue("2023");
+		monthBox.getItems().addAll(TimeUtility.getListMonth());
+		monthBox.setValue(today.format(DateTimeFormatter.ofPattern("MM")));
+		quarterBox.getItems().addAll(TimeUtility.getListQuarter());
+		quarterBox.setValue("03");
+		yearBox.getItems().addAll(TimeUtility.getListYear());
+		yearBox.setValue(today.format(DateTimeFormatter.ofPattern("yyyy")));
+		monthYearBox.getItems().addAll(TimeUtility.getListYear());
+		monthYearBox.setValue(today.format(DateTimeFormatter.ofPattern("yyyy")));
+		quarterYearBox.getItems().addAll(TimeUtility.getListYear());
+		quarterYearBox.setValue(today.format(DateTimeFormatter.ofPattern("yyyy")));
 
 		ArrayList<String> listUnit = new ArrayList<>();
 		ArrayList<Unit> units = UnitDAO.getInstance().getAll();
@@ -313,11 +314,11 @@ public class HRMGeneralInformationReportController implements Initializable {
 		countDepartmentLabel.setText(GeneralInformationUnit.getDepartment());
 		countWorkerLabel.setText(""+GeneralInformationUnit.countNumberWorkerUnit());
 		countOfficerLabel.setText(""+GeneralInformationUnit.countNumberOfficerUnit());
-		if(GeneralInformationUnit.countNumberWorkerUnit() == 0) {
+		if(unit_id.contains("OFF")) {
 			workerPane.setDisable(true);
 			officerPane.setDisable(false);
 		}
-		else {
+		else if (unit_id.contains("FAC")) {
 			officerPane.setDisable(true);
 			workerPane.setDisable(false);
 		}
