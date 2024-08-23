@@ -189,7 +189,7 @@ public class TimekeepingMonthlyWorkerController implements Initializable {
     	tableSummary.setItems(summaryRows);
     	
     	tableTimekeepingMonth.setOnMouseClicked(event -> {
-            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
+            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
             	TimekeepingWorkerTableRow selectedItem = tableTimekeepingMonth.getSelectionModel().getSelectedItem();
             	if (selectedItem != null) {
             		showDetailPopupWorker(selectedItem);
@@ -346,19 +346,23 @@ public class TimekeepingMonthlyWorkerController implements Initializable {
 					float overtime = log.getShift3() ;
 					String status = "";
 
-					if((time_in.compareTo(Time.valueOf(Config.WORKER_START_SHIFT1)) > 0 && time_in.compareTo(Time.valueOf(Config.WORKER_END_SHIFT1)) < 0)
-							|| (time_in.compareTo(Time.valueOf(Config.WORKER_START_SHIFT2)) > 0 && time_in.compareTo(Time.valueOf(Config.WORKER_END_SHIFT2)) < 0)) {
-						status += "Đi muộn ";
-						countLateEarly++;
-					}
+					if (time_in != null && time_out != null) {
+						if((time_in.compareTo(Time.valueOf(Config.WORKER_START_SHIFT1)) > 0 && time_in.compareTo(Time.valueOf(Config.WORKER_END_SHIFT1)) < 0)
+								|| (time_in.compareTo(Time.valueOf(Config.WORKER_START_SHIFT2)) > 0 && time_in.compareTo(Time.valueOf(Config.WORKER_END_SHIFT2)) < 0)) {
+							status += "Đi muộn ";
+							countLateEarly++;
+						}
 
-					if((time_out.compareTo(Time.valueOf(Config.WORKER_END_SHIFT1)) < 0 && time_out.compareTo(Time.valueOf(Config.WORKER_START_SHIFT1)) > 0)
-							|| (time_out.compareTo(Time.valueOf(Config.WORKER_END_SHIFT2)) < 0 && time_out.compareTo(Time.valueOf(Config.WORKER_START_SHIFT2)) > 0)) {
-						status +="Về sớm ";
-						countLateEarly++;
-					}
+						if((time_out.compareTo(Time.valueOf(Config.WORKER_END_SHIFT1)) < 0 && time_out.compareTo(Time.valueOf(Config.WORKER_START_SHIFT1)) > 0)
+								|| (time_out.compareTo(Time.valueOf(Config.WORKER_END_SHIFT2)) < 0 && time_out.compareTo(Time.valueOf(Config.WORKER_START_SHIFT2)) > 0)) {
+							status +="Về sớm ";
+							countLateEarly++;
+						}
 
-					if(time_in.compareTo(Time.valueOf(Config.WORKER_START_SHIFT1)) <= 0 && time_out.compareTo(Time.valueOf(Config.WORKER_END_SHIFT2)) >= 0) status = "Đạt";
+						if(time_in.compareTo(Time.valueOf(Config.WORKER_START_SHIFT1)) <= 0 && time_out.compareTo(Time.valueOf(Config.WORKER_END_SHIFT2)) >= 0) status = "Đạt";
+					} else {
+						status = "Chưa đủ dữ liệu";
+					}
 
 					LogTimekeepingMonthList.add(new TimekeepingWorkerTableRow(date, time_in, time_out, hour_work, overtime, status, log.getShift1(), log.getShift2(), log.getShift3()));
 					checkExistLog = true;
@@ -399,7 +403,7 @@ public class TimekeepingMonthlyWorkerController implements Initializable {
             protected void updateItem(TimekeepingWorkerTableRow item, boolean empty) {
 				super.updateItem(item, empty);
 				if (!empty && item != null) {
-					if (item.getStatus().equals("Nghỉ")) {
+					if (item.getStatus().equals("Nghỉ") || item.getStatus().equals("Chưa đủ dữ liệu")) {
 						setStyle("-fx-background-color: #f8bcbc;");
 					} else if (item.getStatus().contains("Đi muộn") || item.getStatus().contains("Về sớm")) {
 						setStyle("-fx-background-color: #ffecc9;");

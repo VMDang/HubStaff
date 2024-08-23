@@ -264,14 +264,17 @@ public class WUMWorkerUnitReportController implements Initializable {
 
                 Time time_in = log.getTime_in();
                 Time time_out = log.getTime_out();
-                if((time_in.compareTo(Time.valueOf(Config.WORKER_START_SHIFT1)) > 0 && time_in.compareTo(Time.valueOf(Config.WORKER_END_SHIFT1)) < 0)
-                        || (time_in.compareTo(Time.valueOf(Config.WORKER_START_SHIFT1)) > 0 && time_in.compareTo(Time.valueOf(Config.WORKER_END_SHIFT2)) < 0)) {
-                    countLateEarly++;
-                }
 
-                if((time_out.compareTo(Time.valueOf(Config.WORKER_START_SHIFT1)) > 0 && time_out.compareTo(Time.valueOf(Config.WORKER_END_SHIFT1)) < 0)
-                        || (time_out.compareTo(Time.valueOf(Config.WORKER_START_SHIFT1)) > 0 && time_out.compareTo(Time.valueOf(Config.WORKER_END_SHIFT2)) < 0)) {
-                    countLateEarly++;
+                if (time_in != null && time_out != null) {
+                    if((time_in.compareTo(Time.valueOf(Config.WORKER_START_SHIFT1)) > 0 && time_in.compareTo(Time.valueOf(Config.WORKER_END_SHIFT1)) < 0)
+                            || (time_in.compareTo(Time.valueOf(Config.WORKER_START_SHIFT2)) > 0 && time_in.compareTo(Time.valueOf(Config.WORKER_END_SHIFT2)) < 0)) {
+                        countLateEarly++;
+                    }
+
+                    if((time_out.compareTo(Time.valueOf(Config.WORKER_START_SHIFT1)) > 0 && time_out.compareTo(Time.valueOf(Config.WORKER_END_SHIFT1)) < 0)
+                            || (time_out.compareTo(Time.valueOf(Config.WORKER_START_SHIFT2)) > 0 && time_out.compareTo(Time.valueOf(Config.WORKER_END_SHIFT2)) < 0)) {
+                        countLateEarly++;
+                    }
                 }
             }
 

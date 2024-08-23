@@ -186,7 +186,7 @@ public class TimekeepingMonthlyOfficerController implements Initializable {
         tableSummary.setItems(summaryRows);
 
         tableTimekeepingMonth.setOnMouseClicked(event -> {
-            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 1) {
+            if (event.getButton() == MouseButton.PRIMARY && event.getClickCount() == 2) {
                 TimekeepingOfficerTableRow selectedItem = tableTimekeepingMonth.getSelectionModel().getSelectedItem();
                 if (selectedItem != null) {
                     showDetailPopupOfficer(selectedItem);
